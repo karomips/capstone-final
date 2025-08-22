@@ -1,0 +1,418 @@
+/* --- Modern, Professional, and Visually Appealing Homepage --- */
+
+/* --- Animated Bubbles: Subtle, but not distracting --- */
+.homepage-bg-animated {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.homepage-bg-bubble {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.10;
+  animation: floatBubble 14s infinite alternate;
+  filter: blur(3px);
+}
+
+.homepage-bg-bubble.b1 {
+  width: 260px; height: 260px;
+  background: #1976d2;
+  left: 3vw; top: 8vh;
+  animation-delay: 0s;
+}
+.homepage-bg-bubble.b2 {
+  width: 180px; height: 180px;
+  background: #3ca55c;
+  right: 7vw; top: 22vh;
+  animation-delay: 2s;
+}
+.homepage-bg-bubble.b3 {
+  width: 140px; height: 140px;
+  background: #42a5f5;
+  left: 18vw; bottom: 7vh;
+  animation-delay: 4s;
+}
+.homepage-bg-bubble.b4 {
+  width: 110px; height: 110px;
+  background: #b2f2bb;
+  right: 15vw; bottom: 10vh;
+  animation-delay: 1s;
+}
+
+@keyframes floatBubble {
+  0% { transform: translateY(0) scale(1);}
+  100% { transform: translateY(-40px) scale(1.10);}
+}
+
+/* --- Main page background --- */
+body,
+#root {
+  background: linear-gradient(120deg, #181f2a 0%, #232b3e 100%);
+  min-height: 100vh;
+  font-family: 'Segoe UI', 'Poppins', Arial, sans-serif;
+}
+
+/* --- Layout for homepage --- */
+.homepage-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2.5rem;
+  min-height: 400px;
+  background: none;
+  position: relative;
+  z-index: 2;
+  padding: 3rem 1rem 2rem 1rem;
+  max-width: 1200px;
+  margin: 0 auto; /* Center the container */
+}
+
+/* --- Slideshow section --- */
+.homepage-slideshow {
+  width: 100%;
+  max-width: 700px;
+  min-width: 340px;
+  height: 340px;
+  flex: 2 1 340px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  background: #232b3e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 32px rgba(25, 118, 210, 0.13);
+  margin-bottom: 1.5rem;
+  border: 1.5px solid #22304a;
+  transition: box-shadow 0.3s, border 0.3s;
+}
+
+.homepage-slideshow:hover {
+  box-shadow: 0 12px 40px rgba(25, 118, 210, 0.22);
+  border-color: #1976d2;
+}
+
+.homepage-banner {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+  display: block;
+  transition: opacity 0.7s;
+  opacity: 0;
+  box-shadow: 0 2px 12px rgba(25, 118, 210, 0.10);
+}
+
+.homepage-banner.fade-in {
+  opacity: 1;
+}
+
+.homepage-slide-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  color: #fff;
+  background: linear-gradient(0deg, #1976d2 80%, transparent 100%);
+  padding: 1rem 1.5rem 1.5rem 1.5rem;
+  border-radius: 0 0 20px 20px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  letter-spacing: 0.5px;
+  box-shadow: 0 8px 32px rgba(25, 118, 210, 0.10);
+}
+
+/* Slide navigation dots */
+.homepage-slideshow > div[style*="display: flex"] span {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #1976d2;
+  border: 2px solid #fff;
+  cursor: pointer;
+  display: inline-block;
+  transition: background 0.3s, border 0.3s;
+  box-shadow: 0 1px 4px rgba(25, 118, 210, 0.10);
+}
+.homepage-slideshow > div[style*="display: flex"] span:not(.active) {
+  background: #fff;
+  border: 2px solid #1976d2;
+}
+
+/* --- Latest jobs section --- */
+.homepage-latestjobs-container {
+  max-width: 400px;
+  min-width: 320px;
+  flex: 1 1 320px;
+  background: rgba(35, 43, 62, 0.98);
+  border-radius: 20px;
+  box-shadow: 0 4px 24px rgba(25, 118, 210, 0.13);
+  padding: 2.2rem 1.7rem;
+  margin-top: 0;
+  color: #e3f2fd;
+  border: 1.5px solid #22304a;
+  transition: box-shadow 0.3s, border 0.3s;
+}
+
+.homepage-latestjobs-container:hover {
+  box-shadow: 0 8px 32px rgba(25, 118, 210, 0.22);
+  border-color: #42a5f5;
+}
+
+.homepage-latestjobs-container h2 {
+  color: #42a5f5;
+  margin-bottom: 1.2rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.homepage-latestjobs-container span {
+  font-size: 1rem;
+  color: #b2f2bb;
+  margin-left: 0.5rem;
+}
+
+.homepage-job-item {
+  margin-bottom: 1.2rem;
+  padding: 1.1rem 1rem 1rem 1rem;
+  border-bottom: 1px solid #2a3b55;
+  transition: background 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+  color: #e3f2fd;
+  background: rgba(25, 118, 210, 0.03);
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(25, 118, 210, 0.04);
+  position: relative;
+}
+
+.homepage-job-item strong {
+  color: #3ca55c;
+  font-weight: 700;
+}
+
+.homepage-job-item:hover {
+  background: #1a2332;
+  box-shadow: 0 2px 12px rgba(66, 165, 245, 0.10);
+}
+
+.homepage-job-item div {
+  font-size: 0.97em;
+  color: #b2f2bb;
+  margin-top: 0.3em;
+}
+
+/* Spinner styles */
+.lds-dual-ring {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+}
+.lds-dual-ring:after {
+  content: " ";
+  display: block;
+  width: 32px;
+  height: 32px;
+  margin: 4px;
+  border-radius: 50%;
+  border: 4px solid #1976d2;
+  border-color: #1976d2 transparent #42a5f5 transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+  0% { transform: rotate(0deg);}
+  100% { transform: rotate(360deg);}
+}
+
+/* --- Welcome section --- */
+.homepage-welcome-section {
+  width: 100%;
+  text-align: center;
+  margin: 2.5rem auto 0 auto;
+  color: #e3f2fd;
+  background: rgba(35, 43, 62, 0.98);
+  border-radius: 20px;
+  box-shadow: 0 4px 24px rgba(25, 118, 210, 0.13);
+  padding: 2.5rem 1.5rem 2rem 1.5rem;
+  max-width: 900px;
+  border: 1.5px solid #22304a;
+  transition: box-shadow 0.3s, border 0.3s;
+}
+
+.homepage-welcome-section:hover {
+  box-shadow: 0 8px 32px rgba(25, 118, 210, 0.22);
+  border-color: #1976d2;
+}
+
+.homepage-welcome-section h1 {
+  color: #42a5f5;
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  letter-spacing: 1px;
+  font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
+  font-weight: 700;
+  text-shadow: 0 2px 8px rgba(25, 118, 210, 0.10);
+}
+
+.homepage-welcome-section p {
+  color: #b2f2bb;
+  font-size: 1.25rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.7;
+  text-shadow: 0 1px 4px rgba(25, 118, 210, 0.08);
+}
+
+/* --- Welcome Header --- */
+.welcome-header {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.welcome-logo {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.welcome-logo:hover {
+  transform: scale(1.05);
+}
+
+.welcome-text {
+  flex: 1;
+}
+
+.welcome-text h1 {
+  margin-bottom: 0.5rem;
+  color: #fff;
+  font-size: 2.2rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.welcome-text p {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+  .welcome-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .welcome-logo {
+    width: 100px;
+    height: 100px;
+  }
+
+  .welcome-text h1 {
+    font-size: 1.8rem;
+  }
+}
+
+/* --- Responsive --- */
+@media (max-width: 1100px) {
+  .homepage-container {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1.5rem;
+    padding: 1.5rem 0.5rem;
+    max-width: 98vw;
+  }
+  .homepage-slideshow,
+  .homepage-latestjobs-container {
+    max-width: 98vw;
+    min-width: unset;
+  }
+  .homepage-welcome-section {
+    max-width: 98vw;
+    padding: 2rem 0.5rem;
+  }
+}
+
+/* --- Subtle Scrollbar Styling for Modern Look --- */
+::-webkit-scrollbar {
+  width: 10px;
+  background: #232b3e;
+}
+::-webkit-scrollbar-thumb {
+  background: #1976d2;
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #42a5f5;
+}
+
+/* Add this to shift the main content for the sidebar */
+.homepage-main-content {
+  /* margin-left: 230px; */ /* Remove this line */
+  padding: 2.5rem 1rem 1rem 1rem;
+  min-height: 100vh;
+  transition: margin-left 0.3s;
+  max-width: 1400px;
+  margin: 0 auto; /* Center the content */
+}
+
+@media (max-width: 700px) {
+  .homepage-main-content {
+    margin: 0 auto; /* Center on mobile too */
+    padding: 1rem 0.5rem;
+  }
+}
+
+/* Arrange slideshow and jobs side by side on desktop, stacked on mobile */
+.homepage-content-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.5rem;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: 2rem;
+}
+
+@media (max-width: 1100px) {
+  .homepage-content-row {
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 1.2rem;
+  }
+}
+
+/* Style for slide dots */
+.homepage-slide-dots {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+}
+.homepage-slide-dots span {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #246624;
+  cursor: pointer;
+  display: inline-block;
+  transition: background 0.3s;
+}
+.homepage-slide-dots span.active {
+  background: #246624;
+}

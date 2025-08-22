@@ -1,0 +1,9 @@
+{
+  "name": "capstone-monorepo",
+  "private": true,
+  "workspaces": [
+    "admin",
+    "user",
+    "backend"
+  ]
+}

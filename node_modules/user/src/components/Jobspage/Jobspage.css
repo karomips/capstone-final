@@ -1,0 +1,360 @@
+/* --- Professional Enhancement for Job Portal --- */
+
+/* --- Refined Base Styling --- */
+body,
+#root {
+  background: linear-gradient(135deg, #1a2236 0%, #2a3a5a 100%);
+  min-height: 100vh;
+  font-family: 'Inter', 'Poppins', system-ui, -apple-system, sans-serif;
+  color: #e3f2fd;
+  letter-spacing: -0.01em;
+}
+
+/* --- Animated Bubbles: Subtle, not distracting --- */
+.jobspage-bg-animated {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.jobspage-bg-bubble {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.13;
+  animation: floatBubble 14s infinite alternate;
+  filter: blur(3px);
+}
+
+.jobspage-bg-bubble.b1 {
+  width: 220px; height: 220px;
+  background: #1976d2;
+  left: 5vw; top: 10vh;
+  animation-delay: 0s;
+}
+.jobspage-bg-bubble.b2 {
+  width: 160px; height: 160px;
+  background: #3ca55c;
+  right: 8vw; top: 25vh;
+  animation-delay: 2s;
+}
+.jobspage-bg-bubble.b3 {
+  width: 120px; height: 120px;
+  background: #42a5f5;
+  left: 20vw; bottom: 8vh;
+  animation-delay: 4s;
+}
+.jobspage-bg-bubble.b4 {
+  width: 90px; height: 90px;
+  background: #b2f2bb;
+  right: 18vw; bottom: 12vh;
+  animation-delay: 1s;
+}
+
+@keyframes floatBubble {
+  0% { transform: translateY(0) scale(1); }
+  100% { transform: translateY(-30px) scale(1.08); }
+}
+
+/* --- Enhanced Container Layout --- */
+.jobspage-main-content {
+  margin: 0 auto;
+  padding: 2.5rem max(1.5rem, calc((100vw - 1400px) / 2));
+  min-height: 100vh;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  z-index: 1;
+  background: rgba(26, 34, 54, 0.85);
+  backdrop-filter: blur(20px);
+  max-width: 1920px;
+}
+
+/* --- Refined Jobs Container --- */
+.jobspage-container {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.07) 0%,
+    rgba(255, 255, 255, 0.03) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 28px;
+  padding: 3.5rem clamp(1.5rem, 5vw, 3rem);
+  margin: 1rem auto;
+  max-width: 1400px;
+  backdrop-filter: blur(16px);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.2),
+    0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --- Enhanced Typography --- */
+.jobspage-container h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  background: linear-gradient(120deg, #82b1ff, #2979ff, #2962ff);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 2rem;
+  letter-spacing: -0.03em;
+  text-align: center;
+  animation: gradient 4s ease infinite;
+  line-height: 1.2;
+}
+
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* --- Modernized Search Bar --- */
+.jobspage-search {
+  background: rgba(255, 255, 255, 0.08);
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  padding: 1.2rem 1.8rem;
+  width: 100%;
+  color: #fff;
+  font-size: 1.1rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-bottom: 3rem;
+  box-shadow: 
+    inset 0 2px 4px rgba(0, 0, 0, 0.1),
+    0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.jobspage-search:focus {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: #82b1ff;
+  outline: none;
+  box-shadow: 
+    0 0 0 4px rgba(130, 177, 255, 0.15),
+    inset 0 2px 4px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+/* --- Enhanced Job Card Grid --- */
+.jobspage-listings {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 2rem;
+  padding: 1rem 0;
+}
+
+/* --- Refined Job Card Design --- */
+.jobspage-card {
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.07) 0%,
+    rgba(255, 255, 255, 0.03) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 24px;
+  padding: 2rem;
+  backdrop-filter: blur(12px);
+  transition: all 0.4s cubic-bezier(0.2, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.1),
+    0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.jobspage-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #82b1ff, #2979ff);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.jobspage-card:hover {
+  transform: translateY(-6px);
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(130, 177, 255, 0.3);
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.3),
+    0 8px 20px rgba(41, 121, 255, 0.1);
+}
+
+.jobspage-card:hover::before {
+  opacity: 1;
+}
+
+/* --- Enhanced Job Card Content --- */
+.jobspage-card h2 {
+  color: #82b1ff;
+  font-size: 1.5rem;
+  margin-bottom: 1.2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+}
+
+.jobspage-card p {
+  color: #b0bec5;
+  line-height: 1.7;
+  margin-bottom: 1.2rem;
+  font-size: 1rem;
+}
+
+.jobspage-card strong {
+  color: #81c784;
+}
+
+.job-meta {
+  display: flex;
+  gap: 1rem;
+  color: #90caf9;
+  font-size: 0.925rem;
+  margin-bottom: 1.8rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.job-meta span {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* --- Professional Apply Button --- */
+.jobspage-apply-btn {
+  background: linear-gradient(135deg, #2979ff 0%, #82b1ff 100%);
+  color: white;
+  border: none;
+  padding: 1.1rem 2rem;
+  border-radius: 16px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.2, 0, 0.2, 1);
+  width: 100%;
+  text-align: center;
+  margin-top: auto;
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  box-shadow: 0 4px 15px rgba(41, 121, 255, 0.2);
+}
+
+.jobspage-apply-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.2) 50%,
+    transparent 100%
+  );
+  transition: left 0.5s ease;
+}
+
+.jobspage-apply-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(41, 121, 255, 0.4);
+  background: linear-gradient(135deg, #2962ff 0%, #448aff 100%);
+}
+
+.jobspage-apply-btn:hover::before {
+  left: 100%;
+}
+
+.jobspage-nojobs {
+  grid-column: 1/-1;
+  color: #888;
+  font-size: 1.18rem;
+  text-align: center;
+  padding: 2.5rem 0 2rem 0;
+  font-weight: 500;
+}
+
+/* --- Modern Loading State --- */
+.jobspage-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 3px solid rgba(130, 177, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #82b1ff;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* --- Responsive Refinements --- */
+@media (max-width: 1200px) {
+  .jobspage-container {
+    margin: 1rem;
+    border-radius: 24px;
+  }
+  
+  .jobspage-listings {
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .jobspage-main-content {
+    padding: 1.5rem 1rem;
+  }
+  
+  .jobspage-container {
+    padding: 2rem 1.25rem;
+  }
+  
+  .jobspage-listings {
+    grid-template-columns: 1fr;
+  }
+  
+  .jobspage-card {
+    padding: 1.75rem;
+  }
+}
+
+/* --- Custom Scrollbar --- */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #64b5f6;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2196f3;
+}
+
+/* --- Smooth Scroll Behavior --- */
+html {
+  scroll-behavior: smooth;
+}

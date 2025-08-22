@@ -1,0 +1,115 @@
+.postpage-container {
+  max-width: 900px;
+  margin: 3rem auto;
+  padding: 2.5rem 2rem;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(36, 102, 36, 0.10);
+  border: 1px solid #e0e0e0;
+  animation: fadeIn 0.8s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+
+.postpage-form {
+  margin-bottom: 2.5rem;
+}
+
+.postpage-form h2 {
+  color: #246624;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
+  font-size: 1.7rem;
+}
+
+.postpage-field {
+  margin-bottom: 1.3rem;
+}
+
+.postpage-field label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #3ca55c;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.postpage-field input,
+.postpage-field textarea {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  border-radius: 8px;
+  border: 1.5px solid #b2f2bb;
+  font-size: 1rem;
+  background: #f8fff8;
+  transition: border 0.2s;
+  resize: none;
+}
+
+.postpage-field input:focus,
+.postpage-field textarea:focus {
+  border: 2px solid #3ca55c;
+  outline: none;
+  background: #eaffea;
+}
+
+.postpage-btn {
+  width: 100%;
+  background: linear-gradient(90deg, #243666 60%, #3c7ba5 100%);
+  color: white;
+  border: none;
+  padding: 0.8rem 0;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(60, 165, 92, 0.10);
+  transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+  margin-top: 0.5rem;
+}
+
+.postpage-btn:hover {
+  background: linear-gradient(90deg, #3ca55c 60%, #246624 100%);
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 4px 16px rgba(60, 165, 92, 0.18);
+}
+
+.postpage-listings {
+  margin-top: 2rem;
+}
+
+.postpage-listings h3 {
+  color: #246624;
+  margin-bottom: 1.2rem;
+  font-size: 1.3rem;
+}
+
+.postpage-nojobs {
+  color: #888;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.postpage-jobcard {
+  background: linear-gradient(120deg, #f9f9f9 80%, #e0ffe6 100%);
+  padding: 1.5rem 1.2rem;
+  border-radius: 14px;
+  box-shadow: 0 4px 16px rgba(60, 165, 92, 0.08);
+  border: 1px solid #e0f2e9;
+  margin-bottom: 1.2rem;
+}
+
+.postpage-jobcard h4 {
+  color: #246624;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+.postpage-jobcard p {
+  margin: 0.3rem 0;
+  color: #444;
+}
