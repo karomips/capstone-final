@@ -1,6 +1,16 @@
 /* --- Modern, Professional, and Visually Appealing Homepage --- */
 
 /* --- Animated Bubbles: Subtle, but not distracting --- */
+.homepage-bargraph-container {
+  margin: 20px auto;
+  padding: 20px;
+  width: 90%;
+  max-width: 700px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
 .homepage-bg-animated {
   position: fixed;
   inset: 0;

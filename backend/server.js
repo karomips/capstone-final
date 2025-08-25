@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const multer = require('multer');
+const bcrypt = require('bcryptjs'); // Import bcrypt
 
 const app = express();
 app.use(cors());
@@ -20,7 +21,7 @@ const userSchema = new mongoose.Schema({
   uploadId: { 
     type: mongoose.Schema.Types.ObjectId,  
     ref: 'Upload',
-    required: true 
+    required: false 
   },
   isVerified: { 
     type: Boolean, 
@@ -35,6 +36,7 @@ const jobSchema = new mongoose.Schema({
   company: String,
   location: String,
   description: String,
+  category: String
 });
 const Job = mongoose.model('Job', jobSchema);
 
@@ -125,6 +127,26 @@ app.get('/api/admin/registrations', async (req, res) => {
     res.json({ success: true, requests });
   } catch (error) {
     res.status(500).json({ success: false, message: 'Error fetching requests' });
+  }
+});
+
+app.get('/api/jobs/stats/categories', async (req, res) => {
+  try {
+    const stats = await Job.aggregate([
+      {
+        $group: {
+          _id: '$category',
+          count: { $sum: 1 }
+        }
+      },
+      {
+        $sort: { count: -1 }
+      }
+    ]);
+    res.json(stats);
+  } catch (error) {
+    console.error('Error fetching job stats:', error);
+    res.status(500).json({ message: 'Server error' });
   }
 });
 
@@ -253,22 +275,51 @@ app.post('/api/register', async (req, res) => {
   }
 });
 
-// Login endpoint
+// Update the login endpoint
 app.post('/api/login', async (req, res) => {
   try {
     const { email, password } = req.body;
-
-    // Check only in approved users (User collection)
-    const user = await User.findOne({ email, password });
+    
+    // Find user in User collection
+    const user = await User.findOne({ email });
+    
     if (!user) {
-      return res.status(401).json({ success: false, message: 'Invalid credentials' });
+      console.log('User not found:', email);
+      return res.status(401).json({ 
+        success: false, 
+        message: 'Invalid credentials' 
+      });
     }
 
-    // Return user data for frontend
-    res.json({ success: true, user });
+    // Compare passwords
+    const isMatch = await bcrypt.compare(password, user.password);
+    
+    if (!isMatch) {
+      console.log('Password incorrect for:', email);
+      return res.status(401).json({ 
+        success: false, 
+        message: 'Invalid credentials' 
+      });
+    }
+
+    // Login successful
+    console.log('Login successful for:', email);
+    res.json({
+      success: true,
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        isVerified: user.isVerified
+      }
+    });
+
   } catch (error) {
     console.error('Login error:', error);
-    res.status(500).json({ success: false, message: 'Server error' });
+    res.status(500).json({ 
+      success: false, 
+      message: 'Server error' 
+    });
   }
 });
 
@@ -580,6 +631,40 @@ app.patch('/admin/registration/:userId', async (req, res) => {
   }
 
   res.json({ success: true });
+});
+
+// Add this after your existing routes
+app.post('/api/admin/login', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    
+    // Find admin by email
+    const admin = await AdminRegister.findOne({ email });
+    
+    if (!admin) {
+      return res.status(401).json({ message: 'Invalid credentials' });
+    }
+
+    // Check password (assuming you're using bcrypt)
+    const isMatch = await bcrypt.compare(password, admin.password);
+    
+    if (!isMatch) {
+      return res.status(401).json({ message: 'Invalid credentials' });
+    }
+
+    // Send admin data (exclude password)
+    res.json({
+      success: true,
+      admin: {
+        id: admin._id,
+        email: admin.email,
+        name: admin.name
+      }
+    });
+  } catch (error) {
+    console.error('Admin login error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
 });
 
 app.listen(5000, () => console.log('Server running on port 5000'));
