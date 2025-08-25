@@ -1,3 +1,18 @@
+/* Professional Homepage Styling */
+
+:root {
+  --primary-color: #1976d2;
+  --secondary-color: #42a5f5;
+  --success-color: #3ca55c;
+  --background-dark: #181f2a;
+  --background-light: #232b3e;
+  --text-light: #e3f2fd;
+  --text-accent: #b2f2bb;
+  --border-color: #22304a;
+  --shadow-color: rgba(25, 118, 210, 0.13);
+  --transition-speed: 0.3s;
+}
+
 /* --- Modern, Professional, and Visually Appealing Homepage --- */
 
 /* --- Animated Bubbles: Subtle, but not distracting --- */
@@ -13,9 +28,12 @@
 
 .homepage-bg-animated {
   position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background: #ffffff;
   overflow: hidden;
 }
 
@@ -60,7 +78,7 @@
 /* --- Main page background --- */
 body,
 #root {
-  background: linear-gradient(120deg, #181f2a 0%, #232b3e 100%);
+  background: linear-gradient(120deg, #ffffff 0%, #ffffff 100%);
   min-height: 100vh;
   font-family: 'Segoe UI', 'Poppins', Arial, sans-serif;
 }
@@ -84,9 +102,9 @@ body,
 /* --- Slideshow section --- */
 .homepage-slideshow {
   width: 100%;
-  max-width: 700px;
+  max-width: 950px;
   min-width: 340px;
-  height: 340px;
+  height: 400px;
   flex: 2 1 340px;
   position: relative;
   overflow: hidden;
@@ -103,7 +121,7 @@ body,
 
 .homepage-slideshow:hover {
   box-shadow: 0 12px 40px rgba(25, 118, 210, 0.22);
-  border-color: #1976d2;
+  border-color: #4b8c3b;
 }
 
 .homepage-banner {
@@ -127,7 +145,7 @@ body,
   left: 0;
   right: 0;
   color: #fff;
-  background: linear-gradient(0deg, #1976d2 80%, transparent 100%);
+  background: linear-gradient(0deg, #4b8c3b 80%, transparent 100%);
   padding: 1rem 1.5rem 1.5rem 1.5rem;
   border-radius: 0 0 20px 20px;
   font-size: 1.2rem;
@@ -241,102 +259,178 @@ body,
 
 /* --- Welcome section --- */
 .homepage-welcome-section {
-  width: 100%;
-  text-align: center;
-  margin: 2.5rem auto 0 auto;
-  color: #e3f2fd;
-  background: rgba(35, 43, 62, 0.98);
-  border-radius: 20px;
-  box-shadow: 0 4px 24px rgba(25, 118, 210, 0.13);
-  padding: 2.5rem 1.5rem 2rem 1.5rem;
-  max-width: 900px;
-  border: 1.5px solid #22304a;
-  transition: box-shadow 0.3s, border 0.3s;
+  background: #f8f9fa;
+  border-radius: 15px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  color: #333;
 }
 
-.homepage-welcome-section:hover {
-  box-shadow: 0 8px 32px rgba(25, 118, 210, 0.22);
-  border-color: #1976d2;
-}
-
-.homepage-welcome-section h1 {
-  color: #42a5f5;
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-  letter-spacing: 1px;
-  font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
-  font-weight: 700;
-  text-shadow: 0 2px 8px rgba(25, 118, 210, 0.10);
-}
-
-.homepage-welcome-section p {
-  color: #b2f2bb;
-  font-size: 1.25rem;
-  margin-bottom: 1.5rem;
-  line-height: 1.7;
-  text-shadow: 0 1px 4px rgba(25, 118, 210, 0.08);
-}
-
-/* --- Welcome Header --- */
 .welcome-header {
   display: flex;
   align-items: center;
   gap: 2rem;
-  padding: 1rem;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  backdrop-filter: blur(5px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 
 .welcome-logo {
-  width: 120px;
-  height: 120px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   object-fit: cover;
-  border: 4px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease;
 }
 
-.welcome-logo:hover {
-  transform: scale(1.05);
+/* Stats Grid */
+.homepage-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin: 1rem 0;
+  padding: 0;
+  max-width: 100%;
 }
 
-.welcome-text {
-  flex: 1;
+.homepage-totaljobs-container {
+  background: #ffffff;
+  border-radius: 6px;
+  padding: 0.50rem;
+  height: 70px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 80px;
 }
 
-.welcome-text h1 {
-  margin-bottom: 0.5rem;
-  color: #fff;
-  font-size: 2.2rem;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+/* Ensure proper spacing in content row */
+.homepage-content-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr;  /* 2/3 for slideshow, 1/3 for jobs */
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  width: 100%;
 }
 
-.welcome-text p {
-  color: rgba(255, 255, 255, 0.9);
-  font-size: 1.1rem;
+/* Latest Jobs Container */
+.latest-jobs-container {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  height: 400px;
+  overflow-y: auto;
+  border: 1px solid #e0e0e0;
+  width: 100%;
 }
 
+.latest-jobs-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.latest-jobs-header h2 {
+  color: #333;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.latest-jobs-count {
+  background: #e3f2fd;
+  color: #1976d2;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.job-item {
+  padding: 1rem;
+  border-bottom: 1px solid #f0f0f0;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.job-item:last-child {
+  border-bottom: none;
+}
+
+.job-item:hover {
+  background: #f8f9fa;
+  transform: translateX(5px);
+}
+
+.job-item-title {
+  color: #1976d2;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.job-item-company {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+}
+
+.job-item-location {
+  color: #888;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
+  .homepage-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .homepage-content-row {
+    grid-template-columns: 1fr;
+  }
+  
   .welcome-header {
     flex-direction: column;
     text-align: center;
-    gap: 1rem;
   }
-
-  .welcome-logo {
-    width: 100px;
-    height: 100px;
-  }
-
-  .welcome-text h1 {
-    font-size: 1.8rem;
+  
+  .homepage-slideshow {
+    height: 300px;
   }
 }
 
-/* --- Responsive --- */
+@media (max-width: 480px) {
+  .homepage-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+
+  .homepage-totaljobs-container {
+    height: 70px;
+    padding: 0.5rem;
+  }
+
+  .homepage-totaljobs-container h2 {
+    font-size: 0.75rem;
+  }
+
+  .total-jobs-count {
+    font-size: 1.1rem;
+  }
+}
+
 @media (max-width: 1100px) {
   .homepage-container {
     flex-direction: column;
@@ -356,73 +450,188 @@ body,
   }
 }
 
+@media (max-width: 1024px) {
+  .homepage-main-content {
+    margin-left: 220px;
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .homepage-main-content {
+    margin-left: 0;
+    padding: 1rem;
+  }
+
+  .homepage-content-row {
+    grid-template-columns: 1fr;
+  }
+
+  .homepage-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .homepage-main-content {
+    padding: 0.75rem;
+  }
+
+  .homepage-welcome-section {
+    padding: 1rem;
+  }
+}
+
 /* --- Subtle Scrollbar Styling for Modern Look --- */
 ::-webkit-scrollbar {
   width: 10px;
-  background: #232b3e;
+  background: #4b8c3b;
 }
 ::-webkit-scrollbar-thumb {
-  background: #1976d2;
+  background: #4b8c3b;
   border-radius: 8px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #42a5f5;
+  background: #4b8c3b;
 }
 
-/* Add this to shift the main content for the sidebar */
+/* Remove dark background */
+.homepage-bg-animated {
+  display: none;
+}
+
 .homepage-main-content {
-  /* margin-left: 230px; */ /* Remove this line */
-  padding: 2.5rem 1rem 1rem 1rem;
+  max-width: 1500px;
+  margin-left: 300px; /* Account for sidebar width */
+  margin-right: auto;
+  padding: 1.5rem;
+  background: #ffffff;
   min-height: 100vh;
-  transition: margin-left 0.3s;
-  max-width: 1400px;
-  margin: 0 auto; /* Center the content */
 }
 
-@media (max-width: 700px) {
-  .homepage-main-content {
-    margin: 0 auto; /* Center on mobile too */
-    padding: 1rem 0.5rem;
-  }
+.homepage-welcome-section {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
 }
 
-/* Arrange slideshow and jobs side by side on desktop, stacked on mobile */
 .homepage-content-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+.homepage-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.homepage-totaljobs-container {
+  background: #ffffff;
+  border-radius: 6px;
+  padding: 0.75rem;
+  height: 70px;
   display: flex;
-  flex-wrap: wrap;
-  gap: 2.5rem;
+  flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
-  margin-top: 2rem;
-}
-
-@media (max-width: 1100px) {
-  .homepage-content-row {
-    flex-direction: column;
-    gap: 1.5rem;
-    margin-top: 1.2rem;
-  }
-}
-
-/* Style for slide dots */
-.homepage-slide-dots {
-  position: absolute;
-  bottom: 12px;
-  left: 50%;
-  transform: translateX(-50%);
+  align-items: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+  min-width: 0;
   display: flex;
-  gap: 8px;
+  flex-direction: column;
+  justify-content: center;
+  height: 80px;
 }
-.homepage-slide-dots span {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: #fff;
-  border: 2px solid #246624;
+
+/* Latest Jobs Container */
+.latest-jobs-container {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  height: 400px;
+  overflow-y: auto;
+  border: 1px solid #e0e0e0;
+  width: 100%;
+}
+
+.latest-jobs-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.latest-jobs-header h2 {
+  color: #333;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.latest-jobs-count {
+  background: #e3f2fd;
+  color: #1976d2;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.job-item {
+  padding: 1rem;
+  border-bottom: 1px solid #f0f0f0;
+  transition: all 0.2s ease;
   cursor: pointer;
-  display: inline-block;
-  transition: background 0.3s;
 }
-.homepage-slide-dots span.active {
-  background: #246624;
+
+.job-item:last-child {
+  border-bottom: none;
+}
+
+.job-item:hover {
+  background: #f8f9fa;
+  transform: translateX(5px);
+}
+
+.job-item-title {
+  color: #1976d2;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.job-item-company {
+  color: #666;
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+}
+
+.job-item-location {
+  color: #888;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* Additional spacing fixes */
+h1, h2 {
+  margin-bottom: 0.75rem;
+}
+
+p {
+  margin-bottom: 0.5rem;
 }

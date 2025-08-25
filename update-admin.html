@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Admin Password</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #2D6A4F;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #2D6A4F;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #40916C;
+        }
+        .result {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Update Admin Password</h2>
+        <form id="updateForm">
+            <div class="form-group">
+                <label>Email:</label>
+                <input type="email" id="email" value="dave@gmail.com" required>
+            </div>
+            <div class="form-group">
+                <label>New Password:</label>
+                <input type="password" id="newPassword" placeholder="Enter new password" required>
+            </div>
+            <button type="submit">Update Password</button>
+        </form>
+
+        <div id="result"></div>
+
+        <div style="margin-top: 20px; padding: 15px; background: #e9ecef; border-radius: 5px;">
+            <h3>Or Create New Admin:</h3>
+            <form id="createForm">
+                <div class="form-group">
+                    <label>Name:</label>
+                    <input type="text" id="createName" placeholder="Admin Name" required>
+                </div>
+                <div class="form-group">
+                    <label>Email:</label>
+                    <input type="email" id="createEmail" placeholder="admin@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Password:</label>
+                    <input type="password" id="createPassword" placeholder="Enter password" required>
+                </div>
+                <button type="submit">Create New Admin</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Update existing admin password
+        document.getElementById('updateForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const newPassword = document.getElementById('newPassword').value;
+            
+            try {
+                const response = await fetch('http://localhost:5000/api/update-admin-password', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email, newPassword }),
+                });
+                
+                const data = await response.json();
+                const resultDiv = document.getElementById('result');
+                
+                if (data.success) {
+                    resultDiv.innerHTML = `<div class="result success">${data.message}</div>`;
+                    document.getElementById('updateForm').reset();
+                } else {
+                    resultDiv.innerHTML = `<div class="result error">${data.message}</div>`;
+                }
+            } catch (error) {
+                document.getElementById('result').innerHTML = 
+                    `<div class="result error">Error: ${error.message}</div>`;
+            }
+        });
+
+        // Create new admin
+        document.getElementById('createForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('createName').value;
+            const email = document.getElementById('createEmail').value;
+            const password = document.getElementById('createPassword').value;
+            
+            try {
+                const response = await fetch('http://localhost:5000/api/create-admin', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ name, email, password }),
+                });
+                
+                const data = await response.json();
+                const resultDiv = document.getElementById('result');
+                
+                if (data.success) {
+                    resultDiv.innerHTML = `<div class="result success">${data.message}</div>`;
+                    document.getElementById('createForm').reset();
+                } else {
+                    resultDiv.innerHTML = `<div class="result error">${data.message}</div>`;
+                }
+            } catch (error) {
+                document.getElementById('result').innerHTML = 
+                    `<div class="result error">Error: ${error.message}</div>`;
+            }
+        });
+    </script>
+</body>
+</html>

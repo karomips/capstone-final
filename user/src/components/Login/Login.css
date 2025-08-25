@@ -1,7 +1,94 @@
-/* Add these styles at the top */
+/* Reset styles */
 html, body {
-  overflow: hidden;
   height: 100%;
+}
+
+/* Container styles */
+.login-container {
+  min-height: 100vh;
+  max-height: 100vh; /* Prevent overflow */
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Move to left side */
+  padding-left: 8rem; /* Add left padding */
+  background: #ffffff;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  padding-right: 2rem;
+  position: relative;
+  overflow: hidden; /* Add this to contain the half circle */
+}
+
+/* Add background circle - bigger and lighter */
+.login-background-circle {
+  position: absolute;
+  right: -450px; /* Positioned behind main circle */
+  top: -450px; /* Positioned behind main circle */
+  width: 900px; /* Bigger than main circle */
+  height: 900px; /* Bigger than main circle */
+  background: linear-gradient(135deg, rgba(82, 183, 136, 0.3) 0%, rgba(64, 145, 108, 0.2) 100%); /* Lighter color */
+  border-radius: 50%;
+  box-shadow: 0 15px 60px rgba(82, 183, 136, 0.15);
+  z-index: 0; /* Behind main circle */
+  animation: backgroundCircleFloat 8s ease-in-out infinite alternate;
+}
+
+/* Move circle to upper right and make it bigger */
+.login-logo-circle {
+  position: absolute;
+  right: -400px; /* Move to upper right */
+  top: -400px; /* Keep in upper position */
+  width: 800px; /* Made bigger */
+  height: 800px; /* Made bigger */
+  background: linear-gradient(135deg, #2D6A4F 0%, #40916C 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start; /* Align logo to left side of circle */
+  padding: 60px; /* Adjusted padding */
+  box-shadow: 0 20px 80px rgba(45, 106, 79, 0.3), 0 40px 120px rgba(45, 106, 79, 0.15); /* Enhanced shadow */
+  z-index: 1; /* Added z-index */
+}
+
+.login-logo-circle img {
+  width: 600px; /* Much bigger logo size */
+  height: 600px; /* Much bigger logo size */
+  object-fit: contain;
+  transform: translate(10%, -10%); /* Moved the logo down a bit */
+  animation: logoSpin 25s linear infinite; /* Added spinning animation */
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.2)); /* Added shadow to logo */
+}
+
+/* Add floating animation for background circle */
+@keyframes backgroundCircleFloat {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  100% {
+    transform: translate(-15px, 15px) rotate(-3deg);
+  }
+}
+
+/* Add spinning animation for logo */
+@keyframes logoSpin {
+  from {
+    transform: translate(20%, -10%) rotate(0deg);
+  }
+  to {
+    transform: translate(20%, -10%) rotate(360deg);
+  }
+}
+
+/* Update logoFadeIn to work with spinning */
+@keyframes logoFadeIn {
+  from {
+    opacity: 0;
+    transform: translate(20%, -10%) rotate(0deg) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translate(20%, -10%) rotate(0deg) scale(1);
+  }
 }
 
 /* Enhanced animated background */
@@ -11,7 +98,7 @@ html, body {
   z-index: 0;
   pointer-events: none;
   overflow: hidden;
-  background: linear-gradient(135deg, #1a2236 0%, #2a3a5a 100%);
+  background: linear-gradient(135deg, #c9bbbb 0%, #ffffff 100%);
 }
 
 .login-bg-bubble {
@@ -62,77 +149,55 @@ html, body {
   }
 }
 
-/* Enhanced container */
-.login-container {
-  min-height: 100vh;
-  height: 100vh; /* Force exact viewport height */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(26, 34, 54, 0.7);
-  backdrop-filter: blur(10px);
-  position: relative;
-  z-index: 1;
-  padding: 2rem;
-  overflow: hidden; /* Prevent scrolling */
-}
-
 /* Enhanced form */
 .login-form {
-  background: rgba(255, 255, 255, 0.98);
+  background: linear-gradient(135deg, #2D6A4F 0%, #40916C 100%);
   padding: 2.8rem 2.2rem;
-  border-radius: 24px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(45, 106, 79, 0.15);
   min-width: 380px;
   max-width: 400px;
   width: 100%;
-  max-height: 90vh; /* Prevent overflow */
-  overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: center;
   animation: fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   z-index: 2;
+  margin-left: 0; /* Removed margin since circle is on the right */
 }
 
 @keyframes fadeIn {
   from { 
     opacity: 0; 
-    transform: translateY(30px) scale(0.95);
+    transform: translateY(20px);
   }
   to { 
     opacity: 1; 
-    transform: translateY(0) scale(1);
+    transform: translateY(0);
   }
 }
 
 .login-form h2 {
-  color: #1976d2;
+  color: #ffffff;
   text-align: center;
   margin-bottom: 2.2rem;
   font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
   font-size: 2rem;
   font-weight: 700;
   letter-spacing: -0.5px;
-  background: linear-gradient(120deg, #1976d2, #42a5f5);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
 }
 
 /* Enhanced form fields */
 .login-field {
   margin-bottom: 1.8rem;
-  margin-right: 2.5rem; /* Remove right margin */
 }
 
 .login-field label {
   display: block;
   margin-bottom: 0.6rem;
-  color: #1976d2;
-  font-weight: 600;
+  color: #ffffff;
+  font-weight: 500;
   font-size: 1.05rem;
   letter-spacing: 0.3px;
 }
@@ -140,43 +205,42 @@ html, body {
 .login-field input {
   width: 100%;
   padding: 0.9rem 1.2rem;
-  border-radius: 12px;
-  border: 1.5px solid #b2f2bb;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   font-size: 1.05rem;
-  background: #f8fff8;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 2px 8px rgba(66, 165, 245, 0.06);
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  transition: all 0.3s ease;
 }
 
 .login-field input:focus {
-  border: 2px solid #1976d2;
   outline: none;
-  background: #e3f2fd;
-  box-shadow: 0 4px 12px rgba(25, 118, 210, 0.1);
-  transform: translateY(-1px);
+  border-color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.login-field input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
 }
 
 /* Enhanced button */
 .login-btn {
   width: 100%;
-  background: linear-gradient(135deg, #1976d2 0%, #64b5f6 100%);
-  color: white;
+  background: #ffffff;
+  color: #2D6A4F;
   border: none;
   padding: 1rem 0;
-  border-radius: 12px;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 1.15rem;
   font-weight: 600;
-  box-shadow: 0 4px 12px rgba(25, 118, 210, 0.15);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s ease;
   margin-top: 1rem;
-  letter-spacing: 0.5px;
 }
 
 .login-btn:hover {
-  background: linear-gradient(135deg, #1565c0 0%, #42a5f5 100%);
+  background: rgba(255, 255, 255, 0.9);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(25, 118, 210, 0.25);
 }
 
 .login-btn:active {
@@ -187,12 +251,12 @@ html, body {
 .login-footer {
   margin-top: 2rem;
   text-align: center;
-  color: #555;
+  color: rgba(255, 255, 255, 0.8);
   font-size: 1.05rem;
 }
 
 .login-footer a {
-  color: #1976d2;
+  color: #ffffff;
   text-decoration: none;
   font-weight: 600;
   margin-left: 0.4rem;
@@ -201,30 +265,19 @@ html, body {
 }
 
 .login-footer a:hover {
-  color: #3ca55c;
-}
-
-.login-footer a::after {
-  content: '';
-  position: absolute;
-  width: 0;
-  height: 2px;
-  bottom: -2px;
-  left: 0;
-  background: #3ca55c;
-  transition: width 0.3s ease;
-}
-
-.login-footer a:hover::after {
-  width: 100%;
+  opacity: 0.9;
 }
 
 /* Enhanced responsive design */
 @media (max-width: 600px) {
+  .login-container {
+    justify-content: center; /* Center on mobile */
+    padding-left: 2rem; /* Reduce left padding on mobile */
+  }
+
   .login-form {
     min-width: unset;
     max-width: 94vw;
-    max-height: 85vh;
     padding: 2rem 1.5rem;
     margin: 1rem;
   }
@@ -241,5 +294,67 @@ html, body {
   .login-btn {
     padding: 0.9rem 0;
     font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 1200px) {
+  .login-container {
+    padding-left: 6rem; /* Reduce left padding on medium screens */
+  }
+
+  .login-background-circle {
+    width: 700px;
+    height: 700px;
+    right: -350px;
+    top: -350px;
+  }
+
+  .login-logo-circle {
+    width: 600px;
+    height: 600px;
+    right: -300px;
+    top: -300px;
+    box-shadow: 0 15px 60px rgba(45, 106, 79, 0.25), 0 30px 90px rgba(45, 106, 79, 0.12);
+  }
+
+  .login-logo-circle img {
+    width: 350px; /* Increased for better proportion */
+    height: 350px;
+  }
+}
+
+@media (max-width: 992px) {
+  .login-container {
+    padding-left: 4rem; /* Further reduce left padding on smaller screens */
+  }
+
+  .login-background-circle {
+    width: 600px;
+    height: 600px;
+    right: -300px;
+    top: -300px;
+  }
+
+  .login-logo-circle {
+    width: 500px;
+    height: 500px;
+    right: -250px;
+    top: -250px;
+    box-shadow: 0 12px 50px rgba(45, 106, 79, 0.2), 0 25px 75px rgba(45, 106, 79, 0.1);
+  }
+
+  .login-logo-circle img {
+    width: 280px; /* Increased for better proportion */
+    height: 280px;
+  }
+}
+
+@media (max-width: 768px) {
+  .login-background-circle {
+    display: none; /* Hide background circle on mobile */
+  }
+
+  .login-logo-circle {
+    display: none; /* Hide circle on mobile */
   }
 }

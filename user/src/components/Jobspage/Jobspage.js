@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Jobspage.css';  // Make sure this line exists
+import './Jobspage.css';
 
 function Jobspage() {
   const [search, setSearch] = useState('');
   const [jobs, setJobs] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(true); // Modal starts open since this is the jobs page
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,55 +25,92 @@ function Jobspage() {
     navigate(`/apply/${job._id}`, { state: { job } });
   };
 
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    navigate('/home'); // Navigate back to homepage when closing
+  };
+
+  const handleBackdropClick = (e) => {
+    if (e.target === e.currentTarget) {
+      handleCloseModal();
+    }
+  };
+
+  if (!isModalOpen) {
+    return null;
+  }
+
   return (
-    <div style={{ maxWidth: '1100px', margin: '2rem auto', padding: '2rem', background: '#fff', borderRadius: '16px', boxShadow: '0 4px 24px rgba(36,102,36,0.08)' }}>
-      <div className="jobspage-bg-animated">
-        <div className="jobspage-bg-bubble b1"></div>
-        <div className="jobspage-bg-bubble b2"></div>
-        <div className="jobspage-bg-bubble b3"></div>
-        <div className="jobspage-bg-bubble b4"></div>
-      </div>
-      <h1 style={{ color: '#246624', marginBottom: '1.5rem' }}>Job Listings</h1>
-      <input
-        type="text"
-        placeholder="Search jobs, companies, or locations..."
-        value={search}
-        onChange={e => setSearch(e.target.value)}
-        style={{
-          width: '100%',
-          padding: '0.8rem 1rem',
-          borderRadius: '8px',
-          border: '1px solid #b2f2bb',
-          marginBottom: '2rem',
-          fontSize: '1rem',
-        }}
-      />
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2rem' }}>
-        {filteredJobs.length > 0 ? (
-          filteredJobs.map(job => (
-            <div key={job.id} style={{
-              background: 'linear-gradient(120deg, #f9f9f9 80%, #e0ffe6 100%)',
-              padding: '2rem 1.5rem',
-              borderRadius: '14px',
-              boxShadow: '0 4px 16px rgba(60, 165, 92, 0.08)',
-              border: '1px solid #e0f2e9',
-              position: 'relative'
-            }}>
-              <h2 style={{ color: '#246624', marginTop: 0 }}>{job.title}</h2>
-              <p><strong>Company:</strong> {job.company}</p>
-              <p><strong>Location:</strong> {job.location}</p>
-              <p style={{ marginBottom: '1rem' }}>{job.description}</p>
-              <button
-                className="apply-button"
-                onClick={() => handleApply(job)}
-              >
-                Apply Now
-              </button>
-            </div>
-          ))
-        ) : (
-          <p style={{ gridColumn: '1/-1', color: '#888' }}>No jobs found.</p>
-        )}
+    <div className="jobs-modal-backdrop" onClick={handleBackdropClick}>
+      <div className="jobs-modal-container">
+        {/* Modal Header */}
+        <div className="jobs-modal-header">
+          <h1 className="jobs-modal-title">Job Listings</h1>
+          <button className="jobs-modal-close" onClick={handleCloseModal}>
+            <span>&times;</span>
+          </button>
+        </div>
+
+        {/* Search Bar */}
+        <div className="jobs-modal-search-container">
+          <input
+            type="text"
+            placeholder="Search jobs, companies, or locations..."
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            className="jobs-modal-search"
+          />
+        </div>
+
+        {/* Job Listings */}
+        <div className="jobs-modal-content">
+          <div className="jobs-modal-grid">
+            {filteredJobs.length > 0 ? (
+              filteredJobs.map(job => (
+                <div key={job.id} className="jobs-modal-card">
+                  <div className="jobs-card-header">
+                    <h3 className="jobs-card-title">{job.title}</h3>
+                    <div className="jobs-card-badge">{job.category || 'General'}</div>
+                  </div>
+                  
+                  <div className="jobs-card-info">
+                    <p className="jobs-card-company">
+                      <span className="jobs-card-icon">🏢</span>
+                      {job.company}
+                    </p>
+                    <p className="jobs-card-location">
+                      <span className="jobs-card-icon">📍</span>
+                      {job.location}
+                    </p>
+                  </div>
+                  
+                  <p className="jobs-card-description">{job.description}</p>
+                  
+                  <button
+                    className="jobs-card-apply-btn"
+                    onClick={() => handleApply(job)}
+                  >
+                    Apply Now
+                  </button>
+                </div>
+              ))
+            ) : (
+              <div className="jobs-modal-no-results">
+                <div className="no-results-icon">🔍</div>
+                <h3>No jobs found</h3>
+                <p>Try adjusting your search terms or check back later for new opportunities.</p>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Background Animation */}
+        <div className="jobs-modal-bg-animated">
+          <div className="jobs-modal-bg-bubble b1"></div>
+          <div className="jobs-modal-bg-bubble b2"></div>
+          <div className="jobs-modal-bg-bubble b3"></div>
+          <div className="jobs-modal-bg-bubble b4"></div>
+        </div>
       </div>
     </div>
   );

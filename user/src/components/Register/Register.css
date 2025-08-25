@@ -121,27 +121,37 @@ html, body {
 }
 
 .register-password-wrapper {
+  position: relative;
   display: flex;
   align-items: center;
-  position: relative;
+}
+
+.register-password-wrapper input {
+  padding-right: 60px;
 }
 
 .register-showpass-btn {
-  margin-left: 0.5rem;
+  position: absolute;
+  right: 12px;
   background: none;
   border: none;
   color: #1976d2;
-  font-weight: 600;
   cursor: pointer;
-  font-size: 0.95rem;
-  padding: 0.2rem 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 4px 8px;
   border-radius: 4px;
-  transition: background 0.2s, color 0.2s;
+  transition: all 0.2s ease;
 }
 
-.register-showpass-btn:hover {
+.register-showpass-btn:hover:not(:disabled) {
   background: #e3f2fd;
-  color: #3ca55c;
+  color: #1565c0;
+}
+
+.register-showpass-btn:disabled {
+  color: #ccc;
+  cursor: not-allowed;
 }
 
 .register-btn {
@@ -164,6 +174,47 @@ html, body {
   box-shadow: 0 6px 20px rgba(25, 118, 210, 0.25);
 }
 
+.register-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.register-btn.secondary {
+  background: linear-gradient(135deg, #3ca55c 0%, #66bb6a 100%);
+  margin-top: 0.5rem;
+}
+
+.register-btn.secondary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #2e7d32 0%, #4caf50 100%);
+}
+
+.register-divider {
+  text-align: center;
+  margin: 1.5rem 0;
+  position: relative;
+}
+
+.register-divider::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #ddd;
+  z-index: 1;
+}
+
+.register-divider span {
+  background: white;
+  padding: 0 1rem;
+  color: #666;
+  font-weight: 500;
+  position: relative;
+  z-index: 2;
+}
+
 .register-footer {
   margin-top: 2rem;
   text-align: center;
@@ -181,6 +232,34 @@ html, body {
 
 .register-footer a:hover {
   color: #1565c0;
+}
+
+.form-container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: var(--spacing-xl);
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+}
+
+.form-group {
+  margin-bottom: var(--spacing-lg);
+}
+
+.form-group label {
+  display: block;
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-xs);
+  font-weight: 500;
+}
+
+.form-actions {
+  margin-top: var(--spacing-xl);
+  display: flex;
+  gap: var(--spacing-md);
 }
 
 /* Responsive */

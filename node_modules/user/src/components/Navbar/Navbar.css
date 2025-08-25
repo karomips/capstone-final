@@ -1,192 +1,211 @@
-/* Sidebar base with enhanced styling */
-.navbar {
-  background: linear-gradient(135deg, #1a2236 0%, #2a3a5a 100%);
-  padding: 1rem 2rem;
+:root {
+  --nav-primary: #2b5329;
+  --nav-secondary: #4b8c3b;
+  --nav-accent: #8bc34a;
+  --nav-highlight: #2196f3;
+  --nav-text: #ffffff;
+  --nav-text-muted: #e0e0e0;
+  --nav-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); /* Intensified shadow */
+}
+
+/* Base sidenav container */
+.sidenav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 240px;
+  height: 100vh;
+  background: linear-gradient(180deg, var(--nav-primary) 0%, var(--nav-secondary) 100%);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  height: 100vh;
+  padding: 2rem 1rem;
+  box-shadow: var(--nav-shadow);
+  z-index: 1000;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Branding */
+.sidenav-brand {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.brand-container {
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.sidenav-logo {
+  height: 100px;  /* Increased from 60px */
+  width: 100px;   /* Increased from 60px */
+  border-radius: 50%;
+  border: 2px solid var(--nav-accent);
+  box-shadow: 0 4px 15px rgba(139, 195, 74, 0.4);
+  transition: transform 0.3s ease;
+  margin-bottom: 1rem;
+}
+
+.brand-text {
+  color: var(--nav-text);
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  max-width: 200px;
+  line-height: 1.2;
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Navigation links */
+.sidenav-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex: 1;
+  flex-grow: 1;
+  margin-bottom: 1rem;
+}
+
+.sidenav-links li {
+  margin-bottom: 1rem;
+}
+
+.sidenav-links a {
+  display: block;
+  color: var(--nav-text-muted);
+  text-decoration: none;
+  font-weight: 400;
+  font-size: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  letter-spacing: 0.3px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.sidenav-links a:hover,
+.sidenav-links a.active {
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--nav-text);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Sign out button */
+.sidenav-actions {
+  padding-top: 1rem;
+  text-align: center;
+  margin-top: auto;
+  margin-bottom: 1rem;
+}
+
+.signout-btn {
+  width: 100%;
+  background: #ff3d00; /* Solid orange-red color for visibility */
+  color: var(--nav-text);
+  border: none;
+  padding: 1rem 1.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(255, 61, 0, 0.3);
+}
+
+.signout-btn:hover {
+  background: #ff5722;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(255, 61, 0, 0.4);
+}
+
+.signout-btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 4px rgba(255, 61, 0, 0.4);
+}
+
+/* Navbar styles */
+.navbar {
+  background: var(--background-color);
+  box-shadow: var(--shadow-sm);
+  padding: var(--spacing-md) var(--spacing-xl);
   position: sticky;
   top: 0;
   z-index: 1000;
 }
 
-/* Enhanced brand container */
-.navbar-brand {
+.nav-brand {
   display: flex;
   align-items: center;
+  gap: var(--spacing-md);
 }
 
-/* Logo styling */
-.navbar-logo {
+.nav-logo {
+  width: 40px;
   height: 40px;
-  width: auto;
   border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  transition: transform 0.3s ease;
 }
 
-.navbar-logo:hover {
-  transform: scale(1.1);
-}
-
-/* Enhanced navigation links */
-.navbar-links {
+.nav-links {
   display: flex;
-  gap: 2rem;
-  list-style: none;
-  margin: 0;
-  padding: 0;
+  gap: var(--spacing-lg);
 }
 
-.navbar-links a {
-  color: #fff;
+.nav-link {
+  /* Your existing nav-link styles */
   text-decoration: none;
-  font-weight: 500;
-  font-size: 1rem;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
+  padding: 0.75rem 1rem;
+  display: block;
   transition: all 0.3s ease;
 }
 
-.navbar-links a:hover,
-.navbar-links a.active {
-  background: rgba(255, 255, 255, 0.1);
-  transform: translateY(-2px);
-}
-
-/* Navbar actions */
-.navbar-actions {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-}
-
-/* Profile button styling */
-.profile-btn {
-  background: linear-gradient(135deg, #3ca55c 0%, #b5ac49 100%);
-  color: white;
-  border: none;
-  padding: 0.6rem 1.2rem;
-  border-radius: 4px;
+.nav-link.active {
+  /* Your active link styles */
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
   font-weight: 500;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.profile-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+.nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.05);
 }
 
-/* Enhanced sign out button */
-.signout-btn {
-  background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
-  color: white;
-  border: none;
-  padding: 0.6rem 1.2rem;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-.signout-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-}
-
-/* Confirmation overlay styling */
-.confirmation-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(26, 34, 54, 0.8);
-  backdrop-filter: blur(5px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  animation: fadeIn 0.3s ease;
-}
-
-/* Confirmation modal styling */
-.confirmation-modal {
-  background: linear-gradient(135deg, #1a2236 0%, #2a3a5a 100%);
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  color: white;
-  text-align: center;
-  max-width: 400px;
-  width: 90%;
-  animation: slideUp 0.3s ease;
-}
-
-/* Confirmation buttons styling */
-.confirmation-buttons {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  margin-top: 1.5rem;
-}
-
-.confirmation-buttons button {
-  padding: 0.8rem 2rem;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.confirmation-buttons button:first-child {
-  background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
-  color: white;
-}
-
-.confirmation-buttons button:last-child {
-  background: linear-gradient(135deg, #3ca55c 0%, #b5ac49 100%);
-  color: white;
-}
-
-.confirmation-buttons button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-}
-
-/* Keyframes for animations */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes slideUp {
-  from { 
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to { 
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Improved responsive design */
+/* Responsive layout */
 @media (max-width: 768px) {
-  .navbar {
+  .sidenav {
+    width: 200px;
     padding: 1rem;
   }
 
-  .navbar-links {
-    gap: 1rem;
+  .sidenav-logo {
+    height: 80px;  /* Slightly smaller on mobile */
+    width: 80px;
   }
 
-  .navbar-links a {
-    padding: 0.4rem 0.8rem;
+  .sidenav-links a {
+    font-size: 0.9rem;
+    padding: 0.5rem 0.8rem;
+  }
+
+  .brand-text {
     font-size: 0.9rem;
   }
+}
+
+/* Content shift if needed */
+.main-content {
+  margin-left: 240px; /* Match the sidenav width */
+  padding: 2rem;
 }

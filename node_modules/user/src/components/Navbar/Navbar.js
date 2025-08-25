@@ -1,37 +1,43 @@
+// Navbar.js
 import { NavLink } from 'react-router-dom';
 import './Navbar.css';
 
 function Navbar() {
   const handleSignOut = () => {
-    // Remove login info from localStorage on logout
+    // Clear all user data and role information
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('user');
+    localStorage.removeItem('userRole');
     alert('Signed out!');
     window.location.href = '/login';
   };
 
   return (
-    <nav className="navbar">
-      <div className="navbar-brand">
-        <img 
-          src="/barangay_logo.jpg" 
-          alt="Barangay Mangan-vaca Logo"
-          className="navbar-logo"
-        />
+    <aside className="sidenav">
+      <div className="sidenav-brand">
+        <div className="brand-container">
+          <img 
+            src="/barangay_logo.png" 
+            alt="Barangay Mangan-vaca Logo"
+            className="sidenav-logo"
+          />
+          <h1 className="brand-text">Mangan-vaca Job Portal</h1>
+        </div>
       </div>
-      <ul className="navbar-links">
-        <li><NavLink to="/home">Home</NavLink></li>
-        <li><NavLink to="/jobs">Jobs</NavLink></li>
-        <li><NavLink to="/post-job">Post a Job</NavLink></li>
-        <li><NavLink to="/contact">Contact</NavLink></li>
-        <li><NavLink to="/messages">Messages</NavLink></li>
+
+      <ul className="sidenav-links">
+        <li><NavLink to="/home" activeClassName="active">Home</NavLink></li>
+        <li><NavLink to="/post-job" activeClassName="active">Post a Job</NavLink></li>
+        <li><NavLink to="/contact" activeClassName="active">Contact</NavLink></li>
+        <li><NavLink to="/messages" activeClassName="active">Messages</NavLink></li>
       </ul>
-      <div className="navbar-actions">
+
+      <div className="sidenav-actions">
         <button className="signout-btn" onClick={handleSignOut}>
           Sign Out
         </button>
       </div>
-    </nav>
+    </aside>
   );
 }
 

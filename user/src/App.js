@@ -10,6 +10,7 @@ import Upload from './components/Upload/Upload';
 import Register from './components/Register/Register';
 import Jobspage from './components/Jobspage/Jobspage';
 import ProtectedRoute from './components/ProtectedRoute';
+import RoleProtectedRoute from './components/RoleProtectedRoute';
 import Landing from './components/Landing/Landing';
 import Profile from './components/Profile/Profile';
 import Messages from './components/Messages/Messages';
@@ -34,34 +35,58 @@ function AppLayout() {
         <Route
           path="/home"
           element={
-            <ProtectedRoute>
-              <Homepage />
-            </ProtectedRoute>
+            <RoleProtectedRoute requiredRole="user">
+              <ProtectedRoute>
+                <Homepage />
+              </ProtectedRoute>
+            </RoleProtectedRoute>
           }
         />
         <Route
           path="/jobs"
           element={
-            <ProtectedRoute>
-              <Jobspage />
-            </ProtectedRoute>
+            <RoleProtectedRoute requiredRole="user">
+              <ProtectedRoute>
+                <Jobspage />
+              </ProtectedRoute>
+            </RoleProtectedRoute>
           }
         />
         <Route
           path="/post-job"
           element={
-            <ProtectedRoute>
-              <Postpage />
-            </ProtectedRoute>
+            <RoleProtectedRoute requiredRole="user">
+              <ProtectedRoute>
+                <Postpage />
+              </ProtectedRoute>
+            </RoleProtectedRoute>
           }
         />
         <Route
           path="/contact"
           element={
-            <ProtectedRoute>
-              <Contact />
-            </ProtectedRoute>
+            <RoleProtectedRoute requiredRole="user">
+              <ProtectedRoute>
+                <Contact />
+              </ProtectedRoute>
+            </RoleProtectedRoute>
           }
+        />
+        <Route 
+          path="/admin/*" 
+          element={
+            <AdminRoute>
+              {/* Your admin components */}
+            </AdminRoute>
+          } 
+        />
+        <Route 
+          path="/apply/:id" 
+          element={
+            <ProtectedRoute>
+              <Apply />
+            </ProtectedRoute>
+          } 
         />
         {/* Add other routes here */}
       </Routes>
@@ -78,3 +103,8 @@ function App() {
 }
 
 export default App;
+
+function AdminRoute({ children }) {
+  const isAdmin = localStorage.getItem('isAdmin') === 'true';
+  return isAdmin ? children : <Navigate to="/login" />;
+}

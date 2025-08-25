@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './Approve.css';
+import './Approval.css';
 
 function Approve() {
   const [uploads, setUploads] = useState([]);
@@ -11,35 +11,34 @@ function Approve() {
 
   useEffect(() => {
     // Fetch user registrations
-fetch('http://localhost:5000/api/admin/registrations')
-  .then(res => res.json())
-  .then(data => {
-    setAdminRegisters(data.success ? data.requests : []);
-  })
-  .catch(() => setActionMsg('Error fetching admin registers'))
-  .finally(() => setLoading(false));
+    fetch('http://localhost:5000/api/admin/users')
+      .then(res => res.json())
+      .then(data => {
+        setUsers(data.success ? data.users : []);
+      })
+      .catch(() => setActionMsg('Error fetching users'));
+
+    // Fetch admin registrations
+    fetch('http://localhost:5000/api/admin/registrations')
+      .then(res => res.json())
+      .then(data => {
+        setAdminRegisters(data.success ? data.requests : []);
+      })
+      .catch(() => setActionMsg('Error fetching admin registers'));
 
     // Fetch uploads
-    fetch('http://localhost:5000/api/admin/uploads')
+    fetch('http://localhost:5000/api/uploads/pending')
       .then(res => res.json())
       .then(data => {
         setUploads(data.success ? data.uploads : []);
       })
-      .catch(() => setActionMsg('Error fetching uploads'));
-
-    // Fetch admin registers
-    fetch('http://localhost:5000/api/adminregisters')
-      .then(res => res.json())
-      .then(data => {
-        setAdminRegisters(data.success ? data.adminregisters : []);
-      })
-      .catch(() => setActionMsg('Error fetching admin registers'))
+      .catch(() => setActionMsg('Error fetching uploads'))
       .finally(() => setLoading(false));
   }, []);
 
   const handleUserAction = async (userId, status) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/admin/registration/${userId}`, {
+      const response = await fetch(`http://localhost:5000/api/admin/user/${userId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status }),
@@ -59,14 +58,18 @@ fetch('http://localhost:5000/api/admin/registrations')
 
   const handleUploadAction = async (uploadId, status) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/admin/upload/${uploadId}`, {
+      const upload = uploads.find(u => u.id === uploadId);
+      const response = await fetch(`http://localhost:5000/api/upload/${uploadId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status }),
+        body: JSON.stringify({ 
+          status,
+          userId: upload?.user?.id 
+        }),
       });
       const data = await response.json();
       if (data.success) {
-        setUploads(prev => prev.filter(upload => upload._id !== uploadId));
+        setUploads(prev => prev.filter(upload => upload.id !== uploadId));
         setActionMsg(`Upload ${status === 'approved' ? 'approved' : 'rejected'}!`);
       } else {
         setActionMsg(data.message || 'Error updating upload status');
@@ -101,161 +104,233 @@ fetch('http://localhost:5000/api/admin/registrations')
     setTimeout(() => setActionMsg(''), 2000);
   };
 
+  const downloadFile = (uploadId, filename) => {
+    const link = document.createElement('a');
+    link.href = `http://localhost:5000/api/upload/download/${uploadId}`;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
-    <div className="approve-container">
-      <h2>Admin Approval Panel</h2>
-      <div style={{ marginBottom: '16px' }}>
-        <button
-          className={view === 'users' ? 'approve-btn active' : 'approve-btn'}
-          onClick={() => setView('users')}
-        >
-          User Registrations
-        </button>
-        <button
-          className={view === 'uploads' ? 'approve-btn active' : 'approve-btn'}
-          onClick={() => setView('uploads')}
-          style={{ marginLeft: '8px' }}
-        >
-          Uploads
-        </button>
-        <button
-          className={view === 'adminregisters' ? 'approve-btn active' : 'approve-btn'}
-          onClick={() => setView('adminregisters')}
-          style={{ marginLeft: '8px' }}
-        >
-          Admin Registers
-        </button>
+    <>
+      {/* Background Animation */}
+      <div className="approval-bg-animated">
+        <div className="approval-bg-bubble b1"></div>
+        <div className="approval-bg-bubble b2"></div>
+        <div className="approval-bg-bubble b3"></div>
+        <div className="approval-bg-bubble b4"></div>
       </div>
 
-      {loading && <div>Loading...</div>}
-      {actionMsg && <div className="approve-msg">{actionMsg}</div>}
+      <div className="approval-main-content">
+        {/* Welcome Section */}
+        <section className="approval-welcome-section">
+          <div className="welcome-header">
+            <img 
+              src="/barangay_logo.png" 
+              alt="Barangay Mangan-vaca Logo" 
+              className="welcome-logo"
+            />
+            <div className="welcome-text">
+              <h1>Admin Approval Panel</h1>
+              <p>Manage user registrations, uploads, and admin requests</p>
+            </div>
+          </div>
+        </section>
 
-      {!loading && view === 'users' && (
-        <>
-          {users.length === 0 ? (
-            <div>No pending users.</div>
-          ) : (
-            <table className="approve-table">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Status</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {users.map(user => (
-                  <tr key={user._id}>
-                    <td>{user.name || 'N/A'}</td>
-                    <td>{user.email || 'N/A'}</td>
-                    <td>{user.status || 'pending'}</td>
-                    <td className="approve-actions">
-                      <button
-                        onClick={() => handleUserAction(user._id, 'approved')}
-                        className="approve-btn approve"
-                      >
-                        Approve
-                      </button>
-                      <button
-                        onClick={() => handleUserAction(user._id, 'rejected')}
-                        className="approve-btn reject"
-                      >
-                        Reject
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
-        </>
-      )}
+        {/* Stats Grid */}
+        <div className="approval-stats-grid">
+          <div className="approval-stats-container">
+            <h2>Pending Users</h2>
+            <p className="stats-count">{users.length}</p>
+          </div>
+          
+          <div className="approval-stats-container">
+            <h2>Pending Uploads</h2>
+            <p className="stats-count">{uploads.length}</p>
+          </div>
+          
+          <div className="approval-stats-container">
+            <h2>Admin Requests</h2>
+            <p className="stats-count">{adminRegisters.length}</p>
+          </div>
+        </div>
 
-      {!loading && view === 'uploads' && (
-        <>
-          {uploads.length === 0 ? (
-            <div>No pending uploads.</div>
-          ) : (
-            <table className="approve-table">
-              <thead>
-                <tr>
-                  <th>Title</th>
-                  <th>Uploader</th>
-                  <th>Status</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {uploads.map(upload => (
-                  <tr key={upload._id}>
-                    <td>{upload.title || 'N/A'}</td>
-                    <td>{upload.uploader || 'N/A'}</td>
-                    <td>{upload.status || 'pending'}</td>
-                    <td className="approve-actions">
-                      <button
-                        onClick={() => handleUploadAction(upload._id, 'approved')}
-                        className="approve-btn approve"
-                      >
-                        Approve
-                      </button>
-                      <button
-                        onClick={() => handleUploadAction(upload._id, 'rejected')}
-                        className="approve-btn reject"
-                      >
-                        Reject
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
-        </>
-      )}
+        {/* Navigation Tabs */}
+        <div className="approval-nav-tabs">
+          <button
+            className={`approval-tab ${view === 'users' ? 'active' : ''}`}
+            onClick={() => setView('users')}
+          >
+            User Registrations ({users.length})
+          </button>
+          <button
+            className={`approval-tab ${view === 'uploads' ? 'active' : ''}`}
+            onClick={() => setView('uploads')}
+          >
+            File Uploads ({uploads.length})
+          </button>
+          <button
+            className={`approval-tab ${view === 'adminregisters' ? 'active' : ''}`}
+            onClick={() => setView('adminregisters')}
+          >
+            Admin Requests ({adminRegisters.length})
+          </button>
+        </div>
 
-      {!loading && view === 'adminregisters' && (
-        <>
-          {adminRegisters.length === 0 ? (
-            <div>No pending admin registrations.</div>
+        {/* Action Message */}
+        {actionMsg && (
+          <div className="approval-action-msg">
+            {actionMsg}
+          </div>
+        )}
+
+        {/* Content Area */}
+        <div className="approval-content-area">
+          {loading ? (
+            <div className="approval-loading">
+              <div className="spinner">
+                <div className="lds-dual-ring"></div>
+              </div>
+              <p>Loading data...</p>
+            </div>
           ) : (
-            <table className="approve-table">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Status</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {adminRegisters.map(reg => (
-                  <tr key={reg._id}>
-                    <td>{reg.name || 'N/A'}</td>
-                    <td>{reg.email || 'N/A'}</td>
-                    <td>{reg.status || 'pending'}</td>
-                    <td className="approve-actions">
-                      <button
-                        onClick={() => handleAdminAction(reg._id, 'approved')}
-                        className="approve-btn approve"
-                      >
-                        Approve
-                      </button>
-                      <button
-                        onClick={() => handleAdminAction(reg._id, 'rejected')}
-                        className="approve-btn reject"
-                      >
-                        Reject
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <>
+              {view === 'users' && (
+                <div className="approval-section">
+                  <h3>User Registrations</h3>
+                  {users.length === 0 ? (
+                    <div className="no-data">
+                      <p>No pending user registrations.</p>
+                    </div>
+                  ) : (
+                    <div className="approval-grid">
+                      {users.map(user => (
+                        <div key={user._id} className="approval-card">
+                          <div className="card-header">
+                            <h4>{user.name || 'N/A'}</h4>
+                            <span className={`status-badge ${user.status || 'pending'}`}>
+                              {user.status || 'pending'}
+                            </span>
+                          </div>
+                          <div className="card-content">
+                            <p><strong>Email:</strong> {user.email || 'N/A'}</p>
+                          </div>
+                          <div className="card-actions">
+                            <button
+                              onClick={() => handleUserAction(user._id, 'approved')}
+                              className="action-btn approve"
+                            >
+                              Approve
+                            </button>
+                            <button
+                              onClick={() => handleUserAction(user._id, 'rejected')}
+                              className="action-btn reject"
+                            >
+                              Reject
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {view === 'uploads' && (
+                <div className="approval-section">
+                  <h3>File Uploads</h3>
+                  {uploads.length === 0 ? (
+                    <div className="no-data">
+                      <p>No pending file uploads.</p>
+                    </div>
+                  ) : (
+                    <div className="approval-grid">
+                      {uploads.map(upload => (
+                        <div key={upload.id} className="approval-card">
+                          <div className="card-header">
+                            <h4>{upload.filename || 'N/A'}</h4>
+                            <span className={`status-badge ${upload.status || 'pending'}`}>
+                              {upload.status || 'pending'}
+                            </span>
+                          </div>
+                          <div className="card-content">
+                            <p><strong>User:</strong> {upload.user?.email || 'N/A'}</p>
+                            <p><strong>Upload Date:</strong> {upload.uploadDate ? new Date(upload.uploadDate).toLocaleDateString() : 'N/A'}</p>
+                            <button
+                              onClick={() => downloadFile(upload.id, upload.filename)}
+                              className="download-btn"
+                            >
+                              📄 Download File
+                            </button>
+                          </div>
+                          <div className="card-actions">
+                            <button
+                              onClick={() => handleUploadAction(upload.id, 'approved')}
+                              className="action-btn approve"
+                            >
+                              Approve
+                            </button>
+                            <button
+                              onClick={() => handleUploadAction(upload.id, 'rejected')}
+                              className="action-btn reject"
+                            >
+                              Reject
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {view === 'adminregisters' && (
+                <div className="approval-section">
+                  <h3>Admin Registration Requests</h3>
+                  {adminRegisters.length === 0 ? (
+                    <div className="no-data">
+                      <p>No pending admin registration requests.</p>
+                    </div>
+                  ) : (
+                    <div className="approval-grid">
+                      {adminRegisters.map(reg => (
+                        <div key={reg._id} className="approval-card">
+                          <div className="card-header">
+                            <h4>{reg.name || 'N/A'}</h4>
+                            <span className={`status-badge ${reg.status || 'pending'}`}>
+                              {reg.status || 'pending'}
+                            </span>
+                          </div>
+                          <div className="card-content">
+                            <p><strong>Email:</strong> {reg.email || 'N/A'}</p>
+                          </div>
+                          <div className="card-actions">
+                            <button
+                              onClick={() => handleAdminAction(reg._id, 'approved')}
+                              className="action-btn approve"
+                            >
+                              Approve
+                            </button>
+                            <button
+                              onClick={() => handleAdminAction(reg._id, 'rejected')}
+                              className="action-btn reject"
+                            >
+                              Reject
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+            </>
           )}
-        </>
-      )}
-    </div>
+        </div>
+      </div>
+    </>
   );
 }
 

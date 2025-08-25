@@ -1,3 +1,16 @@
+:root {
+  --primary-color: #2196f3;
+  --text-color: #333333;
+  --border-color: #e0e0e0;
+  --background-color: #ffffff;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 0.75rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+}
+
 .apply-container {
   min-height: 100vh;
   padding: 2rem 1rem;
@@ -28,10 +41,11 @@
 }
 
 .job-details {
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
-  padding: 1.5rem;
+  background: white;
+  border-radius: 8px;
+  padding: 2rem;
   margin-bottom: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .job-details h2 {
@@ -45,20 +59,70 @@
   color: rgba(255, 255, 255, 0.9);
 }
 
+.job-header {
+  margin-bottom: 1.5rem;
+}
+
+.job-header h1 {
+  color: #2D6A4F;
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.job-meta {
+  display: flex;
+  gap: 1rem;
+  color: #666;
+}
+
+.job-meta span:not(:last-child)::after {
+  content: "•";
+  margin-left: 1rem;
+}
+
+.job-section {
+  margin-bottom: 1.5rem;
+}
+
+.job-section h2 {
+  color: #2D6A4F;
+  font-size: 1.2rem;
+  margin-bottom: 0.75rem;
+}
+
+.job-section p {
+  line-height: 1.6;
+  color: #444;
+}
+
 .apply-form {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
 }
 
+.form-container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: var(--spacing-xl);
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+}
+
 .form-group {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  margin-bottom: var(--spacing-lg);
 }
 
 .form-group label {
-  color: #90caf9;
+  display: block;
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-xs);
   font-weight: 500;
 }
 
@@ -98,6 +162,9 @@
   display: flex;
   gap: 1rem;
   margin-top: 1rem;
+  margin-top: var(--spacing-xl);
+  display: flex;
+  gap: var(--spacing-md);
 }
 
 .submit-btn,
@@ -208,6 +275,132 @@
   color: #64b5f6;
 }
 
+.job-view-container {
+  min-height: 100vh;
+  padding: 2rem;
+  background: var(--background-color);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.job-view-content {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 800px;
+  box-shadow: 0 2px 8px var(--shadow-color);
+  border: 1px solid var(--border-color);
+}
+
+.job-view-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.job-view-header h1 {
+  font-size: 1.8rem;
+  color: var(--text-color);
+  margin-bottom: 0.5rem;
+}
+
+.job-company {
+  color: var(--primary-color);
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.job-location {
+  color: #666;
+  font-size: 1rem;
+}
+
+.job-details-section {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.job-details-section h2 {
+  color: var(--text-color);
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.detail-item {
+  background: #ffffff;
+  padding: 1rem;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+}
+
+.detail-item h3 {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.detail-item p {
+  color: var(--text-color);
+  font-size: 1rem;
+  margin: 0;
+}
+
+.job-description {
+  line-height: 1.6;
+  color: var(--text-color);
+}
+
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.apply-btn, 
+.back-btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.apply-btn {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  flex: 1;
+}
+
+.apply-btn:hover {
+  background: #1976d2;
+  transform: translateY(-2px);
+}
+
+.back-btn {
+  background: #f8f9fa;
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+.back-btn:hover {
+  background: #e9ecef;
+}
+
 @media (max-width: 768px) {
   .apply-content {
     padding: 1.5rem;
@@ -224,5 +417,21 @@
   .detail-row {
     flex-direction: column;
     gap: 0.5rem;
+  }
+
+  .job-view-container {
+    padding: 1rem;
+  }
+
+  .job-view-content {
+    padding: 1.5rem;
+  }
+
+  .details-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .action-buttons {
+    flex-direction: column;
   }
 }

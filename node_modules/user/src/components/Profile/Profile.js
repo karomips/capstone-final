@@ -8,6 +8,11 @@ function Profile() {
   const [error, setError] = useState(null);
   const [profilePic, setProfilePic] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editForm, setEditForm] = useState({
+    name: '',
+    email: ''
+  });
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -15,15 +20,37 @@ function Profile() {
         // Get user data from localStorage
         const userData = JSON.parse(localStorage.getItem('user'));
 
-        if (!userData || !userData.name || !userData.email) {
+        if (!userData || !userData.email) {
           throw new Error('User data not found');
         }
 
-        // Set user data directly from localStorage
-        setUser({
-          name: userData.name,
-          email: userData.email
-        });
+        // Try to fetch fresh data from the database
+        try {
+          const response = await fetch(`http://localhost:5000/api/user/profile?email=${userData.email}`);
+          const data = await response.json();
+
+          if (data.success) {
+            setUser(data.user);
+            setEditForm({
+              name: data.user.name || '',
+              email: data.user.email || ''
+            });
+          } else {
+            throw new Error('Failed to fetch from database');
+          }
+        } catch (dbError) {
+          console.warn('Database fetch failed, using localStorage:', dbError);
+          // Fallback to localStorage data
+          setUser({
+            name: userData.name,
+            email: userData.email,
+            status: userData.status || 'pending'
+          });
+          setEditForm({
+            name: userData.name || '',
+            email: userData.email || ''
+          });
+        }
 
       } catch (err) {
         console.error('Profile error:', err);
@@ -35,6 +62,64 @@ function Profile() {
 
     fetchUserData();
   }, []);
+
+  const handleEditToggle = () => {
+    setIsEditing(!isEditing);
+    if (!isEditing) {
+      setEditForm({
+        name: user.name || '',
+        email: user.email || ''
+      });
+    }
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setEditForm(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSaveProfile = async () => {
+    try {
+      const response = await fetch('http://localhost:5000/api/user/profile', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          currentEmail: user.email,
+          name: editForm.name,
+          email: editForm.email
+        })
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setUser(prev => ({
+          ...prev,
+          name: editForm.name,
+          email: editForm.email
+        }));
+        
+        // Update localStorage
+        const userData = JSON.parse(localStorage.getItem('user')) || {};
+        userData.name = editForm.name;
+        userData.email = editForm.email;
+        localStorage.setItem('user', JSON.stringify(userData));
+        
+        setIsEditing(false);
+        alert('Profile updated successfully!');
+      } else {
+        alert(data.message || 'Failed to update profile');
+      }
+    } catch (err) {
+      console.error('Update error:', err);
+      alert('Failed to update profile');
+    }
+  };
 
   const handlePictureChange = (e) => {
     const file = e.target.files[0];
@@ -70,9 +155,6 @@ function Profile() {
       const formData = new FormData();
       formData.append('profilePicture', profilePic);
 
-      // Get user email for identification
-      const userData = JSON.parse(localStorage.getItem('user'));
-      
       const response = await axios.post(
         `http://localhost:5000/api/users/profile-picture`,
         formData,
@@ -81,13 +163,14 @@ function Profile() {
             'Content-Type': 'multipart/form-data'
           },
           params: {
-            email: userData.email
+            email: user.email
           }
         }
       );
 
       if (response.data.success) {
         setError(null);
+        setProfilePic(null);
         alert('Profile picture updated successfully');
       }
     } catch (err) {
@@ -97,7 +180,7 @@ function Profile() {
   };
 
   if (loading) return <div className="profile-loading">Loading profile...</div>;
-  if (error) return <div className="profile-error">{error}</div>;
+  if (error && !user) return <div className="profile-error">{error}</div>;
   if (!user) return <div className="profile-error">User not found</div>;
 
   return (
@@ -113,11 +196,11 @@ function Profile() {
               />
             ) : (
               <div className="profile-picture-placeholder">
-                {user.name.charAt(0).toUpperCase()}
+                {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
               </div>
             )}
             <label htmlFor="profile-upload" className="profile-picture-upload">
-              <span>Change Picture</span>
+              <span>📷</span>
               <input
                 type="file"
                 id="profile-upload"
@@ -130,8 +213,83 @@ function Profile() {
         </div>
 
         <div className="profile-info">
-          <h2>{user.name}</h2>
-          <p className="profile-email">{user.email}</p>
+          {isEditing ? (
+            <div className="profile-edit-form">
+              <h2>Edit Profile</h2>
+              
+              <div className="profile-field">
+                <label htmlFor="name">Full Name</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={editForm.name}
+                  onChange={handleInputChange}
+                  placeholder="Enter your full name"
+                />
+              </div>
+              
+              <div className="profile-field">
+                <label htmlFor="email">Email Address</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={editForm.email}
+                  onChange={handleInputChange}
+                  placeholder="Enter your email address"
+                />
+              </div>
+
+              <div className="profile-actions">
+                <button 
+                  className="profile-btn save"
+                  onClick={handleSaveProfile}
+                >
+                  Save Changes
+                </button>
+                <button 
+                  className="profile-btn cancel"
+                  onClick={handleEditToggle}
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className="profile-display">
+              <h2>{user.name || 'User'}</h2>
+              <p className="profile-email">{user.email}</p>
+              
+              <div className="profile-details">
+                <div className="profile-detail-row">
+                  <strong>Account Status:</strong>
+                  <span className={`status-badge ${user.status || 'pending'}`}>
+                    {user.status || 'Pending'}
+                  </span>
+                </div>
+                
+                <div className="profile-detail-row">
+                  <strong>Full Name:</strong>
+                  <span>{user.name || 'Not provided'}</span>
+                </div>
+                
+                <div className="profile-detail-row">
+                  <strong>Email:</strong>
+                  <span>{user.email}</span>
+                </div>
+              </div>
+
+              <div className="profile-actions">
+                <button 
+                  className="profile-btn edit"
+                  onClick={handleEditToggle}
+                >
+                  Edit Profile
+                </button>
+              </div>
+            </div>
+          )}
           
           {profilePic && (
             <button 
@@ -141,6 +299,8 @@ function Profile() {
               Upload New Picture
             </button>
           )}
+          
+          {error && <div className="profile-error-msg">{error}</div>}
         </div>
       </div>
     </div>

@@ -1,28 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './Homepage.css';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-} from 'chart.js';
-
-import { Bar } from 'react-chartjs-2';
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
 
 const slides = [
-  { src: '/barangay_logo.jpg', caption: 'Welcome to Barangay Mangan-vaca Job Portal' },
+  { src: '/barangay_logo.png', caption: 'Welcome to Barangay Mangan-vaca Job Portal' },
   { src: '/tasktracker.png', caption: 'Find jobs in your community!' },
   { src: '/slide3.png', caption: 'Post your job openings easily.' },
   { src: '/gcccsaco.png', caption: 'Stay updated with the latest opportunities.' },
@@ -34,8 +14,7 @@ function Homepage() {
   const [slideIndex, setSlideIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [imgLoaded, setImgLoaded] = useState(false);
-  const [jobStats, setJobStats] = useState([]);
-  const [totalJobs, setTotalJobs] = useState(0); // New state for total jobs
+  const [totalJobs, setTotalJobs] = useState(0);
 
   useEffect(() => {
     setLoading(true);
@@ -43,7 +22,7 @@ function Homepage() {
       .then(res => res.json())
       .then(data => {
         setJobs(data);
-        setTotalJobs(data.length); // Set total jobs count
+        setTotalJobs(data.length);
         setLoading(false);
       });
   }, []);
@@ -55,17 +34,9 @@ function Homepage() {
     return () => clearInterval(interval);
   }, []);
 
-  // For fade-in effect on image change
   useEffect(() => {
     setImgLoaded(false);
   }, [slideIndex]);
-
-  useEffect(() => {
-    fetch('http://localhost:5000/api/jobs/stats/categories')
-      .then(res => res.json())
-      .then(data => setJobStats(data))
-      .catch(err => console.error('Error fetching job stats:', err));
-  }, []);
 
   return (
     <>
@@ -81,7 +52,7 @@ function Homepage() {
         <section className="homepage-welcome-section">
           <div className="welcome-header">
             <img 
-              src="/barangay_logo.jpg" 
+              src="/barangay_logo.png" 
               alt="Barangay Mangan-vaca Logo" 
               className="welcome-logo"
             />
@@ -103,7 +74,6 @@ function Homepage() {
             <div className="homepage-slide-caption">
               {slides[slideIndex].caption}
             </div>
-            {/* Slide navigation dots */}
             <div className="homepage-slide-dots">
               {slides.map((_, idx) => (
                 <span
@@ -115,76 +85,61 @@ function Homepage() {
             </div>
           </div>
           
-          {/* Total Jobs Section */}
+          <div className="latest-jobs-container">
+            <div className="latest-jobs-header">
+              <h2>Latest Job Posts</h2>
+              <span className="latest-jobs-count">{jobs.length}</span>
+            </div>
+            
+            {loading ? (
+              <div className="spinner">
+                <div className="lds-dual-ring"></div>
+              </div>
+            ) : jobs.length === 0 ? (
+              <p>No jobs available at the moment</p>
+            ) : (
+              jobs.slice(0, 5).map((job) => (
+                <div key={job._id} className="job-item">
+                  <div className="job-item-title">{job.title}</div>
+                  <div className="job-item-company">{job.company}</div>
+                  <div className="job-item-location">
+                    <i className="fas fa-map-marker-alt"></i> {job.location}
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+
+        <div className="homepage-stats-grid">
           <div className="homepage-totaljobs-container">
             <h2>Total Available Jobs</h2>
             <p className="total-jobs-count">{totalJobs}</p>
           </div>
-
-          {/* Jobs by Category Graph */}
-          <div className="homepage-bargraph-container">
-            <h2>Jobs by Category</h2>
-            {jobStats.length > 0 ? (
-              <Bar
-                data={{
-                  labels: jobStats.map(stat => stat._id || 'Uncategorized'),
-                  datasets: [
-                    {
-                      label: 'Number of Jobs',
-                      data: jobStats.map(stat => stat.count),
-                      backgroundColor: 'rgba(54, 162, 235, 0.6)'
-                    }
-                  ]
-                }}
-                options={{
-                  responsive: true,
-                  plugins: {
-                    legend: { display: false },
-                    title: { display: true, text: 'Job Availability by Category' }
-                  },
-                  scales: {
-                    y: { beginAtZero: true }
-                  }
-                }}
-              />
-            ) : (
-              <p>No job statistics available.</p>
-            )}
+          
+          <div className="homepage-totaljobs-container">
+            <h2>Active Applications</h2>
+            <p className="total-jobs-count">24</p>
           </div>
-
-          <div className="homepage-latestjobs-container">
-            <h2>
-              Latest Job Posts
-              <span>
-                ({jobs.length})
-              </span>
-            </h2>
-            {loading ? (
-              <div className="spinner" style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                height: '80px'
-              }}>
-                <div className="lds-dual-ring"></div>
-              </div>
-            ) : jobs.length === 0 ? (
-              <p>No jobs posted yet.</p>
-            ) : (
-              <ul>
-                {jobs.slice(0, 5).map((job) => (
-                  <li
-                    key={job._id}
-                    className="homepage-job-item"
-                  >
-                    <strong>{job.title}</strong> at {job.company} — {job.location}
-                    <div>
-                      {job.description}
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            )}
+          
+          <div className="homepage-totaljobs-container">
+            <h2>Companies Hiring</h2>
+            <p className="total-jobs-count">12</p>
+          </div>
+          
+          <div className="homepage-totaljobs-container">
+            <h2>Jobs This Month</h2>
+            <p className="total-jobs-count">8</p>
+          </div>
+          
+          <div className="homepage-totaljobs-container">
+            <h2>Successful Placements</h2>
+            <p className="total-jobs-count">45</p>
+          </div>
+          
+          <div className="homepage-totaljobs-container">
+            <h2>Job Categories</h2>
+            <p className="total-jobs-count">6</p>
           </div>
         </div>
       </div>
