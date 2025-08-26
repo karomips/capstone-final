@@ -40,13 +40,32 @@ const userSchema = new mongoose.Schema({
 });
 const User = mongoose.model('User', userSchema);
 
-// Job Schema
+// Job Schema with required category
 const jobSchema = new mongoose.Schema({
   title: String,
   company: String,
   location: String,
   description: String,
-  category: String
+  category: {
+    type: String,
+    required: true,
+    enum: [
+      'Healthcare',
+      'Education',
+      'Administration',
+      'Social Services',
+      'Security',
+      'Maintenance',
+      'Technology',
+      'Agriculture',
+      'Business',
+      'Other'
+    ]
+  },
+  postedDate: {
+    type: Date,
+    default: Date.now
+  }
 });
 const Job = mongoose.model('Job', jobSchema);
 
@@ -186,6 +205,58 @@ app.patch('/api/admin/user/:id', async (req, res) => {
   }
 });
 
+// Get job categories with counts
+app.get('/api/jobs/categories', async (req, res) => {
+  try {
+    const categories = await Job.aggregate([
+      {
+        $group: {
+          _id: '$category',
+          count: { $sum: 1 }
+        }
+      },
+      {
+        $sort: { count: -1 }
+      }
+    ]);
+    
+    // Define all available categories with their display info
+    const allCategories = [
+      { name: 'Healthcare', description: 'Medical and health services' },
+      { name: 'Education', description: 'Teaching and educational roles' },
+      { name: 'Administration', description: 'Office and administrative work' },
+      { name: 'Social Services', description: 'Community and social programs' },
+      { name: 'Security', description: 'Safety and security positions' },
+      { name: 'Maintenance', description: 'Repair and maintenance work' },
+      { name: 'Technology', description: 'IT and technology roles' },
+      { name: 'Agriculture', description: 'Farming and agricultural work' },
+      { name: 'Business', description: 'Business and entrepreneurship' },
+      { name: 'Other', description: 'Other job opportunities' }
+    ];
+    
+    // Merge category info with counts
+    const categoryStats = allCategories.map(category => {
+      const stat = categories.find(c => c._id === category.name);
+      return {
+        ...category,
+        count: stat ? stat.count : 0
+      };
+    });
+    
+    res.json({
+      success: true,
+      categories: categoryStats,
+      totalJobs: categories.reduce((sum, cat) => sum + cat.count, 0)
+    });
+  } catch (error) {
+    console.error('Error fetching job categories:', error);
+    res.status(500).json({ 
+      success: false, 
+      message: 'Error fetching job categories' 
+    });
+  }
+});
+
 app.get('/api/jobs/stats/categories', async (req, res) => {
   try {
     const stats = await Job.aggregate([
@@ -203,6 +274,37 @@ app.get('/api/jobs/stats/categories', async (req, res) => {
   } catch (error) {
     console.error('Error fetching job stats:', error);
     res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Get single job by ID (moved after specific routes to avoid conflicts)
+app.get('/api/jobs/:id', async (req, res) => {
+  try {
+    const job = await Job.findById(req.params.id);
+    if (!job) {
+      return res.status(404).json({ 
+        success: false, 
+        message: 'Job not found' 
+      });
+    }
+    res.json({ 
+      success: true, 
+      job: {
+        title: job.title,
+        company: job.company,
+        location: job.location,
+        description: job.description,
+        category: job.category,
+        __v: job.__v,
+        _id: job._id
+      }
+    });
+  } catch (error) {
+    console.error('Error fetching job:', error);
+    res.status(500).json({ 
+      success: false, 
+      message: 'Error fetching job details' 
+    });
   }
 });
 
@@ -638,36 +740,6 @@ app.get('/api/jobs', async (req, res) => {
     res.status(500).json({ 
       success: false, 
       message: 'Error fetching jobs' 
-    });
-  }
-});
-
-// Add this endpoint after your other job-related endpoints
-app.get('/api/jobs/:id', async (req, res) => {
-  try {
-    const job = await Job.findById(req.params.id);
-    if (!job) {
-      return res.status(404).json({ 
-        success: false, 
-        message: 'Job not found' 
-      });
-    }
-    res.json({ 
-      success: true, 
-      job: {
-        title: job.title,
-        company: job.company,
-        location: job.location,
-        description: job.description,
-        __v: job.__v,
-        _id: job._id
-      }
-    });
-  } catch (error) {
-    console.error('Error fetching job:', error);
-    res.status(500).json({ 
-      success: false, 
-      message: 'Error fetching job details' 
     });
   }
 });

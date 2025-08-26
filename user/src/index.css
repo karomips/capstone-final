@@ -12,6 +12,18 @@ body {
   padding: 0;
   background-color: var(--background-color);
   color: var(--text-color);
+  overflow-y: scroll !important;
+  overflow-x: hidden;
+  height: 100vh;
+}
+
+html {
+  overflow-y: scroll !important;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
 }
 
 code {

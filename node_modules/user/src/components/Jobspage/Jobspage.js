@@ -5,21 +5,39 @@ import './Jobspage.css';
 function Jobspage() {
   const [search, setSearch] = useState('');
   const [jobs, setJobs] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(true); // Modal starts open since this is the jobs page
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Fetch jobs
     fetch('http://localhost:5000/api/jobs')
       .then(res => res.json())
-      .then(data => setJobs(data));
+      .then(data => setJobs(data))
+      .catch(error => console.error('Error fetching jobs:', error));
+
+    // Fetch categories for icon mapping
+    fetch('http://localhost:5000/api/jobs/categories')
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          setCategories(data.categories);
+        }
+      })
+      .catch(error => console.error('Error fetching categories:', error));
   }, []);
 
   const filteredJobs = jobs.filter(
     job =>
       job.title.toLowerCase().includes(search.toLowerCase()) ||
       job.company.toLowerCase().includes(search.toLowerCase()) ||
-      job.location.toLowerCase().includes(search.toLowerCase())
+      job.location.toLowerCase().includes(search.toLowerCase()) ||
+      (job.category && job.category.toLowerCase().includes(search.toLowerCase()))
   );
+
+  const getCategoryIcon = (categoryName) => {
+    return '';
+  };
 
   const handleApply = (job) => {
     navigate(`/apply/${job._id}`, { state: { job } });
@@ -55,7 +73,7 @@ function Jobspage() {
         <div className="jobs-modal-search-container">
           <input
             type="text"
-            placeholder="Search jobs, companies, or locations..."
+            placeholder="Search jobs by title, company, location, or category..."
             value={search}
             onChange={e => setSearch(e.target.value)}
             className="jobs-modal-search"
@@ -67,10 +85,16 @@ function Jobspage() {
           <div className="jobs-modal-grid">
             {filteredJobs.length > 0 ? (
               filteredJobs.map(job => (
-                <div key={job.id} className="jobs-modal-card">
+                <div key={job._id} className="jobs-modal-card">
                   <div className="jobs-card-header">
                     <h3 className="jobs-card-title">{job.title}</h3>
-                    <div className="jobs-card-badge">{job.category || 'General'}</div>
+                    {job.category ? (
+                      <div className="jobs-card-badge">
+                        {job.category}
+                      </div>
+                    ) : (
+                      <div className="jobs-card-badge">General</div>
+                    )}
                   </div>
                   
                   <div className="jobs-card-info">

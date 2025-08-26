@@ -27,6 +27,7 @@ function Navbar() {
 
       <ul className="sidenav-links">
         <li><NavLink to="/home" activeClassName="active">Home</NavLink></li>
+        <li><NavLink to="/jobs" activeClassName="active">Jobs</NavLink></li>
         <li><NavLink to="/post-job" activeClassName="active">Post a Job</NavLink></li>
         <li><NavLink to="/contact" activeClassName="active">Contact</NavLink></li>
         <li><NavLink to="/messages" activeClassName="active">Messages</NavLink></li>
