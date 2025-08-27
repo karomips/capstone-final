@@ -1,0 +1,41 @@
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import './shared/styles/global.css';
+
+// Import User Components
+import UserApp from './user/App';
+
+// Import Admin Components  
+import AdminApp from './admin/App';
+
+// Import Shared Components
+import Landing from './shared/components/Landing';
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        {/* Root route - Landing page */}
+        <Route path="/" element={<Landing />} />
+        <Route path="/landing" element={<Landing />} />
+        
+        {/* User routes - all routes starting with /user */}
+        <Route path="/user/*" element={<UserApp />} />
+        
+        {/* Admin routes - all routes starting with /admin */}
+        <Route path="/admin/*" element={<AdminApp />} />
+        
+        {/* Redirect old routes to new structure */}
+        <Route path="/login" element={<Navigate to="/user/login" replace />} />
+        <Route path="/register" element={<Navigate to="/user/register" replace />} />
+        <Route path="/home" element={<Navigate to="/user/home" replace />} />
+        <Route path="/jobs" element={<Navigate to="/user/jobs" replace />} />
+        
+        {/* Catch all - redirect to landing */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </Router>
+  );
+}
+
+export default App;

@@ -2,8 +2,13 @@
   "name": "capstone-monorepo",
   "private": true,
   "workspaces": [
-    "admin",
-    "user",
-    "backend"
-  ]
+    "client",
+    "client/backend"
+  ],
+  "scripts": {
+    "start:client": "cd client && npm start",
+    "start:backend": "cd client/backend && npm start",
+    "build:client": "cd client && npm run build",
+    "install:all": "npm install && cd client && npm install && cd backend && npm install"
+  }
 }

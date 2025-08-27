@@ -1,0 +1,345 @@
+/* Jobstreet-Style Admin Navigation */
+:root {
+  --admin-primary: #003366;
+  --admin-secondary: #004080;
+  --admin-accent: #e91e63;
+  --admin-text: #ffffff;
+  --admin-text-muted: #e8f1ff;
+  --admin-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  --admin-border: #e2e8f0;
+  --admin-hover: rgba(255, 255, 255, 0.1);
+  --admin-transition: all 0.3s ease;
+}
+
+/* Simple Admin Sidenav Container */
+.admin-sidenav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 280px;
+  height: 100vh;
+  background: var(--admin-primary);
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+  box-shadow: var(--admin-shadow);
+  z-index: 1000;
+  overflow-y: auto;
+}
+
+/* Simple Admin Branding */
+.admin-sidenav-brand {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+  padding: 0 20px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.admin-brand-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.admin-sidenav-logo {
+  height: 64px;
+  width: 64px;
+  border-radius: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: var(--admin-transition);
+  margin-bottom: 12px;
+  background: white;
+  padding: 8px;
+}
+
+.admin-sidenav-logo:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.admin-brand-text {
+  color: var(--admin-text);
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0 0 4px 0;
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+}
+
+.admin-brand-subtitle {
+  color: var(--admin-text-muted);
+  font-size: 0.85rem;
+  font-weight: 400;
+  opacity: 0.8;
+}
+
+/* Professional Admin Navigation Links */
+.admin-sidenav-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex: 1;
+}
+
+.admin-sidenav-links li {
+  margin-bottom: 4px;
+}
+
+.admin-sidenav-links a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--admin-text-muted);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  padding: 14px 16px;
+  border-radius: 8px;
+  transition: var(--admin-transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.admin-sidenav-links a::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 100%;
+  background: linear-gradient(90deg, var(--admin-accent), transparent);
+  transition: width 0.3s ease;
+  border-radius: 8px;
+}
+
+.admin-sidenav-links a:hover::before,
+.admin-sidenav-links a.active::before {
+  width: 4px;
+}
+
+.admin-sidenav-links a:hover,
+.admin-sidenav-links a.active {
+  background: var(--admin-hover);
+  color: var(--admin-text);
+  transform: translateX(4px);
+}
+
+.nav-icon {
+  font-size: 1.2rem;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Professional Admin Actions Section */
+.admin-sidenav-actions {
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: auto;
+}
+
+.admin-user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.admin-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--admin-accent);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 1.1rem;
+  box-shadow: 0 2px 8px rgba(66, 165, 245, 0.3);
+}
+
+.admin-user-details {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.admin-user-name {
+  color: var(--admin-text);
+  font-weight: 600;
+  font-size: 0.9rem;
+  line-height: 1.2;
+}
+
+.admin-user-role {
+  color: var(--admin-text-muted);
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
+/* Professional Admin Sign Out Button */
+.admin-signout-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #dc3545, #c82333);
+  color: white;
+  border: none;
+  padding: 14px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: var(--admin-transition);
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.admin-signout-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+.admin-signout-btn:hover::before {
+  left: 100%;
+}
+
+.admin-signout-btn:hover {
+  background: linear-gradient(135deg, #c82333, #a71e2a);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(220, 53, 69, 0.4);
+}
+
+.admin-signout-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+}
+
+.signout-icon {
+  font-size: 1.1rem;
+}
+
+/* Scrollbar Styling for Admin Panel */
+.admin-sidenav::-webkit-scrollbar {
+  width: 6px;
+}
+
+.admin-sidenav::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+}
+
+.admin-sidenav::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+}
+
+.admin-sidenav::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Responsive Design for Admin Navigation */
+@media (max-width: 1024px) {
+  .admin-sidenav {
+    width: 260px;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-sidenav {
+    width: 240px;
+    padding: 16px 12px;
+  }
+
+  .admin-sidenav-logo {
+    height: 56px;
+    width: 56px;
+  }
+
+  .admin-brand-text {
+    font-size: 1.1rem;
+  }
+
+  .admin-sidenav-links a {
+    font-size: 0.9rem;
+    padding: 12px 14px;
+  }
+
+  .nav-icon {
+    font-size: 1.1rem;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-sidenav {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    width: 280px;
+  }
+
+  .admin-sidenav.mobile-open {
+    transform: translateX(0);
+  }
+
+  .admin-brand-text {
+    font-size: 1rem;
+  }
+
+  .admin-user-info {
+    padding: 10px 12px;
+  }
+
+  .admin-avatar {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+  }
+}
+
+/* Content shift for main area */
+.admin-main-content {
+  margin-left: 280px;
+  min-height: 100vh;
+  background: #f8f9fa;
+  transition: margin-left 0.3s ease;
+}
+
+@media (max-width: 1024px) {
+  .admin-main-content {
+    margin-left: 260px;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-main-content {
+    margin-left: 240px;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-main-content {
+    margin-left: 0;
+  }
+}

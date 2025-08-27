@@ -1,0 +1,328 @@
+/* Landing Page Styles */
+
+/* Hide navbar on landing page */
+body.landing-page .sidebar,
+body.landing-page .navbar,
+body.landing-page .main-navbar,
+body.landing-page .side-navbar,
+body.landing-page nav {
+  display: none !important;
+}
+
+/* Ensure landing page takes full viewport */
+body.landing-page {
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow-x: hidden;
+}
+
+/* Override any existing layouts */
+body.landing-page .app-container,
+body.landing-page .main-content,
+body.landing-page .layout-container {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.landing-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #003366 0%, #004080 50%, #0066cc 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  margin: 0; /* Remove any default margins */
+  width: 100vw; /* Full viewport width */
+}
+
+.landing-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+  pointer-events: none;
+}
+
+.landing-content {
+  background: white;
+  padding: 3rem;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  max-width: 500px;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.landing-content h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #003366;
+  margin-bottom: 1rem;
+  line-height: 1.3;
+}
+
+.landing-content > p {
+  color: #666666;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+/* Section Styling */
+.user-section,
+.admin-section {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  border-radius: 12px;
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+}
+
+.user-section:last-child,
+.admin-section:last-child {
+  margin-bottom: 0;
+}
+
+.user-section h3,
+.admin-section h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #003366;
+  margin-bottom: 1rem;
+  margin-top: 0;
+}
+
+.user-section,
+.admin-section {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  border-radius: 12px;
+  background: #f8f9fa;
+  border: 2px solid #2d5a3d;
+}
+
+.admin-section h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #2d5a3d;
+  margin-bottom: 1rem;
+  margin-top: 0;
+}
+
+/* User Portal Section */
+.user-portal-section {
+  padding-top: 1.5rem;
+  border-top: 1px solid #e9ecef;
+}
+
+.switch-portal-text {
+  color: #666666;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+
+/* Button Container */
+.landing-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Button Styles */
+.landing-btn {
+  padding: 0.875rem 2rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 140px;
+  position: relative;
+  overflow: hidden;
+}
+
+.landing-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.landing-btn:hover::before {
+  left: 100%;
+}
+
+/* User Login Button */
+.landing-btn.user-login {
+  background: linear-gradient(135deg, #003366, #004080);
+  color: white;
+  border: 2px solid transparent;
+}
+
+.landing-btn.user-login:hover {
+  background: linear-gradient(135deg, #004080, #0066cc);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 51, 102, 0.3);
+}
+
+/* Register Button */
+.landing-btn.register {
+  background: transparent;
+  color: #003366;
+  border: 2px solid #003366;
+}
+
+.landing-btn.register:hover {
+  background: #003366;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 51, 102, 0.2);
+}
+
+/* Admin Login Button */
+.landing-btn.admin-login {
+  background: linear-gradient(135deg, #dc3545, #c82333);
+  color: white;
+  border: 2px solid transparent;
+  width: 100%;
+}
+
+.landing-btn.admin-login:hover {
+  background: linear-gradient(135deg, #c82333, #bd2130);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(220, 53, 69, 0.3);
+}
+
+/* Loading State */
+.landing-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.landing-btn:disabled:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* Icons for buttons (optional) */
+.landing-btn.user-login::after {
+  content: ' �';
+}
+
+.landing-btn.register::after {
+  content: ' 📝';
+}
+
+.landing-btn.admin-login::after {
+  content: ' �';
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .admin-landing-container {
+    padding: 1rem;
+  }
+  
+  .admin-landing-content {
+    padding: 2rem;
+    max-width: 400px;
+  }
+  
+  .admin-landing-content h1 {
+    font-size: 1.5rem;
+  }
+  
+  .admin-landing-content h2 {
+    font-size: 1.1rem;
+  }
+  
+  .admin-description {
+    font-size: 0.9rem;
+  }
+  
+  .admin-section {
+    padding: 1.25rem;
+  }
+  
+  .admin-section h3 {
+    font-size: 1.1rem;
+  }
+  
+  .landing-buttons {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .landing-btn {
+    width: 100%;
+    padding: 1rem 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-landing-content {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+  
+  .admin-landing-content h1 {
+    font-size: 1.3rem;
+  }
+  
+  .admin-landing-content h2 {
+    font-size: 1rem;
+  }
+  
+  .user-section,
+  .admin-section {
+    padding: 1rem;
+  }
+  
+  .landing-btn {
+    font-size: 0.9rem;
+    min-width: auto;
+  }
+}
+
+/* Animation for entrance */
+@keyframes adminFadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.admin-landing-content {
+  animation: adminFadeInUp 0.6s ease-out;
+}
+
+.admin-logo-section {
+  animation: adminFadeInUp 0.8s ease-out;
+}
+
+.admin-section {
+  animation: adminFadeInUp 1s ease-out;
+}
+
+.user-portal-section {
+  animation: adminFadeInUp 1.2s ease-out;
+}

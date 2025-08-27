@@ -1,0 +1,434 @@
+/* Professional Admin Profile with Homepage Style */
+:root {
+  --primary-color: #2d5a3d;
+  --secondary-color: #6c757d;
+  --success-color: #28a745;
+  --warning-color: #ffc107;
+  --danger-color: #dc3545;
+  --info-color: #17a2b8;
+  --background-light: #ffffff;
+  --background-gray: #f8f9fa;
+  --text-primary: #2d3748;
+  --text-secondary: #718096;
+  --border-color: #e2e8f0;
+  --shadow-light: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-medium: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-large: 0 10px 25px rgba(0, 0, 0, 0.1);
+  --border-radius: 8px;
+  --transition-speed: 0.3s;
+}
+
+/* Background Animation */
+.profile-bg-animated {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  overflow: hidden;
+}
+
+.profile-bg-bubble {
+  position: absolute;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(45, 90, 61, 0.1), rgba(45, 90, 61, 0.05));
+  animation: float 20s infinite ease-in-out;
+}
+
+.profile-bg-bubble.b1 {
+  width: 300px;
+  height: 300px;
+  top: 10%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.profile-bg-bubble.b2 {
+  width: 200px;
+  height: 200px;
+  top: 60%;
+  right: 20%;
+  animation-delay: 5s;
+}
+
+.profile-bg-bubble.b3 {
+  width: 150px;
+  height: 150px;
+  bottom: 20%;
+  left: 30%;
+  animation-delay: 10s;
+}
+
+.profile-bg-bubble.b4 {
+  width: 250px;
+  height: 250px;
+  top: 30%;
+  right: 10%;
+  animation-delay: 15s;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.3; }
+  25% { transform: translateY(-20px) rotate(90deg); opacity: 0.5; }
+  50% { transform: translateY(-40px) rotate(180deg); opacity: 0.7; }
+  75% { transform: translateY(-20px) rotate(270deg); opacity: 0.5; }
+}
+
+/* Admin Profile Container */
+.admin-profile-container {
+  margin-left: 280px;
+  padding: 2rem;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  position: relative;
+}
+
+.admin-profile-card {
+  background: var(--background-light);
+  border-radius: 16px;
+  box-shadow: var(--shadow-large);
+  border: 1px solid var(--border-color);
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 700px;
+  animation: fadeIn 0.6s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.admin-profile-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 6px;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+}
+
+.admin-profile-header {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 2.5rem;
+  padding-bottom: 2rem;
+  border-bottom: 2px solid var(--border-color);
+}
+
+.admin-profile-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  box-shadow: var(--shadow-large);
+  border: 4px solid var(--background-light);
+  flex-shrink: 0;
+}
+
+.admin-profile-title h1 {
+  margin: 0 0 0.5rem 0;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.admin-profile-title p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  line-height: 1.4;
+}
+
+.admin-profile-content {
+  margin-top: 1.5rem;
+}
+
+/* Profile Info Display */
+.admin-profile-info {
+  background: #f8f9fa;
+  border-radius: var(--border-radius);
+  padding: 2rem;
+  border: 1px solid var(--border-color);
+}
+
+.admin-profile-info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.admin-profile-info-row:last-child {
+  border-bottom: none;
+}
+
+.admin-profile-info-row strong {
+  font-weight: 600;
+  color: var(--text-primary);
+  min-width: 160px;
+  font-size: 0.95rem;
+}
+
+.admin-profile-info-row span {
+  color: var(--text-secondary);
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.admin-profile-role {
+  background: var(--success-color);
+  color: white;
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.admin-profile-badge {
+  background: var(--primary-color);
+  color: white;
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Edit Form */
+.admin-profile-edit-form {
+  background: #f8f9fa;
+  border-radius: var(--border-radius);
+  padding: 2rem;
+  border: 1px solid var(--border-color);
+}
+
+.admin-profile-field {
+  margin-bottom: 1.5rem;
+}
+
+.admin-profile-field label {
+  display: block;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+}
+
+.admin-profile-field input {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  border: 2px solid var(--border-color);
+  border-radius: var(--border-radius);
+  background: var(--background-light);
+  color: var(--text-primary);
+  font-size: 1rem;
+  transition: var(--transition-speed);
+  box-sizing: border-box;
+}
+
+.admin-profile-field input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(45, 90, 61, 0.1);
+}
+
+.admin-profile-field input::placeholder {
+  color: var(--text-secondary);
+}
+
+/* Action Buttons */
+.admin-profile-actions {
+  margin-top: 2rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.admin-profile-btn {
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: var(--transition-speed);
+  min-width: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.admin-profile-btn.edit {
+  background: var(--info-color);
+  color: white;
+}
+
+.admin-profile-btn.edit:hover {
+  background: #138496;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-medium);
+}
+
+.admin-profile-btn.save {
+  background: var(--success-color);
+  color: white;
+}
+
+.admin-profile-btn.save:hover {
+  background: #218838;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-medium);
+}
+
+.admin-profile-btn.cancel {
+  background: var(--danger-color);
+  color: white;
+}
+
+.admin-profile-btn.cancel:hover {
+  background: #c82333;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-medium);
+}
+
+/* Loading and Error States */
+.admin-profile-loading,
+.admin-profile-error {
+  margin-left: 280px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 1.2rem;
+}
+
+.admin-profile-error {
+  color: var(--danger-color);
+}
+
+.admin-profile-loading::before,
+.admin-profile-error::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { 
+    opacity: 0; 
+    transform: translateY(30px);
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .admin-profile-container {
+    margin-left: 260px;
+    padding: 1.5rem;
+  }
+
+  .admin-profile-loading,
+  .admin-profile-error {
+    margin-left: 260px;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-profile-container {
+    margin-left: 0;
+    padding: 1rem;
+  }
+
+  .admin-profile-loading,
+  .admin-profile-error {
+    margin-left: 0;
+  }
+  
+  .admin-profile-card {
+    padding: 2rem;
+  }
+  
+  .admin-profile-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 1.5rem;
+  }
+  
+  .admin-profile-title h1 {
+    font-size: 1.8rem;
+  }
+  
+  .admin-profile-info-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    text-align: left;
+  }
+  
+  .admin-profile-info-row strong {
+    min-width: auto;
+  }
+  
+  .admin-profile-actions {
+    flex-direction: column;
+  }
+  
+  .admin-profile-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-profile-container {
+    padding: 0.75rem;
+  }
+
+  .admin-profile-card {
+    padding: 1.5rem;
+  }
+  
+  .admin-profile-avatar {
+    width: 80px;
+    height: 80px;
+    font-size: 2rem;
+  }
+  
+  .admin-profile-title h1 {
+    font-size: 1.6rem;
+  }
+
+  .admin-profile-edit-form,
+  .admin-profile-info {
+    padding: 1.5rem;
+  }
+}

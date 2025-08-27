@@ -1,0 +1,717 @@
+/* Apply Page - Homepage Style */
+
+/* Container & Layout */
+.apply-container {
+  min-height: 100vh;
+  background: var(--background-gradient);
+  padding: 2rem 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  position: relative;
+}
+
+.apply-content {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* Apply Header - Homepage Welcome Style */
+.apply-header {
+  background: var(--background-light);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow-medium);
+  border: 1px solid var(--border-color);
+  text-align: center;
+}
+
+.apply-header h1 {
+  color: var(--text-primary);
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.apply-header-icon {
+  font-size: 1.5rem;
+  color: var(--primary-color);
+}
+
+.apply-header p {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Main Content Container - Homepage Card Style */
+.apply-content-main {
+  background: var(--background-light);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 0;
+  width: 100%;
+  max-width: 900px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  animation: slideInUp 0.6s cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Job Details View */
+.job-details-view {
+  padding: 2.5rem;
+}
+
+.job-header {
+  margin-bottom: 2.5rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.job-title-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+  gap: 1rem;
+}
+
+.job-title-section h1 {
+  margin: 0;
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #2c3e50;
+  line-height: 1.2;
+  flex: 1;
+}
+
+.job-badge {
+  background: #2b5329;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.job-meta-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+  transition: all 0.3s ease;
+}
+
+.meta-item:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+}
+
+.meta-icon {
+  font-size: 1.25rem;
+  filter: grayscale(0.2);
+}
+
+.meta-text {
+  font-weight: 600;
+  color: #2d3748;
+  font-size: 0.95rem;
+}
+
+/* Job Content Sections */
+.job-content {
+  margin-bottom: 2.5rem;
+}
+
+.job-section {
+  margin-bottom: 2.5rem;
+  padding: 2rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.job-section h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0 0 1.5rem 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2d3748;
+}
+
+.section-icon {
+  font-size: 1.5rem;
+  filter: grayscale(0.2);
+}
+
+.job-description p {
+  line-height: 1.8;
+  color: #4a5568;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.responsibility-list,
+.requirement-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.responsibility-list li,
+.requirement-list li {
+  padding: 0.75rem 0;
+  padding-left: 2rem;
+  position: relative;
+  color: #4a5568;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  border-bottom: 1px solid rgba(102, 126, 234, 0.05);
+}
+
+.responsibility-list li:last-child,
+.requirement-list li:last-child {
+  border-bottom: none;
+}
+
+.responsibility-list li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 0.75rem;
+  color: #2b5329;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.requirement-list li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  top: 0.75rem;
+  color: #2b5329;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+/* Benefits Grid */
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.benefit-item {
+  text-align: center;
+  padding: 1.5rem;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+  transition: all 0.3s ease;
+}
+
+.benefit-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.benefit-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  display: block;
+  filter: grayscale(0.2);
+}
+
+.benefit-item h4 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.benefit-item p {
+  margin: 0;
+  color: #718096;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  padding-top: 2rem;
+  border-top: 1px solid #e9ecef;
+}
+
+.back-btn,
+.apply-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  text-decoration: none;
+  min-height: 48px;
+}
+
+.back-btn {
+  background: #f8f9fa;
+  color: #495057;
+  border: 1px solid #dee2e6;
+  flex: 1;
+}
+
+.back-btn:hover {
+  background: #e9ecef;
+  transform: translateY(-1px);
+}
+
+.apply-btn {
+  background: #2b5329;
+  color: white;
+  flex: 2;
+  position: relative;
+  overflow: hidden;
+}
+
+.apply-btn:hover {
+  background: #1e3a1c;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(43, 83, 41, 0.3);
+}
+
+.btn-icon {
+  font-size: 1.1rem;
+}
+
+/* Application Form View */
+.application-form-view {
+  padding: 2.5rem;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.form-header h1 {
+  margin: 0 0 1rem 0;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+.form-header p {
+  margin: 0;
+  color: #718096;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+/* Form Sections */
+.form-section {
+  margin-bottom: 2.5rem;
+  padding: 2rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.form-section h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0 0 1.5rem 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #2d3748;
+  font-size: 0.95rem;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  font-size: 1rem;
+  color: #495057;
+  background: white;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #2b5329;
+  box-shadow: 0 0 0 2px rgba(43, 83, 41, 0.1);
+}
+
+.form-group input.error,
+.form-group textarea.error {
+  border-color: #dc3545;
+  box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.1);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 120px;
+  line-height: 1.6;
+}
+
+/* File Upload */
+.file-upload {
+  position: relative;
+}
+
+.file-upload input[type="file"] {
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.file-upload-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 2rem;
+  border: 2px dashed #dee2e6;
+  border-radius: 8px;
+  background: white;
+  color: #6c757d;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.file-upload-label:hover {
+  border-color: #2b5329;
+  color: #2b5329;
+}
+
+.file-icon {
+  font-size: 1.5rem;
+}
+
+.form-group small {
+  display: block;
+  margin-top: 0.5rem;
+  color: #718096;
+  font-size: 0.875rem;
+}
+
+.error-text {
+  display: block;
+  margin-top: 0.5rem;
+  color: #dc3545;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* Form Actions */
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid #e9ecef;
+}
+
+.cancel-btn,
+.submit-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  min-height: 48px;
+}
+
+.cancel-btn {
+  background: #f8f9fa;
+  color: #495057;
+  border: 1px solid #dee2e6;
+  flex: 1;
+}
+
+.cancel-btn:hover:not(:disabled) {
+  background: #e9ecef;
+  transform: translateY(-1px);
+}
+
+.submit-btn {
+  background: #2b5329;
+  color: white;
+  flex: 2;
+  position: relative;
+  overflow: hidden;
+}
+
+.submit-btn:hover:not(:disabled) {
+  background: #1e3a1c;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(43, 83, 41, 0.3);
+}
+
+.submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Loading and Error States */
+.apply-loading,
+.apply-error,
+.success-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 3rem 2rem;
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #e9ecef;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #f8f9fa;
+  border-radius: 50%;
+  border-top-color: #2b5329;
+  animation: spin 1s ease-in-out infinite;
+  margin-bottom: 1.5rem;
+}
+
+.error-icon,
+.success-icon {
+  font-size: 4rem;
+  margin-bottom: 1.5rem;
+}
+
+.apply-loading h2,
+.apply-error h2,
+.success-container h2 {
+  margin: 0 0 1rem 0;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #2d3748;
+}
+
+.apply-loading p,
+.apply-error p,
+.success-container p {
+  margin: 0 0 1rem 0;
+  color: #718096;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.success-actions {
+  margin-top: 2rem;
+}
+
+.primary-btn {
+  background: #2b5329;
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.primary-btn:hover {
+  background: #1e3a1c;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(43, 83, 41, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .apply-container {
+    padding: 1rem;
+  }
+
+  .apply-content {
+    border-radius: 16px;
+  }
+
+  .job-details-view,
+  .application-form-view {
+    padding: 1.5rem;
+  }
+
+  .job-title-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .job-title-section h1 {
+    font-size: 2rem;
+  }
+
+  .job-meta-info {
+    grid-template-columns: 1fr;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .action-buttons,
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .benefits-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .benefit-item {
+    padding: 1rem;
+  }
+
+  .form-section {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .apply-bg-bubble {
+    display: none;
+  }
+
+  .job-title-section h1 {
+    font-size: 1.8rem;
+  }
+
+  .form-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .meta-item {
+    padding: 0.75rem;
+  }
+
+  .job-section {
+    padding: 1.25rem;
+  }
+}
+
+/* Custom Scrollbar */
+.application-form-view::-webkit-scrollbar {
+  width: 8px;
+}
+
+.application-form-view::-webkit-scrollbar-track {
+  background: rgba(102, 126, 234, 0.05);
+  border-radius: 10px;
+}
+
+.application-form-view::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-radius: 10px;
+}
+
+.application-form-view::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #5a67d8, #6b46c1);
+}
