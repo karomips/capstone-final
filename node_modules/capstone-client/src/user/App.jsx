@@ -1,7 +1,6 @@
 import React from 'react';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import './App.css';
-import './styles/professional-theme.css'; // Import professional theme
 import Navbar from './components/Navbar/Navbar.jsx';
 import Homepage from './components/Homepage/Homepage.jsx';
 import Login from './components/Login/Login.jsx';
