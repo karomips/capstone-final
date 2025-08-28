@@ -356,7 +356,7 @@ function UserManagement() {
                         onClick={() => handleSuspendUser(user)}
                         title={user.status === 'approved' ? 'Suspend User' : 'Approve User'}
                       >
-                        {user.status === 'approved' ? '⚠️ Suspend' : '✅ Approve'}
+                        {user.status === 'approved' ? 'Suspend' : 'Approve'}
                       </button>
                     </div>
                   </div>
@@ -516,35 +516,43 @@ function UserManagement() {
         {/* Suspend/Approve User Modal */}
         {showSuspendModal && selectedUser && (
           <div className="modal-overlay" onClick={() => setShowSuspendModal(false)}>
-            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-container" onClick={(e) => e.stopPropagation()}>
               <div className="modal-header">
-                <h2>{selectedUser.status === 'approved' ? 'Suspend User' : 'Approve User'}</h2>
+                <h3>{selectedUser.status === 'approved' ? 'Suspend User Account' : 'Approve User Account'}</h3>
                 <button 
-                  className="modal-close"
+                  className="modal-close-btn"
                   onClick={() => setShowSuspendModal(false)}
                 >
                   ×
                 </button>
               </div>
-              <div className="modal-body">
+              <div className="modal-content">
+                <div className="modal-icon-admin">
+                  <div className={selectedUser.status === 'approved' ? 'suspend-icon' : 'approve-icon'}></div>
+                </div>
                 <p>
                   Are you sure you want to {selectedUser.status === 'approved' ? 'suspend' : 'approve'} the user <strong>{selectedUser.name}</strong>?
                 </p>
-                <div className="form-actions">
-                  <button 
-                    className="btn-cancel"
-                    onClick={() => setShowSuspendModal(false)}
-                  >
-                    Cancel
-                  </button>
-                  <button 
-                    className={selectedUser.status === 'approved' ? 'btn-danger' : 'btn-success'}
-                    onClick={handleConfirmSuspend}
-                    disabled={isSubmitting}
-                  >
-                    {isSubmitting ? 'Processing...' : (selectedUser.status === 'approved' ? 'Suspend' : 'Approve')}
-                  </button>
-                </div>
+                {selectedUser.status === 'approved' ? (
+                  <p className="text-muted">This will prevent the user from accessing their account until reactivated.</p>
+                ) : (
+                  <p className="text-muted">This will grant the user full access to the system.</p>
+                )}
+              </div>
+              <div className="modal-footer">
+                <button 
+                  className="btn btn-secondary"
+                  onClick={() => setShowSuspendModal(false)}
+                >
+                  Cancel
+                </button>
+                <button 
+                  className={`btn ${selectedUser.status === 'approved' ? 'btn-warning' : 'btn-success'}`}
+                  onClick={handleConfirmSuspend}
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? 'Processing...' : (selectedUser.status === 'approved' ? 'Suspend Account' : 'Approve Account')}
+                </button>
               </div>
             </div>
           </div>

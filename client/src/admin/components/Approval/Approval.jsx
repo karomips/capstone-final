@@ -9,6 +9,12 @@ function Approve() {
   const [loading, setLoading] = useState(true);
   const [actionMsg, setActionMsg] = useState('');
   const [view, setView] = useState('users'); // 'users' | 'uploads' | 'adminregisters'
+  
+  // Modal states
+  const [showApprovalModal, setShowApprovalModal] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [actionType, setActionType] = useState(''); // 'approve' | 'reject'
+  const [itemType, setItemType] = useState(''); // 'user' | 'upload' | 'admin'
 
   useEffect(() => {
     // Fetch user registrations
@@ -36,6 +42,37 @@ function Approve() {
       .catch(() => setActionMsg('Error fetching uploads'))
       .finally(() => setLoading(false));
   }, []);
+
+  // Modal helper functions
+  const openApprovalModal = (item, action, type) => {
+    setSelectedItem(item);
+    setActionType(action);
+    setItemType(type);
+    setShowApprovalModal(true);
+  };
+
+  const closeApprovalModal = () => {
+    setShowApprovalModal(false);
+    setSelectedItem(null);
+    setActionType('');
+    setItemType('');
+  };
+
+  const handleConfirmAction = () => {
+    if (!selectedItem || !actionType || !itemType) return;
+
+    const actionStatus = actionType === 'approve' ? 'approved' : 'rejected';
+    
+    if (itemType === 'user') {
+      handleUserAction(selectedItem._id, actionStatus);
+    } else if (itemType === 'upload') {
+      handleUploadAction(selectedItem.id, actionStatus);
+    } else if (itemType === 'admin') {
+      handleAdminAction(selectedItem._id, actionStatus);
+    }
+    
+    closeApprovalModal();
+  };
 
   const handleUserAction = async (userId, status) => {
     try {
@@ -230,16 +267,16 @@ function Approve() {
                           <div className="card-footer">
                             <div className="card-actions">
                               <button
-                                onClick={() => handleUserAction(user._id, 'approved')}
+                                onClick={() => openApprovalModal(user, 'approve', 'user')}
                                 className="btn btn-success btn-sm"
                               >
-                                ✅ Approve
+                                Approve
                               </button>
                               <button
-                                onClick={() => handleUserAction(user._id, 'rejected')}
+                                onClick={() => openApprovalModal(user, 'reject', 'user')}
                                 className="btn btn-danger btn-sm"
                               >
-                                ❌ Reject
+                                Reject
                               </button>
                             </div>
                           </div>
@@ -286,13 +323,13 @@ function Approve() {
                           </div>
                           <div className="card-actions">
                             <button
-                              onClick={() => handleUploadAction(upload.id, 'approved')}
+                              onClick={() => openApprovalModal(upload, 'approved', 'upload')}
                               className="action-btn approve"
                             >
                               Approve
                             </button>
                             <button
-                              onClick={() => handleUploadAction(upload.id, 'rejected')}
+                              onClick={() => openApprovalModal(upload, 'rejected', 'upload')}
                               className="action-btn reject"
                             >
                               Reject
@@ -328,16 +365,16 @@ function Approve() {
                           <div className="card-footer">
                             <div className="card-actions">
                               <button
-                                onClick={() => handleAdminAction(reg._id, 'approved')}
+                                onClick={() => openApprovalModal(reg, 'approved', 'admin')}
                                 className="btn btn-success btn-sm"
                               >
-                                ✅ Approve
+                                Approve
                               </button>
                               <button
-                                onClick={() => handleAdminAction(reg._id, 'rejected')}
+                                onClick={() => openApprovalModal(reg, 'rejected', 'admin')}
                                 className="btn btn-danger btn-sm"
                               >
-                                ❌ Reject
+                                Reject
                               </button>
                             </div>
                           </div>
@@ -351,6 +388,53 @@ function Approve() {
           )}
         </section>
       </div>
+
+      {/* Confirmation Modal */}
+      {showApprovalModal && (
+        <div className="modal-overlay" onClick={closeApprovalModal}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h3>Confirm {actionType === 'approved' ? 'Approval' : 'Rejection'}</h3>
+            </div>
+            <div className="modal-body">
+              <div className="confirmation-icon">
+                {actionType === 'approved' ? (
+                  <div className="icon-approve">
+                    <div className="check-icon"></div>
+                  </div>
+                ) : (
+                  <div className="icon-reject">
+                    <div className="reject-icon"></div>
+                  </div>
+                )}
+              </div>
+              <p>
+                Are you sure you want to {actionType === 'approved' ? 'approve' : 'reject'} this {itemType}?
+              </p>
+              {selectedItem && (
+                <div className="item-details">
+                  <strong>
+                    {itemType === 'user' && selectedItem.name}
+                    {itemType === 'upload' && selectedItem.filename}
+                    {itemType === 'admin' && selectedItem.name}
+                  </strong>
+                </div>
+              )}
+            </div>
+            <div className="modal-footer">
+              <button onClick={closeApprovalModal} className="btn btn-secondary">
+                Cancel
+              </button>
+              <button 
+                onClick={handleConfirmAction} 
+                className={`btn ${actionType === 'approved' ? 'btn-success' : 'btn-danger'}`}
+              >
+                {actionType === 'approved' ? 'Approve' : 'Reject'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

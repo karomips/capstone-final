@@ -784,6 +784,139 @@ p {
   color: var(--text-primary);
 }
 
+/* Suspend Icon */
+.suspend-icon {
+  width: 24px;
+  height: 24px;
+  background: var(--warning-yellow);
+  position: relative;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.suspend-icon::before {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 2px;
+  background: white;
+  border-radius: 1px;
+}
+
+.suspend-icon::after {
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 12px;
+  background: white;
+  border-radius: 1px;
+  transform: rotate(90deg);
+}
+
+/* Approve Icon */
+.approve-icon {
+  width: 24px;
+  height: 24px;
+  background: var(--success-green);
+  position: relative;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.approve-icon::before {
+  content: '';
+  position: absolute;
+  width: 6px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  margin-top: -2px;
+  margin-left: -1px;
+}
+
+/* Check Icon */
+.check-icon {
+  width: 24px;
+  height: 24px;
+  background: var(--success-green);
+  position: relative;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.check-icon::before {
+  content: '';
+  position: absolute;
+  width: 6px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  margin-top: -2px;
+  margin-left: -1px;
+}
+
+/* Reject Icon */
+.reject-icon {
+  width: 24px;
+  height: 24px;
+  background: var(--danger-red);
+  position: relative;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.reject-icon::before {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 2px;
+  background: white;
+  border-radius: 1px;
+  transform: rotate(45deg);
+}
+
+.reject-icon::after {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 2px;
+  background: white;
+  border-radius: 1px;
+  transform: rotate(-45deg);
+}
+
+/* Icon Container Styles */
+.icon-approve {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.icon-suspend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.icon-reject {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
 .spinner {
   width: 1rem;
   height: 1rem;
