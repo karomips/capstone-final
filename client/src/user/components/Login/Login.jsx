@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import '../../../shared/styles/unified-design-system.css';
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -101,111 +102,122 @@ function Login() {
   };
 
   return (
-    <div className="login-container">
-      <div className="login-wrapper">
+    <div style={{ minHeight: '100vh', backgroundColor: 'var(--bg-secondary)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 'var(--space-4)' }}>
+      <div className="container" style={{ maxWidth: '28rem' }}>
         {/* Header */}
-        <div className="login-header">
-          <Link to="/" className="back-link">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.42-1.41L7.83 13H20v-2z"/>
+        <div className="text-center mb-6">
+          <Link to="/" className="btn btn-secondary mb-4" style={{ textDecoration: 'none' }}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19 12H5M12 19L5 12L12 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
             Back to Home
           </Link>
-          <div className="brand">
-            <img src="/barangay_logo.png" alt="Barangay Logo" className="brand-logo" />
-            <div className="brand-text">
-              <h1>Welcome Back</h1>
+          <div className="flex flex-col items-center gap-4">
+            <img src="/barangay_logo.png" alt="Barangay Logo" style={{ width: '48px', height: '48px', borderRadius: '50%' }} />
+            <div>
+              <h1 className="mb-2">Welcome Back</h1>
               <p>Sign in to your job portal account</p>
             </div>
           </div>
         </div>
 
         {/* Login Form */}
-        <div className="login-card">
-          <form onSubmit={handleSubmit} className={`login-form ${isLoading ? 'loading' : ''}`}>
+        <div className="card">
+          <form onSubmit={handleSubmit}>
             {error && (
-              <div className="error-alert">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm4.207 12.793l-1.414 1.414L12 13.414l-2.793 2.793-1.414-1.414L10.586 12 7.793 9.207l1.414-1.414L12 10.586l2.793-2.793 1.414 1.414L13.414 12l2.793 2.793z"/>
+              <div className="alert alert-error mb-4">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
+                  <line x1="15" y1="9" x2="9" y2="15" stroke="currentColor" strokeWidth="2"/>
+                  <line x1="9" y1="9" x2="15" y2="15" stroke="currentColor" strokeWidth="2"/>
                 </svg>
                 {error}
               </div>
             )}
 
-            <div className="form-group floating">
+            <div className="form-group">
+              <label htmlFor="email" className="form-label">
+                <div className="flex items-center gap-2">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <polyline points="22,6 12,13 2,6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  Email Address
+                </div>
+              </label>
               <input
                 type="email"
                 id="email"
                 name="email"
-                className={`form-input ${formData.email ? 'success' : ''}`}
-                placeholder=" "
+                className="form-input"
+                placeholder="Enter your email"
                 value={formData.email}
                 onChange={handleInputChange}
                 required
                 disabled={isLoading}
               />
-              <label htmlFor="email" className="form-label">
-                Email Address
-              </label>
             </div>
 
-            <div className="form-group floating">
+            <div className="form-group">
+              <label htmlFor="password" className="form-label">
+                <div className="flex items-center gap-2">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <circle cx="12" cy="16" r="1" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M7 11V7A5 5 0 0 1 17 7V11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  Password
+                </div>
+              </label>
               <input
                 type="password"
                 id="password"
                 name="password"
-                className={`form-input ${formData.password ? 'success' : ''}`}
-                placeholder=" "
+                className="form-input"
+                placeholder="Enter your password"
                 value={formData.password}
                 onChange={handleInputChange}
                 required
                 disabled={isLoading}
               />
-              <label htmlFor="password" className="form-label">
-                Password
-              </label>
             </div>
 
-            <div className="form-options">
-              <label className="checkbox-label">
+            <div className="flex items-center justify-between mb-4">
+              <label className="flex items-center gap-2">
                 <input 
                   type="checkbox" 
                   name="rememberMe"
                   checked={formData.rememberMe}
                   onChange={handleInputChange}
-                  className="checkbox" 
+                  className="form-checkbox" 
                 />
-                <span className="checkbox-text">Remember me</span>
+                <span className="text-sm">Remember me</span>
               </label>
-              <Link to="/user/forgot-password" className="forgot-link">
+              <Link to="/user/forgot-password" style={{ color: 'var(--primary-blue)', textDecoration: 'none', fontSize: '0.875rem' }}>
                 Forgot password?
               </Link>
             </div>
 
             <button
               type="submit"
-              className={`submit-btn ${isLoading ? 'loading' : ''}`}
+              className={`btn btn-primary w-full ${isLoading ? 'loading' : ''}`}
               disabled={isLoading}
             >
               {isLoading ? (
-                <>
+                <div className="flex items-center gap-2">
                   <div className="spinner"></div>
-                  <span>Signing in...</span>
-                </>
+                  Signing in...
+                </div>
               ) : (
                 'Sign In'
               )}
             </button>
           </form>
 
-          <div className="divider">
-            <span>or</span>
-          </div>
-
-          <div className="alternative-actions">
-            <p className="signup-prompt">
+          <div className="text-center mt-6">
+            <p className="text-sm">
               Don't have an account?{' '}
-              <Link to="/user/register" className="signup-link">
+              <Link to="/user/register" style={{ color: 'var(--primary-blue)', textDecoration: 'none' }}>
                 Create account
               </Link>
             </p>
@@ -213,19 +225,21 @@ function Login() {
         </div>
 
         {/* Footer */}
-        <div className="login-footer">
-          <p>
+        <div className="text-center mt-6">
+          <p className="text-sm text-muted">
             By signing in, you agree to our{' '}
             <button 
-              className="footer-link-btn"
+              className="link-btn"
               onClick={() => setShowTermsModal(true)}
+              style={{ color: 'var(--primary-blue)', textDecoration: 'none', background: 'none', border: 'none', cursor: 'pointer' }}
             >
               Terms of Service
             </button>
             {' '}and{' '}
             <button 
-              className="footer-link-btn"
+              className="link-btn"
               onClick={() => setShowPrivacyModal(true)}
+              style={{ color: 'var(--primary-blue)', textDecoration: 'none', background: 'none', border: 'none', cursor: 'pointer' }}
             >
               Privacy Policy
             </button>

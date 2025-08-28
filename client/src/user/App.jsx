@@ -5,7 +5,6 @@ import Navbar from './components/Navbar/Navbar.jsx';
 import Homepage from './components/Homepage/Homepage.jsx';
 import Login from './components/Login/Login.jsx';
 import Postpage from './components/Postpage/Postpage.jsx';
-import Contact from './components/Contact/Contact.jsx';
 import Upload from './components/Upload/Upload.jsx';
 import Register from './components/Register/Register.jsx';
 import Jobspage from './components/Jobspage/Jobspage.jsx';
@@ -65,16 +64,6 @@ function UserApp() {
             <RoleProtectedRoute requiredRole="user">
               <ProtectedRoute>
                 <Postpage />
-              </ProtectedRoute>
-            </RoleProtectedRoute>
-          }
-        />
-        <Route
-          path="/contact"
-          element={
-            <RoleProtectedRoute requiredRole="user">
-              <ProtectedRoute>
-                <Contact />
               </ProtectedRoute>
             </RoleProtectedRoute>
           }

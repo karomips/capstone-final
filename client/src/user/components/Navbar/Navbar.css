@@ -54,7 +54,7 @@
 .brand-text {
   color: var(--nav-text);
   font-size: 0.55rem; /* Reduced from 0.7rem */
-  font-weight: 600;
+  font-weight: 200;
   margin: 0;
   line-height: 1.1; /* Reduced from 1.2 for tighter spacing */
   text-align: center;

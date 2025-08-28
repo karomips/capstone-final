@@ -107,7 +107,6 @@ function Navbar() {
           </ul>
         </li>
         
-        <li><NavLink to="/user/contact" activeClassName="active" className="professional-nav-link">Contact</NavLink></li>
         <li><NavLink to="/user/messages" activeClassName="active" className="professional-nav-link">Messages</NavLink></li>
         <li><NavLink to="/user/profile" activeClassName="active" className="professional-nav-link">Profile</NavLink></li>
       </ul>

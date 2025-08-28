@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Jobspage.css';
-import '../../styles/professional-theme.css';
+import '../../../shared/styles/unified-design-system.css';
 
 function Jobspage() {
   const [search, setSearch] = useState('');
@@ -143,38 +142,38 @@ function Jobspage() {
   };
 
   return (
-    <div className="jobs-container professional-container">
-      <div className="jobs-content">
+    <div className="page-container">
+      <div className="page-content">
         {/* Jobs Header */}
-        <div className="jobs-header professional-header">
-          <h1 className="jobs-header-title professional-title">
-            <span className="jobs-header-icon"></span>
+        <div className="page-header">
+          <h1 className="page-title">
+            <span className="page-icon">💼</span>
             Job Opportunities
           </h1>
-          <p className="jobs-header-subtitle professional-subtitle">
+          <p className="page-subtitle">
             {loading ? 'Loading...' : `${filteredJobs.length} job${filteredJobs.length !== 1 ? 's' : ''} available`}
           </p>
         </div>
 
         {/* Filters and Search */}
-        <div className="jobs-filters professional-filters">
-          <div className="jobs-filter-row professional-filter-row">
-            <div className="jobs-search-container professional-search">
+        <div className="search-filters-container">
+          <div className="search-filters-row">
+            <div className="search-container">
               <input
                 type="text"
                 placeholder="Search jobs by title, company, location..."
                 value={search}
                 onChange={e => setSearch(e.target.value)}
-                className="jobs-search professional-input"
+                className="search-input"
               />
-              <span className="jobs-search-icon"></span>
+              <span className="search-icon">🔍</span>
             </div>
             
-            <div className="jobs-filter-controls professional-filter-controls">
+            <div className="filter-controls">
               <select
                 value={selectedCategory}
                 onChange={e => setSelectedCategory(e.target.value)}
-                className="jobs-filter-select professional-select"
+                className="form-select"
               >
                 <option value="">All Categories</option>
                 {categories.map(category => (
@@ -187,7 +186,7 @@ function Jobspage() {
               <select
                 value={sortBy}
                 onChange={e => setSortBy(e.target.value)}
-                className="jobs-filter-select professional-select"
+                className="form-select"
               >
                 <option value="newest">Newest First</option>
                 <option value="oldest">Oldest First</option>
@@ -196,7 +195,7 @@ function Jobspage() {
               </select>
 
               {(search || selectedCategory || sortBy !== 'newest') && (
-                <button className="jobs-clear-filters professional-btn professional-btn-secondary" onClick={clearFilters}>
+                <button className="btn btn-secondary" onClick={clearFilters}>
                   Clear Filters
                 </button>
               )}
@@ -207,50 +206,50 @@ function Jobspage() {
         {/* Job Listings */}
         <div className="jobs-content-main">
           {loading ? (
-            <div className="jobs-loading-state professional-loading">
-              <div className="jobs-loading-spinner"></div>
-              <h3 className="professional-heading">Loading Jobs...</h3>
-              <p className="professional-text">Please wait while we fetch the latest job opportunities.</p>
+            <div className="loading-state">
+              <div className="loading-spinner"></div>
+              <h3 className="loading-title">Loading Jobs...</h3>
+              <p className="loading-text">Please wait while we fetch the latest job opportunities.</p>
             </div>
           ) : error ? (
-            <div className="jobs-error-state professional-error">
-              <div className="jobs-error-icon">⚠️</div>
-              <h3 className="professional-heading">Unable to Load Jobs</h3>
-              <p className="professional-text">{error}</p>
+            <div className="error-state">
+              <div className="error-icon">⚠️</div>
+              <h3 className="error-title">Unable to Load Jobs</h3>
+              <p className="error-text">{error}</p>
               <button 
-                className="jobs-retry-btn professional-btn professional-btn-primary"
+                className="btn btn-primary"
                 onClick={() => window.location.reload()}
               >
                 Try Again
               </button>
             </div>
           ) : filteredJobs.length > 0 ? (
-            <div className="jobs-grid professional-grid professional-grid-2">
+            <div className="jobs-grid">
               {filteredJobs.map(job => (
-                <div key={job._id} className="jobs-card professional-card">
-                  <div className="jobs-card-header professional-card-header">
-                    <h3 className="jobs-card-title professional-card-title">{job.title}</h3>
-                    <div className="jobs-card-badge professional-badge">
+                <div key={job._id} className="job-card">
+                  <div className="job-card-header">
+                    <h3 className="job-title">{job.title}</h3>
+                    <div className="job-category-badge">
                       {getCategoryIcon(job.category || 'Other')} {job.category || 'General'}
                     </div>
                   </div>
                   
-                  <div className="jobs-card-info professional-card-info">
-                    <p className="jobs-card-company professional-text">
-                      <span className="jobs-card-icon">🏢</span>
+                  <div className="job-info">
+                    <p className="job-company">
+                      <span className="job-icon">🏢</span>
                       {job.company}
                     </p>
-                    <p className="jobs-card-location professional-text">
-                      <span className="jobs-card-icon">📍</span>
+                    <p className="job-location">
+                      <span className="job-icon">📍</span>
                       {job.location}
                     </p>
-                    <p className="jobs-card-date professional-text">
-                      <span className="jobs-card-icon">📅</span>
+                    <p className="job-date">
+                      <span className="job-icon">📅</span>
                       {formatDate(job.createdAt || job.datePosted)}
                     </p>
                   </div>
                   
-                  <p className="jobs-card-description professional-text">
+                  <p className="job-description">
                     {job.description && typeof job.description === 'string' && job.description.length > 120 
                       ? `${job.description.substring(0, 120)}...` 
                       : typeof job.description === 'string' 
@@ -259,14 +258,14 @@ function Jobspage() {
                   </p>
 
                   {job.salary && (
-                    <p className="jobs-card-salary professional-text">
-                      <span className="jobs-card-icon">💰</span>
+                    <p className="job-salary">
+                      <span className="job-icon">💰</span>
                       {typeof job.salary === 'string' ? job.salary : 'Competitive salary'}
                     </p>
                   )}
 
                   {job.requirements && Array.isArray(job.requirements) && job.requirements.length > 0 && (
-                    <div className="jobs-card-requirements professional-list">
+                    <div className="job-requirements">
                       <strong>Requirements:</strong>
                       <ul>
                         {job.requirements.slice(0, 2).map((req, index) => (
@@ -280,7 +279,7 @@ function Jobspage() {
                   )}
                   
                   <button
-                    className="jobs-card-apply-btn professional-btn professional-btn-primary"
+                    className="btn btn-primary"
                     onClick={() => handleApply(job)}
                   >
                     Apply Now
@@ -289,16 +288,16 @@ function Jobspage() {
               ))}
             </div>
           ) : (
-            <div className="jobs-no-results professional-empty-state">
-              <div className="no-results-icon">🔍</div>
-              <h3 className="professional-heading">No Jobs Found</h3>
-              <p className="professional-text">
+            <div className="empty-state">
+              <div className="empty-icon">🔍</div>
+              <h3 className="empty-title">No Jobs Found</h3>
+              <p className="empty-text">
                 {search || selectedCategory 
                   ? 'Try adjusting your search terms or filters to find more opportunities.'
                   : 'No job listings are currently available. Check back later for new opportunities.'}
               </p>
               {(search || selectedCategory) && (
-                <button className="jobs-clear-search-btn professional-btn professional-btn-secondary" onClick={clearFilters}>
+                <button className="btn btn-secondary" onClick={clearFilters}>
                   Clear Search & Filters
                 </button>
               )}
