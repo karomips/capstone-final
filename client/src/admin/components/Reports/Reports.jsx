@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Reports.css';
+import '../../../shared/styles/unified-design-system.css';
 
 function Reports() {
   const [reportData, setReportData] = useState({
@@ -65,85 +66,86 @@ function Reports() {
 
   if (loading) {
     return (
-      <div className="reports-loading">
-        <div className="loading-spinner">
-          <div className="lds-dual-ring"></div>
+      <div className="main-content">
+        <div className="content-wrapper">
+          <div className="loading-state">
+            <div className="loading-spinner"></div>
+            <p>Generating reports...</p>
+          </div>
         </div>
-        <p>Generating reports...</p>
       </div>
     );
   }
 
   return (
-    <>
-      {/* Background Animation */}
-      <div className="reports-bg-animated">
-        <div className="reports-bg-bubble b1"></div>
-        <div className="reports-bg-bubble b2"></div>
-        <div className="reports-bg-bubble b3"></div>
-        <div className="reports-bg-bubble b4"></div>
-      </div>
-
-      <div className="reports-main-content">
-        {/* Welcome Section */}
-        <section className="reports-welcome-section">
-          <div className="welcome-header">
-            <img 
-              src="/favicon.ico" 
-              alt="Reports" 
-              className="welcome-logo"
-            />
-            <div className="welcome-text">
-              <h1>Analytics & Reports</h1>
-              <p>Comprehensive insights and data analysis for your job portal</p>
+    <div className="main-content">
+      <div className="content-wrapper">
+        {/* Page Header */}
+        <div className="page-header">
+          <div className="header-content">
+            <div className="header-text">
+              <h1 className="page-title blue-accent">
+                <span className="page-icon"></span>
+                Analytics & Reports
+              </h1>
+              <p className="page-subtitle">Comprehensive insights and data analysis for your job portal</p>
             </div>
-            <div className="report-actions">
-              <button className="export-btn pdf" onClick={generatePDFReport}>
+            <div className="header-actions">
+              <button className="btn btn-primary" onClick={generatePDFReport}>
                 📄 Export PDF
               </button>
-              <button className="export-btn excel" onClick={exportToExcel}>
+              <button className="btn btn-secondary" onClick={exportToExcel}>
                 📊 Export Excel
               </button>
             </div>
           </div>
-        </section>
-
-        {/* Report Navigation */}
-        <div className="report-nav">
-          <button 
-            className={`report-tab ${selectedReport === 'overview' ? 'active' : ''}`}
-            onClick={() => setSelectedReport('overview')}
-          >
-            📊 Overview
-          </button>
-          <button 
-            className={`report-tab ${selectedReport === 'users' ? 'active' : ''}`}
-            onClick={() => setSelectedReport('users')}
-          >
-            👥 User Analytics
-          </button>
-          <button 
-            className={`report-tab ${selectedReport === 'jobs' ? 'active' : ''}`}
-            onClick={() => setSelectedReport('jobs')}
-          >
-            💼 Job Analytics
-          </button>
-          <button 
-            className={`report-tab ${selectedReport === 'trends' ? 'active' : ''}`}
-            onClick={() => setSelectedReport('trends')}
-          >
-            📈 Trends
-          </button>
         </div>
 
+        {/* Report Navigation */}
+        <section className="content-section">
+          <div className="tab-navigation">
+            <button 
+              className={`tab-btn ${selectedReport === 'overview' ? 'active blue-accent' : ''}`}
+              onClick={() => setSelectedReport('overview')}
+            >
+              📊 Overview
+            </button>
+            <button 
+              className={`tab-btn ${selectedReport === 'users' ? 'active blue-accent' : ''}`}
+              onClick={() => setSelectedReport('users')}
+            >
+              👥 User Analytics
+            </button>
+            <button 
+              className={`tab-btn ${selectedReport === 'jobs' ? 'active blue-accent' : ''}`}
+              onClick={() => setSelectedReport('jobs')}
+            >
+              💼 Job Analytics
+            </button>
+            <button 
+              className={`tab-btn ${selectedReport === 'trends' ? 'active blue-accent' : ''}`}
+              onClick={() => setSelectedReport('trends')}
+            >
+              📈 Trends
+            </button>
+          </div>
+        </section>
+
         {/* Report Content */}
-        <div className="report-content">
+        <section className="content-section">
           {selectedReport === 'overview' && (
             <div className="overview-section">
+              <div className="section-header">
+                <h2 className="section-title blue-accent">
+                  <span className="section-icon"></span>
+                  Key Metrics Overview
+                </h2>
+              </div>
+              
               {/* Key Metrics */}
-              <div className="metrics-grid">
-                <div className="metric-card">
-                  <div className="metric-icon">👥</div>
+              <div className="grid-layout grid-4">
+                <div className="stat-card">
+                  <div className="stat-icon blue-icon">👥</div>
                   <div className="metric-value">{reportData.totalUsers}</div>
                   <div className="metric-label">Total Users</div>
                   <div className="metric-change positive">+12% this month</div>
@@ -346,17 +348,17 @@ function Reports() {
                 <div className="trend-card positive">
                   <div className="trend-icon">🎯</div>
                   <div className="trend-content">
-                    <h4>Success Rate</h4>
-                    <p>High approval rate for user applications</p>
-                    <div className="trend-percentage">94%</div>
+                    <h4 className="card-title blue-text">Success Rate</h4>
+                    <p className="card-text">High approval rate for user applications</p>
+                    <div className="trend-percentage blue-accent">94%</div>
                   </div>
                 </div>
               </div>
             </div>
           )}
-        </div>
+        </section>
       </div>
-    </>
+    </div>
   );
 }
 

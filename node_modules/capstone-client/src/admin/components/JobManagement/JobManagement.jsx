@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './JobManagement.css';
+import '../../../shared/styles/unified-design-system.css';
 
 function JobManagement() {
   const [jobs, setJobs] = useState([]);
@@ -181,150 +182,178 @@ function JobManagement() {
 
   if (loading) {
     return (
-      <div className="job-management-loading">
-        <div className="loading-spinner">
-          <div className="lds-dual-ring"></div>
+      <div className="main-content">
+        <div className="content-wrapper">
+          <div className="loading-state">
+            <div className="loading-spinner"></div>
+            <p>Loading jobs...</p>
+          </div>
         </div>
-        <p>Loading jobs...</p>
       </div>
     );
   }
 
   return (
-    <>
-      {/* Background Animation */}
-      <div className="job-management-bg-animated">
-        <div className="job-management-bg-bubble b1"></div>
-        <div className="job-management-bg-bubble b2"></div>
-        <div className="job-management-bg-bubble b3"></div>
-        <div className="job-management-bg-bubble b4"></div>
-      </div>
+    <div className="main-content">
+      <div className="content-wrapper">
+        {/* Page Header */}
+        <div className="page-header">
+          <div className="header-content">
+            <div className="header-text">
+              <h1 className="page-title blue-accent">
+                <span className="page-icon"></span>
+                Job Management
+              </h1>
+              <p className="page-subtitle">Manage and monitor all job postings in the portal</p>
+            </div>
+          </div>
+        </div>
 
-      <div className="job-management-main-content">
-        {/* Welcome Section */}
-        <section className="job-management-welcome-section">
-          <div className="welcome-header">
-            <img 
-              src="/favicon.ico" 
-              alt="Job Management" 
-              className="welcome-logo"
-            />
-            <div className="welcome-text">
-              <h1>Job Management</h1>
-              <p>Manage and monitor all job postings in the portal</p>
+        {/* Stats and Controls */}
+        <section className="content-section">
+          <h2 className="section-title blue-accent">
+            <span className="section-icon"></span>
+            Job Statistics
+          </h2>
+          <div className="grid-layout grid-2">
+            <div className="stat-card">
+              <div className="stat-icon blue-icon">💼</div>
+              <div className="stat-number">{jobs.length}</div>
+              <div className="stat-label blue-text">Total Jobs</div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-icon blue-icon">🔍</div>
+              <div className="stat-number">{filteredJobs.length}</div>
+              <div className="stat-label blue-text">Filtered Results</div>
             </div>
           </div>
         </section>
 
-        {/* Stats and Controls */}
-        <div className="job-management-controls">
-          <div className="job-stats">
-            <div className="stat-item">
-              <span className="stat-number">{jobs.length}</span>
-              <span className="stat-label">Total Jobs</span>
+        {/* Search and Filter Controls */}
+        <section className="content-section">
+          <div className="card">
+            <div className="card-header">
+              <h3 className="card-title blue-accent">Search & Filter</h3>
             </div>
-            <div className="stat-item">
-              <span className="stat-number">{filteredJobs.length}</span>
-              <span className="stat-label">Filtered Results</span>
-            </div>
-          </div>
-
-          <div className="search-controls">
-            <div className="search-box">
-              <input
-                type="text"
-                placeholder="Search jobs..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="search-input"
-              />
-            </div>
-            <div className="filter-box">
-              <select
-                value={filterCategory}
-                onChange={(e) => setFilterCategory(e.target.value)}
-                className="filter-select"
-              >
-                {categories.map(category => (
-                  <option key={category} value={category}>
-                    {category === 'all' ? 'All Categories' : category}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-        </div>
-
-        {/* Jobs Grid */}
-        <div className="jobs-grid">
-          {filteredJobs.length === 0 ? (
-            <div className="no-jobs">
-              <div className="no-jobs-icon">📋</div>
-              <h3>No jobs found</h3>
-              <p>No jobs match your current search criteria.</p>
-            </div>
-          ) : (
-            filteredJobs.map(job => (
-              <div key={job._id} className="job-card">
-                <div className="job-header">
-                  <h3 className="job-title">{job.title}</h3>
-                  <span className="job-category">{job.category}</span>
+            <div className="card-content">
+              <div className="grid-layout grid-2">
+                <div className="form-group">
+                  <label className="form-label">Search Jobs</label>
+                  <input
+                    type="text"
+                    placeholder="Search by title or company..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="form-input"
+                  />
                 </div>
-                <div className="job-info">
-                  <p className="job-company">
-                    <span className="info-icon">🏢</span>
-                    {job.company}
-                  </p>
-                  <p className="job-location">
-                    <span className="info-icon">📍</span>
-                    {job.location}
-                  </p>
-                  <p className="job-date">
-                    <span className="info-icon">📅</span>
-                    {new Date(job.postedDate).toLocaleDateString()}
-                  </p>
-                </div>
-                <div className="job-description">
-                  {job.description?.substring(0, 150)}...
-                </div>
-                <div className="job-actions">
-                  <button 
-                    className="action-btn view"
-                    onClick={() => handleViewApplications(job)}
+                <div className="form-group">
+                  <label className="form-label">Filter by Category</label>
+                  <select
+                    value={filterCategory}
+                    onChange={(e) => setFilterCategory(e.target.value)}
+                    className="form-select"
                   >
-                    View Applications
-                  </button>
-                  <button 
-                    className="action-btn info"
-                    onClick={() => handleViewJob(job)}
-                  >
-                    View Details
-                  </button>
-                  <button 
-                    className="action-btn edit"
-                    onClick={() => handleEditJob(job)}
-                  >
-                    Edit Job
-                  </button>
-                  <button 
-                    className="action-btn delete"
-                    onClick={() => handleDeleteJob(job)}
-                  >
-                    Delete Job
-                  </button>
+                    {categories.map(category => (
+                      <option key={category} value={category}>
+                        {category === 'all' ? 'All Categories' : category}
+                      </option>
+                    ))}
+                  </select>
                 </div>
               </div>
-            ))
+            </div>
+          </div>
+        </section>
+
+        {/* Jobs Grid */}
+        <section className="content-section">
+          <div className="section-header">
+            <h2 className="section-title blue-accent">
+              <span className="section-icon"></span>
+              Job Listings ({filteredJobs.length})
+            </h2>
+          </div>
+          
+          {filteredJobs.length === 0 ? (
+            <div className="empty-state">
+              <div className="empty-state-icon">📋</div>
+              <h3 className="empty-state-title">No jobs found</h3>
+              <p className="empty-state-description">No jobs match your current search criteria.</p>
+            </div>
+          ) : (
+            <div className="grid-layout grid-2">
+              {filteredJobs.map(job => (
+                <div key={job._id} className="card">
+                  <div className="card-header">
+                    <div className="job-header-info">
+                      <h3 className="card-title blue-text">{job.title}</h3>
+                      <span className="category-badge blue-accent">{job.category}</span>
+                    </div>
+                  </div>
+                  
+                  <div className="card-content">
+                    <div className="job-info">
+                      <div className="info-item">
+                        <span className="info-icon blue-icon">🏢</span>
+                        <span className="info-text">{job.company}</span>
+                      </div>
+                      <div className="info-item">
+                        <span className="info-icon blue-icon">📍</span>
+                        <span className="info-text">{job.location}</span>
+                      </div>
+                      <div className="info-item">
+                        <span className="info-icon blue-icon">📅</span>
+                        <span className="info-text">{new Date(job.postedDate).toLocaleDateString()}</span>
+                      </div>
+                    </div>
+                    
+                    <div className="job-description">
+                      <p className="card-text">{job.description?.substring(0, 150)}...</p>
+                    </div>
+                  </div>
+
+                  <div className="card-footer">
+                    <div className="job-actions">
+                      <button 
+                        className="btn btn-primary btn-sm"
+                        onClick={() => handleViewApplications(job)}
+                      >
+                        📝 Applications
+                      </button>
+                      <button 
+                        className="btn btn-outline btn-sm"
+                        onClick={() => handleViewJob(job)}
+                      >
+                        👁️ Details
+                      </button>
+                      <button 
+                        className="btn btn-secondary btn-sm"
+                        onClick={() => handleEditJob(job)}
+                      >
+                        ✏️ Edit
+                      </button>
+                      <button 
+                        className="btn btn-danger btn-sm"
+                        onClick={() => handleDeleteJob(job)}
+                      >
+                        🗑️ Delete
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           )}
-        </div>
+        </section>
       </div>
 
       {/* Applications Modal */}
       {showApplications && (
-        <div className="applications-modal-backdrop" onClick={() => setShowApplications(false)}>
-          <div className="applications-modal" onClick={(e) => e.stopPropagation()}>
-            <div className="applications-modal-header">
-              <h2>Applications for: {selectedJob?.title}</h2>
+        <div className="modal-backdrop" onClick={() => setShowApplications(false)}>
+          <div className="modal applications-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2 className="modal-title blue-accent">Applications for: {selectedJob?.title}</h2>
               <button 
                 className="modal-close-btn"
                 onClick={() => setShowApplications(false)}
@@ -333,35 +362,33 @@ function JobManagement() {
               </button>
             </div>
             
-            <div className="applications-modal-content">
+            <div className="modal-content">
               {applicationsLoading ? (
-                <div className="applications-loading">
-                  <div className="loading-spinner">
-                    <div className="lds-dual-ring"></div>
-                  </div>
+                <div className="loading-state">
+                  <div className="loading-spinner"></div>
                   <p>Loading applications...</p>
                 </div>
               ) : applications.length === 0 ? (
-                <div className="no-applications">
-                  <div className="no-applications-icon">📝</div>
-                  <h3>No Applications Yet</h3>
-                  <p>No one has applied for this job position yet.</p>
+                <div className="empty-state">
+                  <div className="empty-state-icon">📝</div>
+                  <h3 className="empty-state-title">No Applications Yet</h3>
+                  <p className="empty-state-description">No one has applied for this job position yet.</p>
                 </div>
               ) : (
                 <div className="applications-list">
                   {applications.map(application => (
-                    <div key={application._id} className="application-card">
-                      <div className="application-header">
+                    <div key={application._id} className="card">
+                      <div className="card-header">
                         <div className="applicant-info">
-                          <h4>{application.fullName}</h4>
-                          <p>{application.email}</p>
-                          <p>{application.phone}</p>
+                          <h4 className="card-title blue-text">{application.fullName}</h4>
+                          <p className="card-text">{application.email}</p>
+                          <p className="card-text">{application.phone}</p>
                         </div>
                         <div className="application-status">
                           <select
                             value={application.status}
                             onChange={(e) => handleUpdateApplicationStatus(application._id, e.target.value)}
-                            className={`status-select ${application.status}`}
+                            className={`form-select status-${application.status}`}
                           >
                             <option value="submitted">Submitted</option>
                             <option value="reviewing">Reviewing</option>
@@ -372,20 +399,22 @@ function JobManagement() {
                         </div>
                       </div>
                       
-                      <div className="application-meta">
-                        <span className="applied-date">
-                          Applied: {new Date(application.appliedDate).toLocaleDateString()}
-                        </span>
-                        {application.hasResume && (
-                          <a 
-                            href={`http://localhost:5000/api/applications/${application._id}/resume`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="resume-link"
-                          >
-                            📎 Download Resume
-                          </a>
-                        )}
+                      <div className="card-content">
+                        <div className="application-meta">
+                          <span className="meta-item blue-text">
+                            Applied: {new Date(application.appliedDate).toLocaleDateString()}
+                          </span>
+                          {application.hasResume && (
+                            <a 
+                              href={`http://localhost:5000/api/applications/${application._id}/resume`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="btn btn-outline btn-sm"
+                            >
+                              📎 Download Resume
+                            </a>
+                          )}
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -401,7 +430,7 @@ function JobManagement() {
         <div className="modal-backdrop" onClick={() => setShowViewModal(false)}>
           <div className="modal job-view-modal" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
-              <h2>Job Details</h2>
+              <h2 className="modal-title blue-accent">Job Details</h2>
               <button 
                 className="modal-close-btn"
                 onClick={() => setShowViewModal(false)}
@@ -411,36 +440,36 @@ function JobManagement() {
             </div>
             
             <div className="modal-content">
-              <div className="job-detail-section">
-                <h3>Basic Information</h3>
+              <div className="content-section">
+                <h3 className="section-title blue-accent">Basic Information</h3>
                 <div className="detail-grid">
                   <div className="detail-item">
-                    <label>Job Title:</label>
-                    <span>{viewingJob.title}</span>
+                    <span className="detail-label">Job Title:</span>
+                    <span className="detail-value blue-text">{viewingJob.title}</span>
                   </div>
                   <div className="detail-item">
-                    <label>Company:</label>
-                    <span>{viewingJob.company}</span>
+                    <span className="detail-label">Company:</span>
+                    <span className="detail-value">{viewingJob.company}</span>
                   </div>
                   <div className="detail-item">
-                    <label>Location:</label>
-                    <span>{viewingJob.location}</span>
+                    <span className="detail-label">Location:</span>
+                    <span className="detail-value">{viewingJob.location}</span>
                   </div>
                   <div className="detail-item">
-                    <label>Category:</label>
-                    <span className="category-badge">{viewingJob.category}</span>
+                    <span className="detail-label">Category:</span>
+                    <span className="detail-value category-badge blue-accent">{viewingJob.category}</span>
                   </div>
                   <div className="detail-item">
-                    <label>Posted Date:</label>
-                    <span>{new Date(viewingJob.postedDate).toLocaleDateString()}</span>
+                    <span className="detail-label">Posted Date:</span>
+                    <span className="detail-value">{new Date(viewingJob.postedDate).toLocaleDateString()}</span>
                   </div>
                 </div>
               </div>
               
-              <div className="job-detail-section">
-                <h3>Job Description</h3>
+              <div className="content-section">
+                <h3 className="section-title blue-accent">Job Description</h3>
                 <div className="description-content">
-                  {viewingJob.description}
+                  <p className="card-text">{viewingJob.description}</p>
                 </div>
               </div>
             </div>
@@ -453,7 +482,7 @@ function JobManagement() {
         <div className="modal-backdrop" onClick={() => setShowEditModal(false)}>
           <div className="modal job-edit-modal" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
-              <h2>Edit Job</h2>
+              <h2 className="modal-title blue-accent">Edit Job</h2>
               <button 
                 className="modal-close-btn"
                 onClick={() => setShowEditModal(false)}
@@ -465,7 +494,7 @@ function JobManagement() {
             <div className="modal-content">
               <form onSubmit={(e) => { e.preventDefault(); handleSaveEdit(); }}>
                 <div className="form-group">
-                  <label>Job Title *</label>
+                  <label className="form-label">Job Title *</label>
                   <input
                     type="text"
                     value={editingJob.title || ''}
@@ -476,7 +505,7 @@ function JobManagement() {
                 </div>
                 
                 <div className="form-group">
-                  <label>Company *</label>
+                  <label className="form-label">Company *</label>
                   <input
                     type="text"
                     value={editingJob.company || ''}
@@ -487,7 +516,7 @@ function JobManagement() {
                 </div>
                 
                 <div className="form-group">
-                  <label>Location *</label>
+                  <label className="form-label">Location *</label>
                   <input
                     type="text"
                     value={editingJob.location || ''}
@@ -498,7 +527,7 @@ function JobManagement() {
                 </div>
                 
                 <div className="form-group">
-                  <label>Category *</label>
+                  <label className="form-label">Category *</label>
                   <select
                     value={editingJob.category || ''}
                     onChange={(e) => handleEditInputChange('category', e.target.value)}
@@ -515,7 +544,7 @@ function JobManagement() {
                 </div>
                 
                 <div className="form-group">
-                  <label>Description *</label>
+                  <label className="form-label">Description *</label>
                   <textarea
                     value={editingJob.description || ''}
                     onChange={(e) => handleEditInputChange('description', e.target.value)}
@@ -528,7 +557,7 @@ function JobManagement() {
                 <div className="modal-actions">
                   <button 
                     type="button" 
-                    className="btn-secondary"
+                    className="btn btn-secondary"
                     onClick={() => setShowEditModal(false)}
                     disabled={isSubmitting}
                   >
@@ -536,7 +565,7 @@ function JobManagement() {
                   </button>
                   <button 
                     type="submit" 
-                    className="btn-primary"
+                    className="btn btn-primary"
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? 'Saving...' : 'Save Changes'}
@@ -553,7 +582,7 @@ function JobManagement() {
         <div className="modal-backdrop" onClick={() => setShowDeleteModal(false)}>
           <div className="modal delete-modal" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
-              <h2>Confirm Delete</h2>
+              <h2 className="modal-title">Confirm Delete</h2>
               <button 
                 className="modal-close-btn"
                 onClick={() => setShowDeleteModal(false)}
@@ -565,8 +594,10 @@ function JobManagement() {
             <div className="modal-content">
               <div className="delete-warning">
                 <div className="warning-icon">⚠️</div>
-                <h3>Are you sure you want to delete this job?</h3>
-                <p><strong>{deletingJob.title}</strong> at <strong>{deletingJob.company}</strong></p>
+                <h3 className="warning-title">Are you sure you want to delete this job?</h3>
+                <p className="warning-details">
+                  <strong className="blue-text">{deletingJob.title}</strong> at <strong>{deletingJob.company}</strong>
+                </p>
                 <p className="warning-text">
                   This action cannot be undone. All applications for this job will also be deleted.
                 </p>
@@ -575,7 +606,7 @@ function JobManagement() {
               <div className="modal-actions">
                 <button 
                   type="button" 
-                  className="btn-secondary"
+                  className="btn btn-secondary"
                   onClick={() => setShowDeleteModal(false)}
                   disabled={isSubmitting}
                 >
@@ -583,7 +614,7 @@ function JobManagement() {
                 </button>
                 <button 
                   type="button" 
-                  className="btn-danger"
+                  className="btn btn-danger"
                   onClick={handleConfirmDelete}
                   disabled={isSubmitting}
                 >
@@ -594,7 +625,7 @@ function JobManagement() {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }
 

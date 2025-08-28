@@ -217,7 +217,7 @@ function Login() {
           <div className="text-center mt-6">
             <p className="text-sm">
               Don't have an account?{' '}
-              <Link to="/user/register" style={{ color: 'var(--primary-blue)', textDecoration: 'none' }}>
+              <Link to="/user/upload" style={{ color: 'var(--primary-blue)', textDecoration: 'none' }}>
                 Create account
               </Link>
             </p>

@@ -1,8 +1,7 @@
 // Navbar.js
 import React, { useState, useEffect, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
-import './Navbar.css';
-import '../../styles/professional-theme.css';
+import '../../../shared/styles/unified-design-system.css';
 
 function Navbar() {
   const [isJobsDropdownOpen, setIsJobsDropdownOpen] = useState(false);
@@ -59,86 +58,105 @@ function Navbar() {
   }, [showSignoutModal]);
 
   return (
-    <aside className="sidenav professional-nav">
-      <div className="sidenav-brand professional-nav-brand">
-        <div className="brand-container">
+    <aside className="sidebar">
+      <div className="sidebar-header">
+        <div className="sidebar-brand">
           <img 
-            src="/barangay_logo.png" 
+            src="/worknest.png" 
             alt="Barangay Mangan-vaca Logo"
-            className="sidenav-logo"
+            className="sidebar-logo"
           />
-          <h1 className="brand-text professional-nav-title">Mangan-vaca Job Portal</h1>
+          <h1 className="sidebar-title">WorkNest: Job Portal</h1>
         </div>
       </div>
 
-      <ul className="sidenav-links professional-nav-links">
-        <li><NavLink to="/user/home" activeClassName="active" className="professional-nav-link">Home</NavLink></li>
-        
-        {/* Jobs Dropdown */}
-        <li className="dropdown-container professional-dropdown" ref={dropdownRef}>
-          <div 
-            className={`dropdown-toggle professional-dropdown-toggle ${isJobsDropdownOpen ? 'active' : ''}`}
-            onClick={toggleJobsDropdown}
-          >
-            <span>Jobs</span>
-            <i className={`dropdown-arrow ${isJobsDropdownOpen ? 'rotated' : ''}`}>▼</i>
-          </div>
-          <ul className={`dropdown-menu professional-dropdown-menu ${isJobsDropdownOpen ? 'open' : ''}`}>
-            <li>
-              <NavLink 
-                to="/user/jobs" 
-                activeClassName="active"
-                className="professional-nav-link"
-                onClick={() => setIsJobsDropdownOpen(false)}
-              >
-                View Jobs
-              </NavLink>
-            </li>
-            <li>
-              <NavLink 
-                to="/user/post-job" 
-                activeClassName="active"
-                className="professional-nav-link"
-                onClick={() => setIsJobsDropdownOpen(false)}
-              >
-                Post a Job
-              </NavLink>
-            </li>
-          </ul>
-        </li>
-        
-        <li><NavLink to="/user/messages" activeClassName="active" className="professional-nav-link">Messages</NavLink></li>
-        <li><NavLink to="/user/profile" activeClassName="active" className="professional-nav-link">Profile</NavLink></li>
-      </ul>
+      <nav className="sidebar-nav">
+        <ul className="nav-list">
+          <li>
+            <NavLink to="/user/home" className="nav-link">
+              <span className="nav-icon"></span>
+              Home
+            </NavLink>
+          </li>
+          
+          {/* Jobs Dropdown */}
+          <li className="nav-dropdown" ref={dropdownRef}>
+            <div 
+              className={`nav-dropdown-toggle ${isJobsDropdownOpen ? 'active' : ''}`}
+              onClick={toggleJobsDropdown}
+            >
+              <span className="nav-icon"></span>
+              <span>Jobs</span>
+              <span className={`dropdown-arrow ${isJobsDropdownOpen ? 'rotated' : ''}`}>▼</span>
+            </div>
+            <ul className={`nav-dropdown-menu ${isJobsDropdownOpen ? 'open' : ''}`}>
+              <li>
+                <NavLink 
+                  to="/user/jobs" 
+                  className="nav-link"
+                  onClick={() => setIsJobsDropdownOpen(false)}
+                >
+                  <span className="nav-icon"></span>
+                  View Jobs
+                </NavLink>
+              </li>
+              <li>
+                <NavLink 
+                  to="/user/post-job" 
+                  className="nav-link"
+                  onClick={() => setIsJobsDropdownOpen(false)}
+                >
+                  <span className="nav-icon"></span>
+                  Post a Job
+                </NavLink>
+              </li>
+            </ul>
+          </li>
+          
+          <li>
+            <NavLink to="/user/messages" className="nav-link">
+              <span className="nav-icon"></span>
+              Messages
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/user/profile" className="nav-link">
+              <span className="nav-icon"></span>
+              Profile
+            </NavLink>
+          </li>
+        </ul>
+      </nav>
 
-      <div className="sidenav-actions professional-nav-actions">
-        <button className="signout-btn professional-btn professional-btn-danger" onClick={handleSignOut}>
+      <div className="sidebar-footer">
+        <button className="btn btn-danger btn-sm" onClick={handleSignOut}>
+          <span className="nav-icon"></span>
           Sign Out
         </button>
       </div>
 
       {/* Signout Confirmation Modal */}
       {showSignoutModal && (
-        <div className="signout-modal-backdrop professional-modal-backdrop" onClick={cancelSignOut}>
-          <div className="signout-modal professional-modal" onClick={(e) => e.stopPropagation()}>
-            <div className="signout-modal-header professional-modal-header">
-              <h3 className="professional-heading">Confirm Sign Out</h3>
-              <button className="signout-modal-close professional-modal-close" onClick={cancelSignOut}>
+        <div className="modal-overlay" onClick={cancelSignOut}>
+          <div className="modal-container" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h3>Confirm Sign Out</h3>
+              <button className="modal-close-btn" onClick={cancelSignOut}>
                 ×
               </button>
             </div>
-            <div className="signout-modal-body professional-modal-body">
-              <div className="signout-modal-icon">
-                🚪
+            <div className="modal-content">
+              <div className="modal-icon-admin">
+                <div className="signout-icon"></div>
               </div>
-              <p className="professional-text">Are you sure you want to sign out?</p>
-              <p className="signout-modal-subtitle professional-text-secondary">You will need to log in again to access your account.</p>
+              <p>Are you sure you want to sign out?</p>
+              <p className="text-muted">You will need to log in again to access your account.</p>
             </div>
-            <div className="signout-modal-footer professional-modal-footer">
-              <button className="signout-cancel-btn professional-btn professional-btn-secondary" onClick={cancelSignOut}>
+            <div className="modal-footer">
+              <button className="btn btn-secondary" onClick={cancelSignOut}>
                 Cancel
               </button>
-              <button className="signout-confirm-btn professional-btn professional-btn-danger" onClick={confirmSignOut}>
+              <button className="btn btn-danger" onClick={confirmSignOut}>
                 Sign Out
               </button>
             </div>

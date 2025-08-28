@@ -87,23 +87,26 @@ function Postpage() {
   };
 
   return (
-    <div className="page-container">
-      {showPrompt && (
-        <div className={`notification ${isSuccess ? 'notification-success' : 'notification-error'}`}>
-          <div className="notification-content">
-            <div className="notification-icon">
-              {isSuccess ? '✓' : '✕'}
+    <div className="main-content">
+      <div className="content-wrapper">
+        {showPrompt && (
+          <div className={`notification ${isSuccess ? 'notification-success' : 'notification-error'}`}>
+            <div className="notification-content">
+              <div className="notification-icon">
+                {isSuccess ? '✓' : '✕'}
+              </div>
+              <p className="notification-message">{promptMessage}</p>
             </div>
-            <p className="notification-message">{promptMessage}</p>
           </div>
-        </div>
-      )}
-      
-      <div className="page-content">
+        )}
+        
         <div className="page-header">
           <div className="header-content">
             <div className="header-text">
-              <h2 className="page-title">Post a New Job Opportunity</h2>
+              <h1 className="page-title">
+                <span className="page-icon">📝</span>
+                Post a New Job Opportunity
+              </h1>
               <p className="page-subtitle">Share exciting career opportunities with our community</p>
             </div>
             <button 
@@ -116,103 +119,105 @@ function Postpage() {
           </div>
         </div>
 
-        <form className="form-card" onSubmit={handleSubmit}>
-          <div className="form-section">
-            <h3 className="section-title">
-              <span className="section-icon">📝</span>
-              Job Information
-            </h3>
-            
-            <div className="form-grid">
-              <div className="form-group">
-                <label htmlFor="title" className="form-label">Job Title *</label>
-                <input
-                  id="title"
-                  type="text"
-                  placeholder="e.g. Barangay Health Worker"
-                  value={title}
-                  onChange={e => setTitle(e.target.value)}
-                  className="form-input"
-                  required
-                />
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="category" className="form-label">Job Category *</label>
-                <div className="select-wrapper">
-                  <select
-                    id="category"
-                    value={category}
-                    onChange={e => setCategory(e.target.value)}
+        <div className="content-section">
+          <form className="form-card" onSubmit={handleSubmit}>
+            <div className="form-section">
+              <h3 className="section-title">
+                <span className="section-icon">📝</span>
+                Job Information
+              </h3>
+              
+              <div className="grid-layout grid-2">
+                <div className="form-group">
+                  <label htmlFor="title" className="form-label">Job Title *</label>
+                  <input
+                    id="title"
+                    type="text"
+                    placeholder="e.g. Barangay Health Worker"
+                    value={title}
+                    onChange={e => setTitle(e.target.value)}
+                    className="form-input"
                     required
-                    className="form-select"
-                  >
-                    <option value="">Select a category...</option>
-                    {jobCategories.map((cat) => (
-                      <option key={cat.value} value={cat.value}>
-                        {cat.icon} {cat.label}
-                      </option>
-                    ))}
-                  </select>
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="category" className="form-label">Job Category *</label>
+                  <div className="select-wrapper">
+                    <select
+                      id="category"
+                      value={category}
+                      onChange={e => setCategory(e.target.value)}
+                      required
+                      className="form-select"
+                    >
+                      <option value="">Select a category...</option>
+                      {jobCategories.map((cat) => (
+                        <option key={cat.value} value={cat.value}>
+                          {cat.icon} {cat.label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="company" className="form-label">Company/Organization *</label>
+                  <input
+                    id="company"
+                    type="text"
+                    placeholder="e.g. Barangay Mangan-vaca Health Center"
+                    value={company}
+                    onChange={e => setCompany(e.target.value)}
+                    className="form-input"
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="location" className="form-label">Location *</label>
+                  <input
+                    id="location"
+                    type="text"
+                    placeholder="e.g. Barangay Mangan-vaca"
+                    value={location}
+                    onChange={e => setLocation(e.target.value)}
+                    className="form-input"
+                    required
+                  />
                 </div>
               </div>
+            </div>
 
+            <div className="form-section">
+              <h3 className="section-title">
+                <span className="section-icon">📄</span>
+                Job Details
+              </h3>
+              
               <div className="form-group">
-                <label htmlFor="company" className="form-label">Company/Organization *</label>
-                <input
-                  id="company"
-                  type="text"
-                  placeholder="e.g. Barangay Mangan-vaca Health Center"
-                  value={company}
-                  onChange={e => setCompany(e.target.value)}
-                  className="form-input"
+                <label htmlFor="description" className="form-label">Job Description *</label>
+                <textarea
+                  id="description"
+                  placeholder="Describe the job responsibilities, requirements, qualifications, and benefits..."
+                  value={description}
+                  onChange={e => setDescription(e.target.value)}
+                  className="form-textarea"
+                  rows={8}
                   required
                 />
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="location" className="form-label">Location *</label>
-                <input
-                  id="location"
-                  type="text"
-                  placeholder="e.g. Barangay Mangan-vaca"
-                  value={location}
-                  onChange={e => setLocation(e.target.value)}
-                  className="form-input"
-                  required
-                />
+                <small className="form-hint">Provide a detailed description including responsibilities, requirements, and benefits</small>
               </div>
             </div>
-          </div>
 
-          <div className="form-section">
-            <h3 className="section-title">
-              <span className="section-icon">📄</span>
-              Job Details
-            </h3>
-            
-            <div className="form-group">
-              <label htmlFor="description" className="form-label">Job Description *</label>
-              <textarea
-                id="description"
-                placeholder="Describe the job responsibilities, requirements, qualifications, and benefits..."
-                value={description}
-                onChange={e => setDescription(e.target.value)}
-                className="form-textarea"
-                rows={8}
-                required
-              />
-              <small className="form-hint">Provide a detailed description including responsibilities, requirements, and benefits</small>
+            <div className="form-actions">
+              <button className="btn btn-primary btn-large" type="submit">
+                <span className="btn-icon">🚀</span>
+                Post Job Opportunity
+              </button>
             </div>
-          </div>
-
-          <div className="form-actions">
-            <button className="btn btn-primary btn-large" type="submit">
-              <span className="btn-icon">🚀</span>
-              Post Job Opportunity
-            </button>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     </div>
   );

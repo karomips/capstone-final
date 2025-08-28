@@ -27,7 +27,7 @@ function App() {
         
         {/* Redirect old routes to new structure */}
         <Route path="/login" element={<Navigate to="/user/login" replace />} />
-        <Route path="/register" element={<Navigate to="/user/register" replace />} />
+        <Route path="/register" element={<Navigate to="/user/upload" replace />} />
         <Route path="/home" element={<Navigate to="/user/home" replace />} />
         <Route path="/jobs" element={<Navigate to="/user/jobs" replace />} />
         

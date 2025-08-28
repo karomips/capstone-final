@@ -1,6 +1,7 @@
 import React from 'react';
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import './App.css';
+import '../shared/styles/unified-design-system.css';
 import Navbar from './components/Navbar/Navbar.jsx';
 import Homepage from './components/Homepage/Homepage.jsx';
 import Login from './components/Login/Login.jsx';
@@ -19,7 +20,7 @@ function UserApp() {
   const hideNavbar = location.pathname.includes('/login') || location.pathname.includes('/register') || location.pathname.includes('/upload');
 
   return (
-    <>
+    <div className={hideNavbar ? '' : 'app-layout'}>
       {!hideNavbar && <Navbar />}
       <Routes>
         <Route path="/login" element={<Login />} />
@@ -80,7 +81,7 @@ function UserApp() {
         <Route path="/" element={<Navigate to="/user/home" replace />} />
         <Route path="*" element={<Navigate to="/user/home" replace />} />
       </Routes>
-    </>
+    </div>
   );
 }
 

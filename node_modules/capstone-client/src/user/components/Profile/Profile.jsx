@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './Profile.css';
-import '../../styles/professional-theme.css';
+import '../../../shared/styles/unified-design-system.css';
 
 function Profile() {
   const [user, setUser] = useState(null);
@@ -240,8 +239,9 @@ function Profile() {
   };
 
   if (loading) return (
-    <div className="user-profile-bg-animated">
-      <div className="user-profile-loading">
+    <div className="main-content">
+      <div className="loading-state">
+        <div className="loading-spinner"></div>
         <h2>Loading profile...</h2>
         <p>Please wait while we fetch your profile data.</p>
       </div>
@@ -249,12 +249,12 @@ function Profile() {
   );
 
   if (error && !user) return (
-    <div className="user-profile-bg-animated">
-      <div className="user-profile-error">
+    <div className="main-content">
+      <div className="error-state">
         <h2>Profile Not Available</h2>
         <p>{error}</p>
         <button 
-          className="user-profile-btn edit"
+          className="btn btn-primary"
           onClick={() => window.location.href = '/login'}
         >
           Go to Login
@@ -264,12 +264,12 @@ function Profile() {
   );
 
   if (!user) return (
-    <div className="user-profile-bg-animated">
-      <div className="user-profile-error">
+    <div className="main-content">
+      <div className="error-state">
         <h2>User Profile Not Found</h2>
         <p>Unable to load user profile data.</p>
         <button 
-          className="user-profile-btn edit"
+          className="btn btn-primary"
           onClick={() => window.location.href = '/login'}
         >
           Go to Login
@@ -279,167 +279,176 @@ function Profile() {
   );
 
   return (
-    <div className="user-profile-bg-animated">
-      <div className="user-profile-bg-bubble b1"></div>
-      <div className="user-profile-bg-bubble b2"></div>
-      <div className="user-profile-bg-bubble b3"></div>
-      <div className="user-profile-bg-bubble b4"></div>
-      
-      <div className="user-profile-container professional-container">
-        <div className="user-profile-card professional-card">
-          <div className="user-profile-header professional-header">
-            <div className="user-profile-picture-section">
-              <div className="user-profile-picture-container">
-                {previewUrl ? (
-                  <img 
-                    src={previewUrl} 
-                    alt="Profile Preview" 
-                    className="user-profile-picture" 
-                  />
-                ) : currentProfilePic ? (
-                  <img 
-                    src={currentProfilePic} 
-                    alt="Profile" 
-                    className="user-profile-picture"
-                    onError={() => setCurrentProfilePic(null)}
-                  />
-                ) : (
-                  <div className="user-profile-picture-placeholder">
-                    {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
+    <div className="main-content">
+      <div className="content-wrapper">
+        <div className="page-header">
+          <h1 className="page-title">
+            <span className="page-icon"></span>
+            User Profile
+          </h1>
+          <p className="page-subtitle">Manage your personal information and settings</p>
+        </div>
+
+        <div className="profile-container">
+          <div className="profile-card">
+            <div className="profile-header">
+              <div className="profile-picture-section">
+                <div className="profile-picture-container">
+                  {previewUrl ? (
+                    <img 
+                      src={previewUrl} 
+                      alt="Profile Preview" 
+                      className="profile-picture" 
+                    />
+                  ) : currentProfilePic ? (
+                    <img 
+                      src={currentProfilePic} 
+                      alt="Profile" 
+                      className="profile-picture"
+                      onError={() => setCurrentProfilePic(null)}
+                    />
+                  ) : (
+                    <div className="profile-picture-placeholder">
+                      {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
+                    </div>
+                  )}
+                  <label htmlFor="profile-upload" className="profile-picture-upload">
+                    <span className="upload-icon">📷</span>
+                    <input
+                      type="file"
+                      id="profile-upload"
+                      accept="image/*"
+                      onChange={handlePictureChange}
+                      style={{ display: 'none' }}
+                    />
+                  </label>
+                </div>
+                
+                {previewUrl && (
+                  <div className="profile-picture-actions">
+                    <button 
+                      className="btn btn-primary btn-sm"
+                      onClick={handleUpload}
+                      disabled={uploading}
+                    >
+                      {uploading ? 'Uploading...' : 'Save Picture'}
+                    </button>
+                    <button 
+                      className="btn btn-secondary btn-sm"
+                      onClick={removePreview}
+                      disabled={uploading}
+                    >
+                      Cancel
+                    </button>
                   </div>
                 )}
-                <label htmlFor="profile-upload" className="user-profile-picture-upload">
-                  <i className="upload-icon">📷</i>
-                  <input
-                    type="file"
-                    id="profile-upload"
-                    accept="image/*"
-                    onChange={handlePictureChange}
-                    style={{ display: 'none' }}
-                  />
-                </label>
               </div>
               
-              {previewUrl && (
-                <div className="user-profile-picture-actions">
-                  <button 
-                    className="user-profile-btn upload professional-btn professional-btn-primary"
-                    onClick={handleUpload}
-                    disabled={uploading}
-                  >
-                    {uploading ? 'Uploading...' : 'Save Picture'}
-                  </button>
-                  <button 
-                    className="user-profile-btn cancel-preview professional-btn professional-btn-secondary"
-                    onClick={removePreview}
-                    disabled={uploading}
-                  >
-                    Cancel
-                  </button>
+              <div className="profile-info-header">
+                <h2 className="profile-name">{user.name || 'User Profile'}</h2>
+                <span className={`status-badge ${user.status || 'pending'}`}>
+                  {(user.status || 'pending').charAt(0).toUpperCase() + (user.status || 'pending').slice(1)}
+                </span>
+              </div>
+            </div>
+
+            <div className="profile-content">
+              {isEditing ? (
+                <div className="profile-edit-form">
+                  <h3 className="section-title">Edit Profile Information</h3>
+                  
+                  <div className="form-group">
+                    <label htmlFor="name" className="form-label">Full Name</label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      value={editForm.name}
+                      onChange={handleInputChange}
+                      placeholder="Enter your full name"
+                      className="form-input"
+                    />
+                  </div>
+                  
+                  <div className="form-group">
+                    <label htmlFor="email" className="form-label">Email Address</label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={editForm.email}
+                      onChange={handleInputChange}
+                      placeholder="Enter your email address"
+                      className="form-input"
+                    />
+                  </div>
+
+                  <div className="form-actions">
+                    <button 
+                      className="btn btn-primary"
+                      onClick={handleSaveProfile}
+                    >
+                      Save Changes
+                    </button>
+                    <button 
+                      className="btn btn-secondary"
+                      onClick={handleEditToggle}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="profile-info">
+                  <div className="info-grid">
+                    <div className="info-item">
+                      <label className="info-label">Full Name:</label>
+                      <span className="info-value">{user.name || 'Not provided'}</span>
+                    </div>
+                    
+                    <div className="info-item">
+                      <label className="info-label">Email Address:</label>
+                      <span className="info-value">{user.email}</span>
+                    </div>
+                    
+                    <div className="info-item">
+                      <label className="info-label">Account Type:</label>
+                      <span className="info-badge">User</span>
+                    </div>
+
+                    <div className="info-item">
+                      <label className="info-label">Account Verified:</label>
+                      <span className={`status-badge ${user.isVerified ? 'approved' : 'pending'}`}>
+                        {user.isVerified ? 'Verified' : 'Pending Verification'}
+                      </span>
+                    </div>
+
+                    <div className="info-item">
+                      <label className="info-label">Member Since:</label>
+                      <span className="info-value">
+                        {user.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'Unknown'}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="profile-actions">
+                    <button 
+                      className="btn btn-primary"
+                      onClick={handleEditToggle}
+                    >
+                      <span className="btn-icon">✏️</span>
+                      Edit Profile
+                    </button>
+                  </div>
+                </div>
+              )}
+              
+              {error && (
+                <div className="alert alert-error">
+                  {error}
                 </div>
               )}
             </div>
-            
-            <div className="user-profile-title">
-              <h1 className="professional-title">{user.name || 'User Profile'}</h1>
-              <p className="professional-subtitle">Manage your personal information and settings</p>
-            </div>
-          </div>
-
-          <div className="user-profile-content">
-            {isEditing ? (
-              <div className="user-profile-edit-form professional-form">
-                <h3 className="professional-heading">Edit Profile Information</h3>
-                
-                <div className="user-profile-field professional-field">
-                  <label htmlFor="name" className="professional-label">Full Name</label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={editForm.name}
-                    onChange={handleInputChange}
-                    placeholder="Enter your full name"
-                    className="professional-input"
-                  />
-                </div>
-                
-                <div className="user-profile-field professional-field">
-                  <label htmlFor="email" className="professional-label">Email Address</label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={editForm.email}
-                    onChange={handleInputChange}
-                    placeholder="Enter your email address"
-                    className="professional-input"
-                  />
-                </div>
-
-                <div className="user-profile-actions professional-actions">
-                  <button 
-                    className="user-profile-btn save professional-btn professional-btn-primary"
-                    onClick={handleSaveProfile}
-                  >
-                    Save Changes
-                  </button>
-                  <button 
-                    className="user-profile-btn cancel professional-btn professional-btn-secondary"
-                    onClick={handleEditToggle}
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </div>
-            ) : (
-              <div className="user-profile-info professional-info">
-                <div className="user-profile-info-row professional-info-row">
-                  <strong>Account Status:</strong>
-                  <span className={`user-status-badge professional-badge ${user.status || 'pending'}`}>
-                    {(user.status || 'pending').charAt(0).toUpperCase() + (user.status || 'pending').slice(1)}
-                  </span>
-                </div>
-                
-                <div className="user-profile-info-row professional-info-row">
-                  <strong>Full Name:</strong>
-                  <span>{user.name || 'Not provided'}</span>
-                </div>
-                
-                <div className="user-profile-info-row professional-info-row">
-                  <strong>Email Address:</strong>
-                  <span>{user.email}</span>
-                </div>
-                
-                <div className="user-profile-info-row professional-info-row">
-                  <strong>Account Type:</strong>
-                  <span className="user-profile-badge professional-badge">User</span>
-                </div>
-
-                <div className="user-profile-info-row professional-info-row">
-                  <strong>Account Verified:</strong>
-                  <span className={`user-status-badge professional-badge ${user.isVerified ? 'approved' : 'pending'}`}>
-                    {user.isVerified ? 'Verified' : 'Pending Verification'}
-                  </span>
-                </div>
-
-                <div className="user-profile-info-row professional-info-row">
-                  <strong>Member Since:</strong>
-                  <span>{user.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'Unknown'}</span>
-                </div>
-
-                <div className="user-profile-actions professional-actions">
-                  <button 
-                    className="user-profile-btn edit professional-btn professional-btn-primary"
-                    onClick={handleEditToggle}
-                  >
-                    Edit Profile
-                  </button>
-                </div>
-              </div>
-            )}
-            
-            {error && <div className="user-profile-error-msg professional-error">{error}</div>}
           </div>
         </div>
       </div>

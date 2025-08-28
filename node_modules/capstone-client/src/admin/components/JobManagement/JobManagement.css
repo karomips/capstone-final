@@ -79,7 +79,7 @@
 /* Main Content */
 .job-management-main-content {
   margin-left: 280px;
-  padding: 2rem;
+  padding: 1rem;
   min-height: 100vh;
   background: transparent;
 }
@@ -87,9 +87,9 @@
 /* Welcome Section */
 .job-management-welcome-section {
   background: var(--background-light);
-  border-radius: 16px;
-  padding: 2rem;
-  margin-bottom: 2rem;
+  border-radius: 4px;
+  padding: 1rem;
+  margin-bottom: 1rem;
   box-shadow: var(--shadow-medium);
   border: 1px solid var(--border-color);
 }
@@ -97,12 +97,12 @@
 .welcome-header {
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 1rem;
 }
 
 .welcome-logo {
-  width: 80px;
-  height: 80px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   object-fit: cover;
   box-shadow: var(--shadow-medium);
@@ -196,14 +196,14 @@
 /* Jobs Grid */
 .jobs-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
 }
 
 .job-card {
   background: var(--background-light);
-  border-radius: var(--border-radius);
-  padding: 1.5rem;
+  border-radius: 4px;
+  padding: 1rem;
   box-shadow: var(--shadow-light);
   border: 1px solid var(--border-color);
   transition: var(--transition-speed);

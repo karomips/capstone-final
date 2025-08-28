@@ -1,11 +1,12 @@
-/* Jobstreet-Style Navigation */
+/* Modern User Navigation with Black Text Theme */
 :root {
-  --nav-primary: #003366;
-  --nav-secondary: #004080;
+  --nav-primary: #1f2937;
+  --nav-secondary: #374151;
   --nav-text: #ffffff;
-  --nav-text-muted: #e8f1ff;
-  --nav-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  --nav-text-muted: #e5e7eb;
+  --nav-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
   --nav-border: #e2e8f0;
+  --nav-accent: #111827;
 }
 
 /* Clean sidenav container */
@@ -483,4 +484,67 @@
   .signout-confirm-btn {
     flex: none;
   }
+}
+
+/* Design Elements for User Navigation */
+.sidenav::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 3px;
+  height: 100%;
+  background: linear-gradient(180deg, var(--nav-accent), transparent, var(--nav-accent));
+  opacity: 0.3;
+}
+
+.sidenav-brand::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  width: 40px;
+  height: 1px;
+  background: var(--nav-text-muted);
+  transform: translateX(-50%);
+  opacity: 0.5;
+}
+
+.sidenav-item {
+  position: relative;
+}
+
+.sidenav-item::before {
+  content: '';
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  width: 4px;
+  height: 4px;
+  background: var(--nav-text-muted);
+  border-radius: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.sidenav-item:hover::before,
+.sidenav-item.active::before {
+  opacity: 1;
+}
+
+.sidenav-link {
+  position: relative;
+  padding-left: 40px;
+}
+
+.sidenav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 20px;
+  right: 20px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--nav-text-muted), transparent);
+  opacity: 0.2;
 }

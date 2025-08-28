@@ -1,14 +1,15 @@
-/* Jobstreet-Style Admin Navigation */
+/* Modern Admin Navigation with Black Text Theme */
 :root {
-  --admin-primary: #003366;
-  --admin-secondary: #004080;
-  --admin-accent: #e91e63;
+  --admin-primary: #1f2937;
+  --admin-secondary: #374151;
+  --admin-accent: #6b7280;
   --admin-text: #ffffff;
-  --admin-text-muted: #e8f1ff;
-  --admin-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  --admin-text-muted: #e5e7eb;
+  --admin-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
   --admin-border: #e2e8f0;
   --admin-hover: rgba(255, 255, 255, 0.1);
   --admin-transition: all 0.3s ease;
+  --admin-accent-color: #111827;
 }
 
 /* Simple Admin Sidenav Container */
@@ -342,4 +343,80 @@
   .admin-main-content {
     margin-left: 0;
   }
+}
+
+/* Design Elements for Admin Navigation */
+.admin-sidenav::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 3px;
+  height: 100%;
+  background: linear-gradient(180deg, var(--admin-accent-color), transparent, var(--admin-accent-color));
+  opacity: 0.3;
+}
+
+.admin-sidenav-brand::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  width: 60px;
+  height: 1px;
+  background: var(--admin-text-muted);
+  transform: translateX(-50%);
+  opacity: 0.5;
+}
+
+.admin-nav-item {
+  position: relative;
+}
+
+.admin-nav-item::before {
+  content: '';
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  width: 4px;
+  height: 4px;
+  background: var(--admin-text-muted);
+  border-radius: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.admin-nav-item:hover::before,
+.admin-nav-item.active::before {
+  opacity: 1;
+}
+
+.admin-nav-link {
+  position: relative;
+  padding-left: 40px;
+}
+
+.admin-nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 20px;
+  right: 20px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--admin-text-muted), transparent);
+  opacity: 0.2;
+}
+
+/* Additional geometric patterns */
+.admin-brand-container::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  border: 1px solid var(--admin-text-muted);
+  border-radius: 8px;
+  opacity: 0.2;
 }

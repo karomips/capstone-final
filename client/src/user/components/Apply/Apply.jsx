@@ -107,10 +107,12 @@ function Apply() {
 
   if (loading) {
     return (
-      <div className="apply-container">
-        <div className="apply-loading">
-          <div className="loading-spinner"></div>
-          <p>Loading job details...</p>
+      <div className="main-content">
+        <div className="content-wrapper">
+          <div className="loading-state">
+            <div className="loading-spinner"></div>
+            <p>Loading job details...</p>
+          </div>
         </div>
       </div>
     );
@@ -118,45 +120,14 @@ function Apply() {
 
   if (error) {
     return (
-      <div className="apply-container">
-        <div className="apply-error">
-          <div className="error-icon">⚠️</div>
-          <h2>Oops! Something went wrong</h2>
-          <p>{error}</p>
-          <button className="back-btn" onClick={() => navigate('/jobs')}>
-            Back to Jobs
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  if (!job) {
-    return (
-      <div className="apply-container">
-        <div className="apply-error">
-          <div className="error-icon">🔍</div>
-          <h2>Job Not Found</h2>
-          <p>The job you're looking for doesn't exist or has been removed.</p>
-          <button className="back-btn" onClick={() => navigate('/jobs')}>
-            Back to Jobs
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  if (submitSuccess) {
-    return (
-      <div className="apply-container">
-        <div className="success-container">
-          <div className="success-icon">🎉</div>
-          <h2>Application Submitted Successfully!</h2>
-          <p>Thank you for applying to <strong>{job.title}</strong> at <strong>{job.company}</strong>.</p>
-          <p>We'll review your application and get back to you soon.</p>
-          <div className="success-actions">
-            <button className="primary-btn" onClick={() => navigate('/jobs')}>
-              Browse More Jobs
+      <div className="main-content">
+        <div className="content-wrapper">
+          <div className="error-state">
+            <div className="error-icon">⚠️</div>
+            <h2>Oops! Something went wrong</h2>
+            <p>{error}</p>
+            <button className="btn btn-primary" onClick={() => navigate('/jobs')}>
+              Back to Jobs
             </button>
           </div>
         </div>
@@ -164,290 +135,346 @@ function Apply() {
     );
   }
 
-  return (
-    <div className="apply-container professional-container">
-      {/* Background Animation */}
-      <div className="apply-bg-animated">
-        <div className="apply-bg-bubble b1"></div>
-        <div className="apply-bg-bubble b2"></div>
-        <div className="apply-bg-bubble b3"></div>
-        <div className="apply-bg-bubble b4"></div>
+  if (!job) {
+    return (
+      <div className="main-content">
+        <div className="content-wrapper">
+          <div className="error-state">
+            <div className="error-icon">🔍</div>
+            <h2>Job Not Found</h2>
+            <p>The job you're looking for doesn't exist or has been removed.</p>
+            <button className="btn btn-primary" onClick={() => navigate('/jobs')}>
+              Back to Jobs
+            </button>
+          </div>
+        </div>
       </div>
+    );
+  }
 
-      <div className="apply-content">
-        {!showForm ? (
-          /* Job Details View */
-          <div className="job-details-view professional-card">
-            <div className="job-header professional-header">
-              <div className="job-title-section">
-                <h1 className="professional-title">{job.title}</h1>
-                <div className="job-badge professional-badge">Open Position</div>
-              </div>
-              <div className="job-meta-info professional-meta">
-                <div className="meta-item">
-                  <span className="meta-icon">🏢</span>
-                  <span className="meta-text">{job.company}</span>
-                </div>
-                <div className="meta-item">
-                  <span className="meta-icon">📍</span>
-                  <span className="meta-text">{job.location}</span>
-                </div>
-                <div className="meta-item">
-                  <span className="meta-icon">💼</span>
-                  <span className="meta-text">Full Time</span>
-                </div>
-                <div className="meta-item">
-                  <span className="meta-icon">💰</span>
-                  <span className="meta-text">Competitive Salary</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="job-content">
-              <div className="job-section professional-section">
-                <h2 className="professional-heading">
-                  <span className="section-icon">📋</span>
-                  Job Description
-                </h2>
-                <div className="job-description professional-text">
-                  <p>{job.description}</p>
-                </div>
-              </div>
-
-              <div className="job-section professional-section">
-                <h2 className="professional-heading">
-                  <span className="section-icon">✅</span>
-                  Key Responsibilities
-                </h2>
-                <ul className="responsibility-list professional-list">
-                  <li>Develop and maintain high-quality software applications</li>
-                  <li>Collaborate with cross-functional teams to deliver projects</li>
-                  <li>Participate in code reviews and maintain coding standards</li>
-                  <li>Troubleshoot and debug applications</li>
-                  <li>Stay updated with latest technology trends</li>
-                </ul>
-              </div>
-
-              <div className="job-section professional-section">
-                <h2 className="professional-heading">
-                  <span className="section-icon">🎯</span>
-                  Requirements
-                </h2>
-                <ul className="requirement-list professional-list">
-                  <li>Bachelor's degree in Computer Science or related field</li>
-                  <li>2+ years of experience in software development</li>
-                  <li>Proficiency in relevant programming languages</li>
-                  <li>Strong problem-solving and analytical skills</li>
-                  <li>Excellent communication and teamwork abilities</li>
-                </ul>
-              </div>
-
-              <div className="job-section professional-section">
-                <h2 className="professional-heading">
-                  <span className="section-icon">🌟</span>
-                  What We Offer
-                </h2>
-                <div className="benefits-grid professional-grid professional-grid-2">
-                  <div className="benefit-item professional-card">
-                    <span className="benefit-icon">💰</span>
-                    <h4 className="professional-card-title">Competitive Salary</h4>
-                    <p className="professional-text">Industry-leading compensation package</p>
-                  </div>
-                  <div className="benefit-item professional-card">
-                    <span className="benefit-icon">🏥</span>
-                    <h4 className="professional-card-title">Health Benefits</h4>
-                    <p className="professional-text">Comprehensive medical and dental coverage</p>
-                  </div>
-                  <div className="benefit-item professional-card">
-                    <span className="benefit-icon">🏖️</span>
-                    <h4 className="professional-card-title">Flexible Time Off</h4>
-                    <p className="professional-text">Generous vacation and personal time</p>
-                  </div>
-                  <div className="benefit-item professional-card">
-                    <span className="benefit-icon">📚</span>
-                    <h4 className="professional-card-title">Learning & Development</h4>
-                    <p className="professional-text">Continuous learning opportunities</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="action-buttons professional-actions">
-              <button className="back-btn professional-btn professional-btn-secondary" onClick={() => navigate('/jobs')}>
-                <span className="btn-icon">←</span>
-                Back to Jobs
-              </button>
-              <button className="apply-btn professional-btn professional-btn-primary" onClick={() => setShowForm(true)}>
-                <span className="btn-icon">📝</span>
-                Apply Now
+  if (submitSuccess) {
+    return (
+      <div className="main-content">
+        <div className="content-wrapper">
+          <div className="success-state">
+            <div className="success-icon">🎉</div>
+            <h2>Application Submitted Successfully!</h2>
+            <p>Thank you for applying to <strong>{job.title}</strong> at <strong>{job.company}</strong>.</p>
+            <p>We'll review your application and get back to you soon.</p>
+            <div className="success-actions">
+              <button className="btn btn-primary" onClick={() => navigate('/jobs')}>
+                Browse More Jobs
               </button>
             </div>
           </div>
-        ) : (
-          /* Application Form */
-          <div className="application-form-view professional-card">
-            <div className="form-header professional-header">
-              <h1 className="professional-title">Apply for {job.title}</h1>
-              <p className="professional-subtitle">Please fill out the form below to submit your application</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="main-content">
+      <div className="content-wrapper">
+        {/* Background Animation */}
+        <div className="apply-bg-animated">
+          <div className="apply-bg-bubble b1"></div>
+          <div className="apply-bg-bubble b2"></div>
+          <div className="apply-bg-bubble b3"></div>
+          <div className="apply-bg-bubble b4"></div>
+        </div>
+
+        <div className="apply-content">
+          {!showForm ? (
+            /* Job Details View */
+            <div className="job-details-view professional-card">
+              <div className="page-header">
+                <div className="header-content">
+                  <div className="header-text">
+                    <h1 className="page-title">
+                      <span className="page-icon">💼</span>
+                      {job.title}
+                    </h1>
+                    <div className="job-badge professional-badge">Open Position</div>
+                  </div>
+                  <button 
+                    className="btn btn-secondary" 
+                    onClick={() => navigate('/jobs')}
+                  >
+                    <span className="btn-icon">🔙</span>
+                    Back to Jobs
+                  </button>
+                </div>
+              </div>
+
+              <div className="content-section">
+                <div className="job-meta-info professional-meta">
+                  <div className="meta-item">
+                    <span className="meta-icon">🏢</span>
+                    <span className="meta-text">{job.company}</span>
+                  </div>
+                  <div className="meta-item">
+                    <span className="meta-icon">📍</span>
+                    <span className="meta-text">{job.location}</span>
+                  </div>
+                  <div className="meta-item">
+                    <span className="meta-icon">💼</span>
+                    <span className="meta-text">Full Time</span>
+                  </div>
+                  <div className="meta-item">
+                    <span className="meta-icon">💰</span>
+                    <span className="meta-text">Competitive Salary</span>
+                  </div>
+                </div>
+
+                <div className="job-content">
+                  <div className="job-section professional-section">
+                    <h2 className="section-title">
+                      <span className="section-icon">📋</span>
+                      Job Description
+                    </h2>
+                    <div className="job-description professional-text">
+                      <p>{job.description}</p>
+                    </div>
+                  </div>
+
+                  <div className="job-section professional-section">
+                    <h2 className="section-title">
+                      <span className="section-icon">✅</span>
+                      Key Responsibilities
+                    </h2>
+                    <ul className="responsibility-list professional-list">
+                      <li>Develop and maintain high-quality software applications</li>
+                      <li>Collaborate with cross-functional teams to deliver projects</li>
+                      <li>Participate in code reviews and maintain coding standards</li>
+                      <li>Troubleshoot and debug applications</li>
+                      <li>Stay updated with latest technology trends</li>
+                    </ul>
+                  </div>
+
+                  <div className="job-section professional-section">
+                    <h2 className="section-title">
+                      <span className="section-icon">🎯</span>
+                      Requirements
+                    </h2>
+                    <ul className="requirement-list professional-list">
+                      <li>Bachelor's degree in Computer Science or related field</li>
+                      <li>2+ years of experience in software development</li>
+                      <li>Proficiency in relevant programming languages</li>
+                      <li>Strong problem-solving and analytical skills</li>
+                      <li>Excellent communication and teamwork abilities</li>
+                    </ul>
+                  </div>
+
+                  <div className="job-section professional-section">
+                    <h2 className="section-title">
+                      <span className="section-icon">🌟</span>
+                      What We Offer
+                    </h2>
+                    <div className="grid-layout grid-2">
+                      <div className="benefit-item card">
+                        <span className="benefit-icon">💰</span>
+                        <h4 className="card-title">Competitive Salary</h4>
+                        <p className="card-text">Industry-leading compensation package</p>
+                      </div>
+                      <div className="benefit-item card">
+                        <span className="benefit-icon">🏥</span>
+                        <h4 className="card-title">Health Benefits</h4>
+                        <p className="card-text">Comprehensive medical and dental coverage</p>
+                      </div>
+                      <div className="benefit-item card">
+                        <span className="benefit-icon">🏖️</span>
+                        <h4 className="card-title">Flexible Time Off</h4>
+                        <p className="card-text">Generous vacation and personal time</p>
+                      </div>
+                      <div className="benefit-item card">
+                        <span className="benefit-icon">📚</span>
+                        <h4 className="card-title">Learning & Development</h4>
+                        <p className="card-text">Continuous learning opportunities</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="form-actions">
+                  <button className="btn btn-primary btn-large" onClick={() => setShowForm(true)}>
+                    <span className="btn-icon">📝</span>
+                    Apply Now
+                  </button>
+                </div>
+              </div>
             </div>
+          ) : (
+            /* Application Form */
+            <div className="application-form-view">
+              <div className="page-header">
+                <div className="header-content">
+                  <div className="header-text">
+                    <h1 className="page-title">
+                      <span className="page-icon">📝</span>
+                      Apply for {job.title}
+                    </h1>
+                    <p className="page-subtitle">Please fill out the form below to submit your application</p>
+                  </div>
+                  <button 
+                    className="btn btn-secondary" 
+                    onClick={() => setShowForm(false)}
+                    disabled={submitting}
+                  >
+                    <span className="btn-icon">🔙</span>
+                    Back to Job Details
+                  </button>
+                </div>
+              </div>
 
-            <form onSubmit={handleSubmit} className="apply-form professional-form">
-              <div className="form-section professional-section">
-                <h3 className="professional-heading">
-                  <span className="section-icon">👤</span>
-                  Personal Information
-                </h3>
-                
-                <div className="form-row professional-form-row">
-                  <div className="form-group professional-field">
-                    <label htmlFor="fullName" className="professional-label">Full Name *</label>
-                    <input
-                      type="text"
-                      id="fullName"
-                      name="fullName"
-                      value={formData.fullName}
-                      onChange={handleInputChange}
-                      className={`professional-input ${formErrors.fullName ? 'error' : ''}`}
-                      placeholder="Enter your full name"
-                    />
-                    {formErrors.fullName && <span className="error-text professional-error">{formErrors.fullName}</span>}
+              <form onSubmit={handleSubmit} className="form-card">
+                <div className="form-section">
+                  <h3 className="section-title">
+                    <span className="section-icon">👤</span>
+                    Personal Information
+                  </h3>
+                  
+                  <div className="grid-layout grid-2">
+                    <div className="form-group">
+                      <label htmlFor="fullName" className="form-label">Full Name *</label>
+                      <input
+                        type="text"
+                        id="fullName"
+                        name="fullName"
+                        value={formData.fullName}
+                        onChange={handleInputChange}
+                        className={`form-input ${formErrors.fullName ? 'error' : ''}`}
+                        placeholder="Enter your full name"
+                      />
+                      {formErrors.fullName && <span className="error-text">{formErrors.fullName}</span>}
+                    </div>
+
+                    <div className="form-group">
+                      <label htmlFor="email" className="form-label">Email Address *</label>
+                      <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        className={`form-input ${formErrors.email ? 'error' : ''}`}
+                        placeholder="Enter your email address"
+                      />
+                      {formErrors.email && <span className="error-text">{formErrors.email}</span>}
+                    </div>
                   </div>
 
-                  <div className="form-group professional-field">
-                    <label htmlFor="email" className="professional-label">Email Address *</label>
+                  <div className="form-group">
+                    <label htmlFor="phone" className="form-label">Phone Number *</label>
                     <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      value={formData.phone}
                       onChange={handleInputChange}
-                      className={`professional-input ${formErrors.email ? 'error' : ''}`}
-                      placeholder="Enter your email address"
+                      className={`form-input ${formErrors.phone ? 'error' : ''}`}
+                      placeholder="Enter your phone number"
                     />
-                    {formErrors.email && <span className="error-text professional-error">{formErrors.email}</span>}
+                    {formErrors.phone && <span className="error-text">{formErrors.phone}</span>}
                   </div>
                 </div>
 
-                <div className="form-group professional-field">
-                  <label htmlFor="phone" className="professional-label">Phone Number *</label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    className={`professional-input ${formErrors.phone ? 'error' : ''}`}
-                    placeholder="Enter your phone number"
-                  />
-                  {formErrors.phone && <span className="error-text professional-error">{formErrors.phone}</span>}
-                </div>
-              </div>
+                <div className="form-section">
+                  <h3 className="section-title">
+                    <span className="section-icon">💼</span>
+                    Professional Information
+                  </h3>
 
-              <div className="form-section professional-section">
-                <h3 className="professional-heading">
-                  <span className="section-icon">💼</span>
-                  Professional Information
-                </h3>
-
-                <div className="form-group professional-field">
-                  <label htmlFor="experience" className="professional-label">Work Experience *</label>
-                  <textarea
-                    id="experience"
-                    name="experience"
-                    value={formData.experience}
-                    onChange={handleInputChange}
-                    className={`professional-textarea ${formErrors.experience ? 'error' : ''}`}
-                    placeholder="Describe your relevant work experience..."
-                    rows="4"
-                  />
-                  {formErrors.experience && <span className="error-text professional-error">{formErrors.experience}</span>}
-                </div>
-
-                <div className="form-group professional-field">
-                  <label htmlFor="education" className="professional-label">Education Background *</label>
-                  <textarea
-                    id="education"
-                    name="education"
-                    value={formData.education}
-                    onChange={handleInputChange}
-                    className={`professional-textarea ${formErrors.education ? 'error' : ''}`}
-                    placeholder="Describe your educational background..."
-                    rows="3"
-                  />
-                  {formErrors.education && <span className="error-text professional-error">{formErrors.education}</span>}
-                </div>
-
-                <div className="form-group professional-field">
-                  <label htmlFor="resume" className="professional-label">Resume/CV</label>
-                  <div className="file-upload professional-file-upload">
-                    <input
-                      type="file"
-                      id="resume"
-                      name="resume"
+                  <div className="form-group">
+                    <label htmlFor="experience" className="form-label">Work Experience *</label>
+                    <textarea
+                      id="experience"
+                      name="experience"
+                      value={formData.experience}
                       onChange={handleInputChange}
-                      accept=".pdf,.doc,.docx"
+                      className={`form-textarea ${formErrors.experience ? 'error' : ''}`}
+                      placeholder="Describe your relevant work experience..."
+                      rows="4"
                     />
-                    <label htmlFor="resume" className="file-upload-label professional-file-label">
-                      <span className="file-icon">📎</span>
-                      {formData.resume ? formData.resume.name : 'Choose file or drag here'}
-                    </label>
+                    {formErrors.experience && <span className="error-text">{formErrors.experience}</span>}
                   </div>
-                  <small className="professional-help-text">Accepted formats: PDF, DOC, DOCX (Max 5MB)</small>
+
+                  <div className="form-group">
+                    <label htmlFor="education" className="form-label">Education Background *</label>
+                    <textarea
+                      id="education"
+                      name="education"
+                      value={formData.education}
+                      onChange={handleInputChange}
+                      className={`form-textarea ${formErrors.education ? 'error' : ''}`}
+                      placeholder="Describe your educational background..."
+                      rows="3"
+                    />
+                    {formErrors.education && <span className="error-text">{formErrors.education}</span>}
+                  </div>
+
+                  <div className="form-group">
+                    <label htmlFor="resume" className="form-label">Resume/CV</label>
+                    <div className="file-upload">
+                      <input
+                        type="file"
+                        id="resume"
+                        name="resume"
+                        onChange={handleInputChange}
+                        accept=".pdf,.doc,.docx"
+                      />
+                      <label htmlFor="resume" className="file-upload-label">
+                        <span className="file-icon">📎</span>
+                        {formData.resume ? formData.resume.name : 'Choose file or drag here'}
+                      </label>
+                    </div>
+                    <small className="form-hint">Accepted formats: PDF, DOC, DOCX (Max 5MB)</small>
+                  </div>
                 </div>
-              </div>
 
-              <div className="form-section professional-section">
-                <h3 className="professional-heading">
-                  <span className="section-icon">✍️</span>
-                  Cover Letter
-                </h3>
+                <div className="form-section">
+                  <h3 className="section-title">
+                    <span className="section-icon">✍️</span>
+                    Cover Letter
+                  </h3>
 
-                <div className="form-group professional-field">
-                  <label htmlFor="coverLetter" className="professional-label">Why are you interested in this position? *</label>
-                  <textarea
-                    id="coverLetter"
-                    name="coverLetter"
-                    value={formData.coverLetter}
-                    onChange={handleInputChange}
-                    className={`professional-textarea ${formErrors.coverLetter ? 'error' : ''}`}
-                    placeholder="Tell us why you're the perfect fit for this role..."
-                    rows="6"
-                  />
-                  {formErrors.coverLetter && <span className="error-text professional-error">{formErrors.coverLetter}</span>}
+                  <div className="form-group">
+                    <label htmlFor="coverLetter" className="form-label">Why are you interested in this position? *</label>
+                    <textarea
+                      id="coverLetter"
+                      name="coverLetter"
+                      value={formData.coverLetter}
+                      onChange={handleInputChange}
+                      className={`form-textarea ${formErrors.coverLetter ? 'error' : ''}`}
+                      placeholder="Tell us why you're the perfect fit for this role..."
+                      rows="6"
+                    />
+                    {formErrors.coverLetter && <span className="error-text">{formErrors.coverLetter}</span>}
+                  </div>
                 </div>
-              </div>
 
-              <div className="form-actions professional-actions">
-                <button 
-                  type="button" 
-                  className="cancel-btn professional-btn professional-btn-secondary" 
-                  onClick={() => setShowForm(false)}
-                  disabled={submitting}
-                >
-                  <span className="btn-icon">←</span>
-                  Back to Job Details
-                </button>
-                <button 
-                  type="submit" 
-                  className="submit-btn professional-btn professional-btn-primary" 
-                  disabled={submitting}
-                >
-                  {submitting ? (
-                    <>
-                      <div className="btn-spinner"></div>
-                      Submitting...
-                    </>
-                  ) : (
-                    <>
-                      <span className="btn-icon">🚀</span>
-                      Submit Application
-                    </>
-                  )}
-                </button>
-              </div>
-            </form>
-          </div>
-        )}
+                <div className="form-actions">
+                  <button 
+                    type="submit" 
+                    className="btn btn-primary btn-large" 
+                    disabled={submitting}
+                  >
+                    {submitting ? (
+                      <>
+                        <div className="loading-spinner small"></div>
+                        Submitting...
+                      </>
+                    ) : (
+                      <>
+                        <span className="btn-icon">🚀</span>
+                        Submit Application
+                      </>
+                    )}
+                  </button>
+                </div>
+              </form>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

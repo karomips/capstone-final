@@ -110,125 +110,143 @@ function Messages() {
   };
 
   return (
-    <div className="messages-container professional-container">
-      <div className="messages-content">
+    <div className="main-content">
+      <div className="content-wrapper">
         {/* Messages Header */}
-        <div className="messages-header professional-header">
-          <h1 className="messages-header-title professional-title">
-            <span className="messages-header-icon"></span>
-            Messages
-          </h1>
-          <p className="messages-header-subtitle professional-subtitle">
-            Connect with other users in the community
-          </p>
+        <div className="page-header">
+          <div className="header-content">
+            <div className="header-text">
+              <h1 className="page-title">
+                <span className="page-icon"></span>
+                Messages
+              </h1>
+              <p className="page-subtitle">Connect with other users in the community</p>
+            </div>
+          </div>
         </div>
 
-        <div className="messages professional-card">
-          <div className="messages-menu professional-sidebar">
-            <div className="messages-menu-header professional-sidebar-header">
-              <h2 className="professional-heading">Conversations</h2>
-              <button 
-                className="new-chat-btn professional-btn professional-btn-primary"
-                onClick={() => setShowNewChat(!showNewChat)}
-              >
-                + New Chat
-              </button>
-            </div>
-            
-            {showNewChat && (
-              <div className="new-chat-form professional-form">
-                <select 
-                  value={selectedUser} 
-                  onChange={(e) => setSelectedUser(e.target.value)}
-                  className="user-select professional-select"
-                >
-                  <option value="">Select a user...</option>
-                  {users.map((user) => (
-                    <option key={user.email} value={user.email}>
-                      {user.name} ({user.email})
-                    </option>
-                  ))}
-                </select>
-                <button 
-                  onClick={startNewConversation}
-                  disabled={!selectedUser}
-                  className="start-chat-btn professional-btn professional-btn-secondary"
-                >
-                  Start Chat
-                </button>
-              </div>
-            )}
-            
-            {loading ? (
-              <div className="messages-loading professional-loading">Loading conversations...</div>
-            ) : (
-              <div className="conversations-list">
-                {conversations.length > 0 ? (
-                  conversations.map((conv) => (
-                    <div
-                      key={conv._id}
-                      className={`conversation-item professional-list-item ${currentChat?._id === conv._id ? 'active' : ''}`}
-                      onClick={() => setCurrentChat(conv)}
-                    >
-                      <div className="conversation-name professional-text">
-                        {getOtherMember(conv)}
-                      </div>
-                      <div className="conversation-preview professional-text-secondary">
-                        {conv.lastMessage || 'No messages yet'}
-                      </div>
+        <div className="content-section">
+          <div className="messages-layout">
+            <div className="messages-sidebar">
+              <div className="card">
+                <div className="card-header">
+                  <h2 className="card-title">Conversations</h2>
+                  <button 
+                    className="btn btn-primary btn-small"
+                    onClick={() => setShowNewChat(!showNewChat)}
+                  >
+                    + New Chat
+                  </button>
+                </div>
+                
+                <div className="card-content">
+                  {showNewChat && (
+                    <div className="new-chat-form">
+                      <select 
+                        value={selectedUser} 
+                        onChange={(e) => setSelectedUser(e.target.value)}
+                        className="form-select"
+                      >
+                        <option value="">Select a user...</option>
+                        {users.map((user) => (
+                          <option key={user.email} value={user.email}>
+                            {user.name} ({user.email})
+                          </option>
+                        ))}
+                      </select>
+                      <button 
+                        onClick={startNewConversation}
+                        disabled={!selectedUser}
+                        className="btn btn-secondary btn-small mt-2"
+                      >
+                        Start Chat
+                      </button>
                     </div>
-                  ))
+                  )}
+                  
+                  {loading ? (
+                    <div className="loading-state">
+                      <div className="loading-spinner"></div>
+                      <p>Loading conversations...</p>
+                    </div>
+                  ) : (
+                    <div className="conversations-list">
+                      {conversations.length > 0 ? (
+                        conversations.map((conv) => (
+                          <div
+                            key={conv._id}
+                            className={`conversation-item ${currentChat?._id === conv._id ? 'active' : ''}`}
+                            onClick={() => setCurrentChat(conv)}
+                          >
+                            <div className="conversation-name">
+                              {getOtherMember(conv)}
+                            </div>
+                            <div className="conversation-preview">
+                              {conv.lastMessage || 'No messages yet'}
+                            </div>
+                          </div>
+                        ))
+                      ) : (
+                        <div className="empty-state">
+                          <p>No conversations yet. Start a new chat above!</p>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <div className="messages-main">
+              <div className="card full-height">
+                {currentChat ? (
+                  <>
+                    <div className="card-header">
+                      <h3 className="card-title">{getOtherMember(currentChat)}</h3>
+                    </div>
+                    <div className="card-content chat-messages">
+                      {messages.map((message) => (
+                        <div
+                          ref={scrollRef}
+                          key={message._id}
+                          className={`message ${message.sender === currentUser.email ? 'own' : ''}`}
+                        >
+                          <div className="message-content">
+                            <p>{message.text}</p>
+                            <span className="message-time">
+                              {new Date(message.createdAt).toLocaleTimeString()}
+                            </span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="card-footer">
+                      <form className="chat-input-container" onSubmit={handleSubmit}>
+                        <input
+                          type="text"
+                          placeholder="Type a message..."
+                          value={newMessage}
+                          onChange={(e) => setNewMessage(e.target.value)}
+                          className="form-input"
+                        />
+                        <button type="submit" className="btn btn-primary">
+                          <span className="btn-icon">📤</span>
+                          Send
+                        </button>
+                      </form>
+                    </div>
+                  </>
                 ) : (
-                  <div className="no-conversations professional-empty-state">
-                    <p className="professional-text">No conversations yet. Start a new chat above!</p>
+                  <div className="card-content">
+                    <div className="empty-state">
+                      <div className="empty-icon">💬</div>
+                      <h3>Welcome to Messages</h3>
+                      <p>Select a conversation to start messaging or create a new chat</p>
+                    </div>
                   </div>
                 )}
               </div>
-            )}
-          </div>
-
-          <div className="messages-chat professional-main-content">
-            {currentChat ? (
-              <>
-                <div className="chat-header professional-chat-header">
-                  <h3 className="professional-heading">{getOtherMember(currentChat)}</h3>
-                </div>
-                <div className="chat-messages professional-chat-messages">
-                  {messages.map((message) => (
-                    <div
-                      ref={scrollRef}
-                      key={message._id}
-                      className={`message professional-message ${message.sender === currentUser.email ? 'own' : ''}`}
-                    >
-                      <div className="message-content professional-message-content">
-                        <p className="professional-text">{message.text}</p>
-                        <span className="message-time professional-text-secondary">
-                          {new Date(message.createdAt).toLocaleTimeString()}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                <form className="chat-input-container professional-chat-input" onSubmit={handleSubmit}>
-                  <input
-                    type="text"
-                    placeholder="Type a message..."
-                    value={newMessage}
-                    onChange={(e) => setNewMessage(e.target.value)}
-                    className="chat-input professional-input"
-                  />
-                  <button type="submit" className="send-button professional-btn professional-btn-primary">
-                    Send
-                  </button>
-                </form>
-              </>
-            ) : (
-              <div className="no-chat-selected professional-empty-state">
-                <div className="no-chat-icon">💬</div>
-                <h3 className="professional-heading">Welcome to Messages</h3>
-                <p className="professional-text">Select a conversation to start messaging or create a new chat</p>
-              </div>
-            )}
+            </div>
           </div>
         </div>
       </div>

@@ -142,12 +142,12 @@ function Jobspage() {
   };
 
   return (
-    <div className="page-container">
-      <div className="page-content">
+    <div className="main-content">
+      <div className="content-wrapper">
         {/* Jobs Header */}
         <div className="page-header">
           <h1 className="page-title">
-            <span className="page-icon">💼</span>
+            <span className="page-icon"></span>
             Job Opportunities
           </h1>
           <p className="page-subtitle">
@@ -156,15 +156,15 @@ function Jobspage() {
         </div>
 
         {/* Filters and Search */}
-        <div className="search-filters-container">
-          <div className="search-filters-row">
+        <div className="filters-section">
+          <div className="filters-row">
             <div className="search-container">
               <input
                 type="text"
                 placeholder="Search jobs by title, company, location..."
                 value={search}
                 onChange={e => setSearch(e.target.value)}
-                className="search-input"
+                className="form-input search-input"
               />
               <span className="search-icon">🔍</span>
             </div>
@@ -204,7 +204,7 @@ function Jobspage() {
         </div>
 
         {/* Job Listings */}
-        <div className="jobs-content-main">
+        <div className="content-section">
           {loading ? (
             <div className="loading-state">
               <div className="loading-spinner"></div>
@@ -224,74 +224,78 @@ function Jobspage() {
               </button>
             </div>
           ) : filteredJobs.length > 0 ? (
-            <div className="jobs-grid">
+            <div className="grid-layout grid-2">
               {filteredJobs.map(job => (
                 <div key={job._id} className="job-card">
-                  <div className="job-card-header">
+                  <div className="job-header">
                     <h3 className="job-title">{job.title}</h3>
                     <div className="job-category-badge">
                       {getCategoryIcon(job.category || 'Other')} {job.category || 'General'}
                     </div>
                   </div>
                   
-                  <div className="job-info">
-                    <p className="job-company">
-                      <span className="job-icon">🏢</span>
-                      {job.company}
+                  <div className="job-content">
+                    <div className="job-info">
+                      <div className="job-detail">
+                        <span className="detail-icon">🏢</span>
+                        <span>{job.company}</span>
+                      </div>
+                      <div className="job-detail">
+                        <span className="detail-icon">📍</span>
+                        <span>{job.location}</span>
+                      </div>
+                      <div className="job-detail">
+                        <span className="detail-icon">📅</span>
+                        <span>{formatDate(job.createdAt || job.datePosted)}</span>
+                      </div>
+                    </div>
+                    
+                    <p className="job-description">
+                      {job.description && typeof job.description === 'string' && job.description.length > 120 
+                        ? `${job.description.substring(0, 120)}...` 
+                        : typeof job.description === 'string' 
+                          ? job.description 
+                          : 'No description available.'}
                     </p>
-                    <p className="job-location">
-                      <span className="job-icon">📍</span>
-                      {job.location}
-                    </p>
-                    <p className="job-date">
-                      <span className="job-icon">📅</span>
-                      {formatDate(job.createdAt || job.datePosted)}
-                    </p>
+
+                    {job.salary && (
+                      <div className="job-detail">
+                        <span className="detail-icon">💰</span>
+                        <span>{typeof job.salary === 'string' ? job.salary : 'Competitive salary'}</span>
+                      </div>
+                    )}
+
+                    {job.requirements && Array.isArray(job.requirements) && job.requirements.length > 0 && (
+                      <div className="job-requirements">
+                        <strong className="requirements-title">Requirements:</strong>
+                        <ul className="requirements-list">
+                          {job.requirements.slice(0, 2).map((req, index) => (
+                            <li key={index}>{typeof req === 'string' ? req : req.name || req.title || 'Requirement'}</li>
+                          ))}
+                          {job.requirements.length > 2 && (
+                            <li>+{job.requirements.length - 2} more...</li>
+                          )}
+                        </ul>
+                      </div>
+                    )}
                   </div>
                   
-                  <p className="job-description">
-                    {job.description && typeof job.description === 'string' && job.description.length > 120 
-                      ? `${job.description.substring(0, 120)}...` 
-                      : typeof job.description === 'string' 
-                        ? job.description 
-                        : 'No description available.'}
-                  </p>
-
-                  {job.salary && (
-                    <p className="job-salary">
-                      <span className="job-icon">💰</span>
-                      {typeof job.salary === 'string' ? job.salary : 'Competitive salary'}
-                    </p>
-                  )}
-
-                  {job.requirements && Array.isArray(job.requirements) && job.requirements.length > 0 && (
-                    <div className="job-requirements">
-                      <strong>Requirements:</strong>
-                      <ul>
-                        {job.requirements.slice(0, 2).map((req, index) => (
-                          <li key={index}>{typeof req === 'string' ? req : req.name || req.title || 'Requirement'}</li>
-                        ))}
-                        {job.requirements.length > 2 && (
-                          <li>+{job.requirements.length - 2} more...</li>
-                        )}
-                      </ul>
-                    </div>
-                  )}
-                  
-                  <button
-                    className="btn btn-primary"
-                    onClick={() => handleApply(job)}
-                  >
-                    Apply Now
-                  </button>
+                  <div className="job-footer">
+                    <button
+                      className="btn btn-primary"
+                      onClick={() => handleApply(job)}
+                    >
+                      Apply Now
+                    </button>
+                  </div>
                 </div>
               ))}
             </div>
           ) : (
             <div className="empty-state">
-              <div className="empty-icon">🔍</div>
-              <h3 className="empty-title">No Jobs Found</h3>
-              <p className="empty-text">
+              <div className="empty-state-icon">🔍</div>
+              <h3 className="empty-state-title">No Jobs Found</h3>
+              <p className="empty-state-description">
                 {search || selectedCategory 
                   ? 'Try adjusting your search terms or filters to find more opportunities.'
                   : 'No job listings are currently available. Check back later for new opportunities.'}

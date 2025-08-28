@@ -48,7 +48,7 @@ function Landing() {
   };
 
   const handleUserRegister = () => {
-    navigate('/user/register');
+    navigate('/user/upload');
   };
 
   const handleAdminLogin = () => {
@@ -61,10 +61,13 @@ function Landing() {
       <header style={{ backgroundColor: 'var(--bg-primary)', borderBottom: '1px solid var(--border-light)', padding: 'var(--space-8) 0' }}>
         <div className="container">
           <div className="flex flex-col items-center text-center gap-6">
-            <img src="/barangay_logo.png" alt="Barangay Logo" style={{ width: '5rem', height: '5rem' }} />
+            <div className="flex items-center gap-4">
+              <img src="/barangay_logo.png" alt="Barangay Logo" style={{ width: '5rem', height: '5rem' }} />
+              <img src="/worknest.png" alt="WorkNest Logo" style={{ width: '5rem', height: '5rem' }} />
+            </div>
             <div>
-              <h1 style={{ color: 'var(--primary-blue)', marginBottom: 'var(--space-2)' }}>Barangay Mangan-vaca</h1>
-              <h2 className="mb-2">Job Portal</h2>
+              <h1 style={{ color: 'var(--primary-blue)', marginBottom: 'var(--space-2)' }}>WorkNest</h1>
+              <h2 className="mb-2">Barangay Mangan-vaca Job Portal</h2>
               <p>Connecting opportunities within our community</p>
             </div>
           </div>

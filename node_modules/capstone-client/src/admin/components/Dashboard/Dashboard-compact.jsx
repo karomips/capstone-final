@@ -128,7 +128,7 @@ function Dashboard() {
           <div className="grid-layout grid-4">
             <div className="stat-card compact">
               <div className="stat-content">
-                <div className="stat-icon blue-icon"></div>
+                <div className="stat-icon blue-icon">👥</div>
                 <div className="stat-info">
                   <div className="stat-number">{stats.totalUsers}</div>
                   <div className="stat-label blue-text">Total Users</div>
@@ -138,7 +138,7 @@ function Dashboard() {
             
             <div className="stat-card compact">
               <div className="stat-content">
-                <div className="stat-icon blue-icon"></div>
+                <div className="stat-icon blue-icon">⏳</div>
                 <div className="stat-info">
                   <div className="stat-number">{stats.pendingUsers}</div>
                   <div className="stat-label blue-text">Pending</div>
@@ -148,7 +148,7 @@ function Dashboard() {
             
             <div className="stat-card compact">
               <div className="stat-content">
-                <div className="stat-icon blue-icon"></div>
+                <div className="stat-icon blue-icon">💼</div>
                 <div className="stat-info">
                   <div className="stat-number">{stats.totalJobs}</div>
                   <div className="stat-label blue-text">Jobs</div>
@@ -158,7 +158,7 @@ function Dashboard() {
             
             <div className="stat-card compact">
               <div className="stat-content">
-                <div className="stat-icon blue-icon"></div>
+                <div className="stat-icon blue-icon">📄</div>
                 <div className="stat-info">
                   <div className="stat-number">{stats.pendingUploads + stats.adminRequests}</div>
                   <div className="stat-label blue-text">Actions Needed</div>
@@ -168,9 +168,9 @@ function Dashboard() {
           </div>
         </section>
 
-        {/* Three Column Layout to Utilize Right Space */}
-        <div className="grid-layout grid-3 full-width-layout">
-          {/* Quick Actions - Left Column */}
+        {/* Two Column Layout for Actions and Activity - Compact */}
+        <div className="grid-layout grid-2 compact-row">
+          {/* Quick Actions - Compact List */}
           <section className="content-section compact">
             <h3 className="section-title blue-accent">
               <span className="section-icon">⚡</span>
@@ -224,7 +224,7 @@ function Dashboard() {
             </div>
           </section>
 
-          {/* Recent Activity - Center Column */}
+          {/* Recent Activity - Compact */}
           <section className="content-section compact">
             <h3 className="section-title blue-accent">
               <span className="section-icon">📈</span>
@@ -252,63 +252,41 @@ function Dashboard() {
               )}
             </div>
           </section>
-
-          {/* System Status - Right Column (utilizing the unused space) */}
-          <section className="content-section compact">
-            <h3 className="section-title blue-accent">
-              <span className="section-icon">⚙️</span>
-              System Status
-            </h3>
-            
-            <div className="status-list">
-              <div className="status-card">
-                <div className="status-indicator online"></div>
-                <div className="status-info">
-                  <strong>Server Status</strong>
-                  <span>Online</span>
-                </div>
-              </div>
-              
-              <div className="status-card">
-                <div className="status-indicator good"></div>
-                <div className="status-info">
-                  <strong>Database</strong>
-                  <span>Connected</span>
-                </div>
-              </div>
-              
-              <div className="status-card">
-                <div className="status-indicator warning"></div>
-                <div className="status-info">
-                  <strong>Pending Actions</strong>
-                  <span>{stats.pendingUsers + stats.pendingUploads + stats.adminRequests} items</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Additional Info Panel to Use More Space */}
-            <div className="info-panel">
-              <h4 className="info-title">
-                <span className="info-icon">📊</span>
-                Today's Summary
-              </h4>
-              <div className="info-stats">
-                <div className="info-stat">
-                  <span className="info-number">{stats.pendingUsers}</span>
-                  <span className="info-label">New Registrations</span>
-                </div>
-                <div className="info-stat">
-                  <span className="info-number">{stats.pendingUploads}</span>
-                  <span className="info-label">Documents Pending</span>
-                </div>
-                <div className="info-stat">
-                  <span className="info-number">{stats.adminRequests}</span>
-                  <span className="info-label">Admin Requests</span>
-                </div>
-              </div>
-            </div>
-          </section>
         </div>
+
+        {/* System Status - Single Row */}
+        <section className="content-section compact">
+          <h3 className="section-title blue-accent">
+            <span className="section-icon">⚙️</span>
+            System Status
+          </h3>
+          
+          <div className="grid-layout grid-3">
+            <div className="status-card">
+              <div className="status-indicator online"></div>
+              <div className="status-info">
+                <strong>Server Status</strong>
+                <span>Online</span>
+              </div>
+            </div>
+            
+            <div className="status-card">
+              <div className="status-indicator good"></div>
+              <div className="status-info">
+                <strong>Database</strong>
+                <span>Connected</span>
+              </div>
+            </div>
+            
+            <div className="status-card">
+              <div className="status-indicator warning"></div>
+              <div className="status-info">
+                <strong>Pending Actions</strong>
+                <span>{stats.pendingUsers + stats.pendingUploads + stats.adminRequests} items</span>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
   );

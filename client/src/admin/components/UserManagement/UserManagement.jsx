@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './UserManagement.css';
+import '../../../shared/styles/unified-design-system.css';
 
 function UserManagement() {
   const [users, setUsers] = useState([]);
@@ -177,168 +178,193 @@ function UserManagement() {
 
   if (loading) {
     return (
-      <div className="user-management-loading">
-        <div className="loading-spinner">
-          <div className="lds-dual-ring"></div>
+      <div className="main-content">
+        <div className="content-wrapper">
+          <div className="loading-state">
+            <div className="loading-spinner"></div>
+            <p>Loading users...</p>
+          </div>
         </div>
-        <p>Loading users...</p>
       </div>
     );
   }
 
   return (
-    <>
-      {/* Background Animation */}
-      <div className="user-management-bg-animated">
-        <div className="user-management-bg-bubble b1"></div>
-        <div className="user-management-bg-bubble b2"></div>
-        <div className="user-management-bg-bubble b3"></div>
-        <div className="user-management-bg-bubble b4"></div>
-      </div>
+    <div className="main-content">
+      <div className="content-wrapper">
+        {/* Page Header */}
+        <div className="page-header">
+          <div className="header-content">
+            <div className="header-text">
+              <h1 className="page-title blue-accent">
+                <span className="page-icon"></span>
+                User Management
+              </h1>
+              <p className="page-subtitle">Manage all users and their account statuses</p>
+            </div>
+          </div>
+        </div>
 
-      <div className="user-management-main-content">
-        {/* Welcome Section */}
-        <section className="user-management-welcome-section">
-          <div className="welcome-header">
-            <img 
-              src="/favicon.ico" 
-              alt="User Management" 
-              className="welcome-logo"
-            />
-            <div className="welcome-text">
-              <h1>User Management</h1>
-              <p>Manage all users and their account statuses</p>
+        {/* Stats and Controls */}
+        <section className="content-section">
+          <h2 className="section-title blue-accent">
+            <span className="section-icon"></span>
+            User Statistics
+          </h2>
+          <div className="grid-layout grid-4">
+            <div className="stat-card">
+              <div className="stat-icon blue-icon">👥</div>
+              <div className="stat-number">{users.length}</div>
+              <div className="stat-label blue-text">Total Users</div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-icon blue-icon">✅</div>
+              <div className="stat-number">{users.filter(u => u.status === 'approved').length}</div>
+              <div className="stat-label blue-text">Approved</div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-icon blue-icon">⏳</div>
+              <div className="stat-number">{users.filter(u => u.status === 'pending').length}</div>
+              <div className="stat-label blue-text">Pending</div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-icon blue-icon">👑</div>
+              <div className="stat-number">{users.filter(u => u.isAdmin).length}</div>
+              <div className="stat-label blue-text">Admins</div>
             </div>
           </div>
         </section>
 
-        {/* Stats and Controls */}
-        <div className="user-management-controls">
-          <div className="user-stats">
-            <div className="stat-item">
-              <span className="stat-number">{users.length}</span>
-              <span className="stat-label">Total Users</span>
+        {/* Search and Filter Controls */}
+        <section className="content-section">
+          <div className="card">
+            <div className="card-header">
+              <h3 className="card-title blue-accent">Search & Filter</h3>
             </div>
-            <div className="stat-item">
-              <span className="stat-number">{users.filter(u => u.status === 'approved').length}</span>
-              <span className="stat-label">Approved</span>
-            </div>
-            <div className="stat-item">
-              <span className="stat-number">{users.filter(u => u.status === 'pending').length}</span>
-              <span className="stat-label">Pending</span>
-            </div>
-            <div className="stat-item">
-              <span className="stat-number">{users.filter(u => u.isAdmin).length}</span>
-              <span className="stat-label">Admins</span>
-            </div>
-          </div>
-
-          <div className="search-controls">
-            <div className="search-box">
-              <input
-                type="text"
-                placeholder="Search users..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="search-input"
-              />
-            </div>
-            <div className="filter-box">
-              <select
-                value={filterStatus}
-                onChange={(e) => setFilterStatus(e.target.value)}
-                className="filter-select"
-              >
-                {statusOptions.map(status => (
-                  <option key={status} value={status}>
-                    {status === 'all' ? 'All Statuses' : status.charAt(0).toUpperCase() + status.slice(1)}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-        </div>
-
-        {/* Users Grid */}
-        <div className="users-grid">
-          {filteredUsers.length === 0 ? (
-            <div className="no-users">
-              <div className="no-users-icon">👥</div>
-              <h3>No users found</h3>
-              <p>No users match your current search criteria.</p>
-            </div>
-          ) : (
-            filteredUsers.map(user => (
-              <div key={user._id} className="user-card">
-                <div className="user-header">
-                  <div className="user-avatar">
-                    <span className="avatar-text">
-                      {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
-                    </span>
-                    <span className="user-type-icon">
-                      {getUserTypeIcon(user.isAdmin)}
-                    </span>
-                  </div>
-                  <div className="user-info">
-                    <h3 className="user-name">{user.name || 'Unnamed User'}</h3>
-                    <p className="user-email">{user.email}</p>
-                    <span 
-                      className="user-status"
-                      style={{ backgroundColor: getStatusColor(user.status) }}
-                    >
-                      {user.status || 'Unknown'}
-                    </span>
-                  </div>
+            <div className="card-content">
+              <div className="grid-layout grid-2">
+                <div className="form-group">
+                  <label className="form-label">Search Users</label>
+                  <input
+                    type="text"
+                    placeholder="Search by name or email..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="form-input"
+                  />
                 </div>
-                
-                <div className="user-details">
-                  <div className="detail-item">
-                    <span className="detail-label">Account Type:</span>
-                    <span className="detail-value">
-                      {user.isAdmin ? 'Administrator' : 'Regular User'}
-                    </span>
-                  </div>
-                  <div className="detail-item">
-                    <span className="detail-label">Verified:</span>
-                    <span className="detail-value">
-                      {user.isVerified ? '✅ Yes' : '❌ No'}
-                    </span>
-                  </div>
-                  <div className="detail-item">
-                    <span className="detail-label">Status:</span>
-                    <span className="detail-value" style={{ color: getStatusColor(user.status) }}>
-                      {user.status?.charAt(0).toUpperCase() + user.status?.slice(1) || 'Unknown'}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="user-actions">
-                  <button 
-                    className="action-btn view-btn"
-                    onClick={() => handleViewProfile(user)}
-                    title="View Profile"
+                <div className="form-group">
+                  <label className="form-label">Filter by Status</label>
+                  <select
+                    value={filterStatus}
+                    onChange={(e) => setFilterStatus(e.target.value)}
+                    className="form-select"
                   >
-                    👁️ View
-                  </button>
-                  <button 
-                    className="action-btn edit-btn"
-                    onClick={() => handleEditUser(user)}
-                    title="Edit User"
-                  >
-                    ✏️ Edit
-                  </button>
-                  <button 
-                    className={`action-btn ${user.status === 'approved' ? 'suspend-btn' : 'approve-btn'}`}
-                    onClick={() => handleSuspendUser(user)}
-                    title={user.status === 'approved' ? 'Suspend User' : 'Approve User'}
-                  >
-                    {user.status === 'approved' ? '⚠️ Suspend' : '✅ Approve'}
-                  </button>
+                    {statusOptions.map(status => (
+                      <option key={status} value={status}>
+                        {status === 'all' ? 'All Statuses' : status.charAt(0).toUpperCase() + status.slice(1)}
+                      </option>
+                    ))}
+                  </select>
                 </div>
               </div>
-            ))
+            </div>
+          </div>
+        </section>
+
+        {/* Users Grid */}
+        <section className="content-section">
+          <div className="section-header">
+            <h2 className="section-title blue-accent">
+              <span className="section-icon"></span>
+              User Accounts ({filteredUsers.length})
+            </h2>
+          </div>
+          
+          {filteredUsers.length === 0 ? (
+            <div className="empty-state">
+              <div className="empty-state-icon">👥</div>
+              <h3 className="empty-state-title">No users found</h3>
+              <p className="empty-state-description">No users match your current search criteria.</p>
+            </div>
+          ) : (
+            <div className="grid-layout grid-3">
+              {filteredUsers.map(user => (
+                <div key={user._id} className="card">
+                  <div className="card-header">
+                    <div className="user-avatar">
+                      <span className="avatar-text">
+                        {user.name ? user.name.charAt(0).toUpperCase() : 'U'}
+                      </span>
+                      <span className="user-type-icon">
+                        {getUserTypeIcon(user.isAdmin)}
+                      </span>
+                    </div>
+                    <div className="user-info">
+                      <h3 className="card-title blue-text">{user.name || 'Unnamed User'}</h3>
+                      <p className="card-text">{user.email}</p>
+                      <span 
+                        className="status-badge"
+                        style={{ backgroundColor: getStatusColor(user.status) }}
+                      >
+                        {user.status || 'Unknown'}
+                      </span>
+                    </div>
+                  </div>
+                  
+                  <div className="card-content">
+                    <div className="user-details">
+                      <div className="detail-item">
+                        <span className="detail-label">Account Type:</span>
+                        <span className="detail-value blue-text">
+                          {user.isAdmin ? 'Administrator' : 'Regular User'}
+                        </span>
+                      </div>
+                      <div className="detail-item">
+                        <span className="detail-label">Verified:</span>
+                        <span className="detail-value">
+                          {user.isVerified ? '✅ Yes' : '❌ No'}
+                        </span>
+                      </div>
+                      <div className="detail-item">
+                        <span className="detail-label">Status:</span>
+                        <span className="detail-value" style={{ color: getStatusColor(user.status) }}>
+                          {user.status?.charAt(0).toUpperCase() + user.status?.slice(1) || 'Unknown'}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="card-footer">
+                    <div className="user-actions">
+                      <button 
+                        className="btn btn-outline btn-sm"
+                        onClick={() => handleViewProfile(user)}
+                        title="View Profile"
+                      >
+                        👁️ View
+                      </button>
+                      <button 
+                        className="btn btn-secondary btn-sm"
+                        onClick={() => handleEditUser(user)}
+                        title="Edit User"
+                      >
+                        ✏️ Edit
+                      </button>
+                      <button 
+                        className={`btn btn-sm ${user.status === 'approved' ? 'btn-warning' : 'btn-success'}`}
+                        onClick={() => handleSuspendUser(user)}
+                        title={user.status === 'approved' ? 'Suspend User' : 'Approve User'}
+                      >
+                        {user.status === 'approved' ? '⚠️ Suspend' : '✅ Approve'}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           )}
-        </div>
+        </section>
 
         {/* Modals */}
         {/* View User Modal */}
@@ -524,7 +550,7 @@ function UserManagement() {
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 }
 
