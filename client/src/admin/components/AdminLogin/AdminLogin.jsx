@@ -53,8 +53,10 @@ function AdminLogin() {
         };
         localStorage.setItem('adminUser', JSON.stringify(adminUser));
         
-        // Navigate to admin dashboard
+        // Navigate to admin dashboard and force refresh to update state
         navigate('/dashboard');
+        // Force state update by triggering a storage event
+        window.dispatchEvent(new Event('storage'));
       } else {
         setError(data.message || 'Admin login failed');
       }

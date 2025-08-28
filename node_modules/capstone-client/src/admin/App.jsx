@@ -26,8 +26,9 @@ function AdminApp() {
     // Listen for storage events (from other tabs/windows)
     window.addEventListener('storage', handleStorageChange);
     
-    // Also check periodically for same-tab changes
-    const interval = setInterval(handleStorageChange, 100);
+    // Check immediately and then periodically for same-tab changes
+    handleStorageChange();
+    const interval = setInterval(handleStorageChange, 50); // More frequent check
 
     return () => {
       window.removeEventListener('storage', handleStorageChange);
@@ -37,11 +38,6 @@ function AdminApp() {
 
   // Hide navbar on login pages
   const hideNavbar = location.pathname.includes('/login');
-
-  // Show login page if not logged in and trying to access protected routes
-  if (!isAdminLoggedIn && !location.pathname.includes('/login')) {
-    return <AdminLogin />;
-  }
 
   return (
     <>

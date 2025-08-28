@@ -1,4 +1,5 @@
 import React from 'react';
+import { Navigate } from 'react-router-dom';
 
 const AdminProtectedRoute = ({ children }) => {
   const isAdminLoggedIn = localStorage.getItem('isAdminLoggedIn') === 'true';
@@ -9,7 +10,7 @@ const AdminProtectedRoute = ({ children }) => {
     // Clear any invalid data
     localStorage.removeItem('isAdminLoggedIn');
     localStorage.removeItem('adminUser');
-    return null; // This will show the login form since App.js handles the redirect
+    return <Navigate to="/admin/login" replace />;
   }
 
   return children;
