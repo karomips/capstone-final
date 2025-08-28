@@ -1,13 +1,1 @@
-{
-  "version": 2,
-  "buildCommand": "CI=false GENERATE_SOURCEMAP=false npx --yes react-scripts@5.0.1 build",
-  "outputDirectory": "build",
-  "installCommand": "npm install --legacy-peer-deps",
-  "framework": null,
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
-    }
-  ]
-}
+{}
