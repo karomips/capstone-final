@@ -1,1 +1,7 @@
-{}
+{
+  "version": 2,
+  "framework": "create-react-app",
+  "buildCommand": null,
+  "installCommand": null,
+  "outputDirectory": null
+}
